@@ -1,0 +1,500 @@
+{
+  "github:jspm/nodelibs-stream@0.2.0-alpha": {
+    "deps": {
+      "stream-browserify": "npm:stream-browserify@^2.0.1"
+    },
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-fs@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-assert@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-vm@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-events@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-util@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "github:jspm/nodelibs-buffer@0.2.0-alpha": {
+    "deps": {
+      "buffer-browserify": "npm:buffer@^4.0.0"
+    },
+    "peerDeps": {}
+  },
+  "github:jspm/nodelibs-path@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-buffer@1.1.0": {
+    "deps": {
+      "geojson-normalize": "npm:geojson-normalize@0.0.0",
+      "jsts": "npm:jsts@^0.15.0",
+      "turf-combine": "npm:turf-combine@^1.0.2",
+      "turf-featurecollection": "npm:turf-featurecollection@^1.0.1",
+      "turf-polygon": "npm:turf-polygon@^1.0.3"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-along@1.0.2": {
+    "deps": {
+      "turf-bearing": "npm:turf-bearing@^1.0.0",
+      "turf-destination": "npm:turf-destination@^1.2.0",
+      "turf-distance": "npm:turf-distance@^1.0.0",
+      "turf-point": "npm:turf-point@^2.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-featurecollection@1.0.1": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-centroid@1.1.3": {
+    "deps": {
+      "geojson-fixtures": "npm:geojson-fixtures@^0.5.0",
+      "turf-meta": "npm:turf-meta@^1.0.2",
+      "turf-point": "npm:turf-point@^2.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-inside@1.1.4": {
+    "deps": {
+      "minimist": "npm:minimist@^1.1.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-line-slice@1.3.4": {
+    "deps": {
+      "turf-bearing": "npm:turf-bearing@^1.0.0",
+      "turf-destination": "npm:turf-destination@^1.2.0",
+      "turf-distance": "npm:turf-distance@^1.0.0",
+      "turf-linestring": "npm:turf-linestring@^1.0.1",
+      "turf-point": "npm:turf-point@^2.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-linestring@1.0.2": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-point@2.0.1": {
+    "deps": {
+      "minimist": "npm:minimist@^1.1.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-merge@1.0.2": {
+    "deps": {
+      "turf-union": "npm:turf-union@^1.0.0",
+      "clone": "npm:clone@0.2"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-polygon@1.0.3": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-union@1.0.2": {
+    "deps": {
+      "jsts": "npm:jsts@0.15"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-simplify@1.0.3": {
+    "deps": {
+      "simplify-js": "npm:simplify-js@^1.2.1"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "github:jspm/nodelibs-process@0.2.0-alpha": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:systemjs-plugin-babel@0.0.13": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:stream-browserify@2.0.1": {
+    "deps": {
+      "inherits": "npm:inherits@~2.0.1",
+      "readable-stream": "npm:readable-stream@^2.0.2"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha"
+    }
+  },
+  "npm:buffer@4.7.1": {
+    "deps": {
+      "base64-js": "npm:base64-js@^1.0.2",
+      "ieee754": "npm:ieee754@^1.1.4",
+      "isarray": "npm:isarray@^1.0.0"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-bearing@1.0.2": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:jsts@0.15.0": {
+    "deps": {
+      "javascript.util": "npm:javascript.util@~0.12.5"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:geojson-normalize@0.0.0": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:minimist@1.2.0": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-meta@1.0.2": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:simplify-js@1.2.1": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:geojson-fixtures@0.5.0": {
+    "deps": {
+      "geojsonhint": "npm:geojsonhint@^1.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:clone@0.2.0": {
+    "deps": {},
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha",
+      "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-combine@1.1.0": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-distance@1.1.0": {
+    "deps": {
+      "turf-invariant": "npm:turf-invariant@^1.0.2"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-destination@1.2.1": {
+    "deps": {
+      "turf-point": "npm:turf-point@^2.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:inherits@2.0.1": {
+    "deps": {},
+    "peerDeps": {
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+    }
+  },
+  "npm:readable-stream@2.1.4": {
+    "deps": {
+      "buffer-shims": "npm:buffer-shims@^1.0.0",
+      "core-util-is": "npm:core-util-is@1.0",
+      "inherits": "npm:inherits@~2.0.1",
+      "isarray": "npm:isarray@1.0",
+      "process-nextick-args": "npm:process-nextick-args@~1.0.6",
+      "string_decoder": "npm:string_decoder@0.10",
+      "util-deprecate": "npm:util-deprecate@~1.0.1"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+    }
+  },
+  "npm:ieee754@1.1.6": {
+    "deps": {},
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha"
+    }
+  },
+  "npm:isarray@1.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:javascript.util@0.12.12": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:base64-js@1.1.2": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:geojsonhint@1.2.1": {
+    "deps": {
+      "chalk": "npm:chalk@^1.1.0",
+      "concat-stream": "npm:concat-stream@~1.4.4",
+      "jsonlint-lines": "npm:jsonlint-lines@1.7.1",
+      "minimist": "npm:minimist@1.1.1",
+      "text-table": "npm:text-table@^0.2.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
+  },
+  "npm:minimist@1.1.1": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:turf-invariant@1.0.3": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:buffer-shims@1.0.0": {
+    "deps": {},
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha"
+    }
+  },
+  "npm:string_decoder@0.10.31": {
+    "deps": {},
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha"
+    }
+  },
+  "npm:core-util-is@1.0.2": {
+    "deps": {},
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha"
+    }
+  },
+  "npm:util-deprecate@1.0.2": {
+    "deps": {},
+    "peerDeps": {
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+    }
+  },
+  "npm:process-nextick-args@1.0.7": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:chalk@1.1.3": {
+    "deps": {
+      "ansi-styles": "npm:ansi-styles@^2.2.1",
+      "escape-string-regexp": "npm:escape-string-regexp@^1.0.2",
+      "has-ansi": "npm:has-ansi@^2.0.0",
+      "strip-ansi": "npm:strip-ansi@^3.0.0",
+      "supports-color": "npm:supports-color@^2.0.0"
+    },
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:text-table@0.2.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:jsonlint-lines@1.7.1": {
+    "deps": {
+      "nomnom": "npm:nomnom",
+      "JSV": "npm:JSV"
+    },
+    "peerDeps": {
+      "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:concat-stream@1.4.10": {
+    "deps": {
+      "inherits": "npm:inherits@~2.0.1",
+      "typedarray": "npm:typedarray@~0.0.5",
+      "readable-stream": "npm:readable-stream@~1.1.9"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha"
+    }
+  },
+  "npm:readable-stream@1.1.14": {
+    "deps": {
+      "core-util-is": "npm:core-util-is@1.0",
+      "inherits": "npm:inherits@~2.0.1",
+      "isarray": "npm:isarray@0.0.1",
+      "string_decoder": "npm:string_decoder@0.10",
+      "stream-browserify": "npm:stream-browserify@^1.0.0"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+    }
+  },
+  "npm:stream-browserify@1.0.0": {
+    "deps": {
+      "inherits": "npm:inherits@~2.0.1",
+      "readable-stream": "npm:readable-stream@^1.0.27-1"
+    },
+    "peerDeps": {
+      "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+      "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha"
+    }
+  },
+  "npm:isarray@0.0.1": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:strip-ansi@3.0.1": {
+    "deps": {
+      "ansi-regex": "npm:ansi-regex@^2.0.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:ansi-styles@2.2.1": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:supports-color@2.0.0": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:typedarray@0.0.6": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
+    }
+  },
+  "npm:nomnom@1.8.1": {
+    "deps": {
+      "underscore": "npm:underscore@1.6",
+      "chalk": "npm:chalk@0.4"
+    },
+    "peerDeps": {
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:chalk@0.4.0": {
+    "deps": {
+      "has-color": "npm:has-color@0.1",
+      "ansi-styles": "npm:ansi-styles@1.0",
+      "strip-ansi": "npm:strip-ansi@0.1"
+    },
+    "peerDeps": {}
+  },
+  "npm:ansi-styles@1.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:strip-ansi@0.1.1": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:escape-string-regexp@1.0.5": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:JSV@4.0.2": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:underscore@1.6.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:has-color@0.1.7": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:amd-googlemaps-loader@1.6.4": {
+    "deps": {},
+    "peerDeps": {
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
+    }
+  },
+  "npm:has-ansi@2.0.0": {
+    "deps": {
+      "ansi-regex": "npm:ansi-regex@^2.0.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:ansi-regex@2.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:underscore@1.8.3": {
+    "deps": {},
+    "peerDeps": {}
+  }
+}
