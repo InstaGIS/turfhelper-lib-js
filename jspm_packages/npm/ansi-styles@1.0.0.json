@@ -1,0 +1,9 @@
+{
+  "main": "ansi-styles.js",
+  "format": "cjs",
+  "meta": {
+    "*.json": {
+      "format": "json"
+    }
+  }
+}

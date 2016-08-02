@@ -1,0 +1,107 @@
+{
+	"babelOptions": {
+		"stage1": true,
+		"compact": true,
+		"plugins": [
+			"babel-plugin-transform-merge-sibling-variables",
+			"babel-plugin-transform-object-assign",
+			"babel-plugin-transform-es2015-unicode-regex"
+
+		]
+	},
+	"paths": {
+		"ig_turfhelper": "dist/ig_turfhelper/ig_turfhelper.js",
+		"ig_backbone": "dist/ig_backbone.js",
+		"ig_overlay": "dist/ig_overlay/ig_overlay.js",
+		"ig_featurecollection": "dist/ig_featurecollection.js",
+		"ig_reportfactory": "dist/ig_reportfactory/ig_reportfactory.js",
+		"ig_helper": "dist/ig_helper.js",
+		"jquery": "test/vendor/jquery.js",
+		"d3": "test/vendor/d3.js",
+		"c3": "test/vendor/c3.js",
+		"backbone": "test/vendor/backbone.js",
+		"general_helper": "test/vendor/general_helper.js",
+		"three": "vendor/three.min.js",
+		"underscore": "test/vendor/underscore.js"
+	},
+	"meta": {
+		"dist/**/*.js": {
+			"build": false
+		},
+		"dist/*.js": {
+			"build": false
+		},
+		"test/vendor/*": {
+			"build": false
+		}
+	},
+	"packages": {
+
+		"src/ig_helper": {
+			"main": "ig_helper.js",
+			"format": "esm",
+			"exports": "IGProviders"
+		},
+		"src/ig_backbone": {
+			"main": "ig_backbone.js",
+			"defaultExtension": false,
+
+			"map": {
+				"backbone": "./vendor/backbone.es6.js",
+				"jquery": "./vendor/jquery.es6.js",
+				"underscore": "./vendor/underscore.es6.js",
+				"backgrid": "./vendor/backgrid.es6.js"
+			}
+		},
+		"src/ig_turfhelper": {
+			"main": "ig_turfhelper.js",
+			"defaultExtension": false,
+			"map": {
+				"ig_helper": "dist/ig_helper.js"
+			}
+		},
+		"src/ig_map": {
+			"main": "ig_map.js",
+			"defaultExtension": false,
+
+			"map": {
+				"ig_helper": "dist/ig_helper.js"
+			}
+		},
+		"src/ig_featurecollection": {
+			"main": "ig_featurecollection.js",
+			"defaultExtension": false,
+
+			"map": {
+				"ig_helper": "dist/ig_helper.js",
+				"ig_overlay": "dist/ig_overlay/ig_overlay.js"
+			}
+		},
+		"src/ig_overlay": {
+			"main": "ig_overlay.js",
+			"defaultExtension": "js",
+			"format": "esm",
+
+			"map": {
+				"ig_overlay": ".",
+				"ig_helper": "dist/ig_helper.js",
+				"ig_turfhelper": "dist/ig_turfhelper/ig_turfhelper.js"
+			}
+		},
+		"src/ig_reportfactory": {
+			"main": "ig_reportfactory.js",
+			"defaultExtension": "js",
+
+			"map": {
+				"ig_helper": "dist/ig_helper.js",
+				"ig_featurecollection": "dist/ig_featurecollection.js",
+				"c3": "./c3js/c3.core.js",
+				"d3": "./vendor/d3.module.js"
+			}
+		},
+		"src/ig_screenshot": {
+			"main": "ig_screenshot.js",
+			"defaultExtension": "js"
+		}
+	}
+}

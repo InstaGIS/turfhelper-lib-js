@@ -1,0 +1,10 @@
+{
+  "main": "index.js",
+  "format": "cjs",
+  "meta": {
+    "*.json": {
+      "format": "json"
+    },
+    "../turf/turf_modules/turf-random": true
+  }
+}
