@@ -1,9 +1,0 @@
-{
-  "main": "lib/jsv.js",
-  "format": "cjs",
-  "meta": {
-    "*.json": {
-      "format": "json"
-    }
-  }
-}

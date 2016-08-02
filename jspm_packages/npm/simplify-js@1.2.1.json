@@ -1,9 +1,0 @@
-{
-  "main": "simplify.js",
-  "format": "cjs",
-  "meta": {
-    "*.json": {
-      "format": "json"
-    }
-  }
-}
