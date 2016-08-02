@@ -234,6 +234,7 @@ SystemJS.config({
     packages: {
         "turfhelper-lib-js": {
             "main": "dist/index.js",
+            "format": "amd",
             "meta": {
                 "*.js": {
                     "loader": "plugin-babel"
