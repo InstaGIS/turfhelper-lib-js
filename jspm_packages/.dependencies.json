@@ -86,18 +86,6 @@
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
     }
   },
-  "npm:turf-line-slice@1.3.4": {
-    "deps": {
-      "turf-bearing": "npm:turf-bearing@^1.0.0",
-      "turf-destination": "npm:turf-destination@^1.2.0",
-      "turf-distance": "npm:turf-distance@^1.0.0",
-      "turf-linestring": "npm:turf-linestring@^1.0.1",
-      "turf-point": "npm:turf-point@^2.0.0"
-    },
-    "peerDeps": {
-      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
-    }
-  },
   "npm:turf-linestring@1.0.2": {
     "deps": {},
     "peerDeps": {
@@ -496,5 +484,17 @@
   "npm:underscore@1.8.3": {
     "deps": {},
     "peerDeps": {}
+  },
+  "npm:turf-line-slice@1.3.4": {
+    "deps": {
+      "turf-bearing": "npm:turf-bearing@^1.0.0",
+      "turf-destination": "npm:turf-destination@^1.2.0",
+      "turf-distance": "npm:turf-distance@^1.0.0",
+      "turf-linestring": "npm:turf-linestring@^1.0.1",
+      "turf-point": "npm:turf-point@^2.0.0"
+    },
+    "peerDeps": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha"
+    }
   }
 }
