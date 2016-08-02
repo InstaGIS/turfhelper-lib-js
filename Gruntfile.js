@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
         },
 
-        ig_screenshot: {
+        /*ig_screenshot: {
             options: {
 
                 // list of files / patterns to load in the browser
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
                 ]
 
             }
-        },
+        },*/
 
         ig_turfhelper: {
             options: {
