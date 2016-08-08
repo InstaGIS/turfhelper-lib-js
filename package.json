@@ -42,14 +42,11 @@
         "name": "turfhelper-lib-js",
         "main": "dist/index.js",
         "format": "amd",
-        "dependencies": {},
+        "dependencies": {
+            "turf-merge": "npm:turf-merge@^1.0.2"
+        },
         "devDependencies": {
-            "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
-            "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
-            "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
-            "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
-            "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
-            "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
+            "lodash-es": "npm:lodash-es@^4.14.2",
             "turf-along": "npm:turf-along@^3.0.12",
             "turf-buffer": "npm:turf-buffer@^3.0.12",
             "turf-centroid": "npm:turf-centroid@^3.0.12",
@@ -57,20 +54,28 @@
             "turf-inside": "npm:turf-inside@^3.0.12",
             "turf-line-slice": "npm:turf-line-slice@^3.0.12",
             "turf-linestring": "npm:turf-linestring@^1.0.2",
-            "turf-merge": "npm:turf-merge@^1.0.2",
             "turf-point": "npm:turf-point@^2.0.1",
             "turf-polygon": "npm:turf-polygon@^1.0.3",
             "turf-simplify": "npm:turf-simplify@^3.0.12",
             "turf-union": "npm:turf-union@^3.0.12",
-            "underscore": "npm:underscore@^1.8.3",
-            "util": "github:jspm/nodelibs-util@^0.2.0-alpha",
-            "gmap": "npm:amd-googlemaps-loader@^1.6",
-            "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
-            "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
+            "gmap": "npm:amd-googlemaps-loader@^1.6"
         },
         "peerDependencies": {
-            "plugin-babel": "npm:systemjs-plugin-babel@^0.0.13"
-
+            "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
+            "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+            "child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
+            "constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
+            "crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
+            "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+            "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+            "os": "github:jspm/nodelibs-os@^0.2.0-alpha",
+            "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
+            "plugin-babel": "npm:systemjs-plugin-babel@^0.0.13",
+            "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+            "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
+            "string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
+            "util": "github:jspm/nodelibs-util@^0.2.0-alpha",
+            "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
         },
         "overrides": {
             "npm:inherits@2.0.1": {

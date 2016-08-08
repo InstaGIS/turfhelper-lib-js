@@ -1,5 +1,9 @@
 import turf_featurecollection from 'turf-featurecollection';
-import _ from 'underscore';
+
+import {
+	default as _isEqual
+}
+from 'lodash-es/isEqual.js';
 
 function diffCoords(coord1, coord2) {
 	var vector = [Math.abs(coord1[0] - coord2[0]), Math.abs(coord1[1] - coord2[1])];
@@ -70,7 +74,7 @@ export function traverseRings(ring1, ring2) {
 	};
 	var samering = false,
 		consecutive = false;
-	if (_.isEqual(ring1, ring2)) {
+	if (_isEqual(ring1, ring2)) {
 		samering = true;
 	}
 	for (var i = 0; i < ring1.length - 1; i++) {

@@ -1,5 +1,8 @@
 import gmaps from 'gmaps';
-import _ from 'underscore';
+
+import {
+	default as _map
+} from 'lodash-es/map.js';
 
 function toLatLng(point) {
 	if (point.lat) {
@@ -15,7 +18,7 @@ function toLatLng(point) {
  * @return {Array.<external:google.maps.LatLng>} array de posiciones {@link external:google.maps.LatLng}
  */
 function toLatLngs(coordinates) {
-	return _.map(coordinates, toLatLng);
+	return _map(coordinates, toLatLng);
 }
 
 function toCoord(LatLng) {
@@ -33,7 +36,7 @@ function toCoord(LatLng) {
  * @return {Array.<Array.<Number>>} [description]
  */
 function toCoords(arrayLatLng, closeRing) {
-	var ring = _.map(arrayLatLng, toCoord);
+	var ring = _map(arrayLatLng, toCoord);
 	if (closeRing === true) {
 		ring.push(ring[0]);
 	}

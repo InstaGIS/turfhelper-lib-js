@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import gmaps from 'gmaps';
 import turf_line_slice from 'turf-line-slice';
 import turf_point from 'turf-point';

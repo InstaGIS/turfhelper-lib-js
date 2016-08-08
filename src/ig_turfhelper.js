@@ -26,7 +26,6 @@
  * @todo  hay que separar esto en modulos más chicos!!!
  */
 
-
 import {
     representGeometry,
     polygonToFeaturePolygon,
@@ -49,19 +48,36 @@ import {
     simplifyPointArray
 } from './components/simplify_things.js';
 
-import { along } from './components/along.js';
-import { union } from './components/union.js';
-import { createbuffer } from './components/buffer.js';
-import { pointInPolygon } from './components/point_in_polygon.js';
+import {
+    along
+} from './components/along.js';
+import {
+    union
+} from './components/union.js';
+import {
+    createbuffer
+} from './components/buffer.js';
+import {
+    pointInPolygon
+} from './components/point_in_polygon.js';
 
-import { trimPaths } from './components/trimpaths.js';
-import { cleanFeaturePolygon } from './components/cleanfeaturepolygon.js';
+import {
+    trimPaths
+} from './components/trimpaths.js';
+import {
+    cleanFeaturePolygon
+} from './components/cleanfeaturepolygon.js';
 
-import { drawFeature } from './components/drawfeature.js';
+import {
+    drawFeature
+} from './components/drawfeature.js';
 
-
-
-
+import {
+    Wkt,
+    Wicket,
+    WKT2Object
+}
+from './components/wicket_helper.js';
 
 /**
  * @alias module:turfHelper
@@ -69,7 +85,9 @@ import { drawFeature } from './components/drawfeature.js';
  */
 
 export {
-
+    Wkt,
+    Wicket,
+    WKT2Object,
     along,
     arrayToFeaturePoints,
     createbuffer,
@@ -91,7 +109,9 @@ export {
     verticesInPolygon
 };
 export default {
-
+    Wkt: Wkt,
+    Wicket: Wicket,
+    WKT2Object: WKT2Object,
     along: along,
     arrayToFeaturePoints: arrayToFeaturePoints,
     createbuffer: createbuffer,

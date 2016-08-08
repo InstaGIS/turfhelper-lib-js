@@ -1,4 +1,13 @@
-import { Wicket } from './wicket_helper.js';
+import {
+    Wicket
+} from './wicket_helper.js';
+import {
+    default as _each
+} from 'lodash-es/forEach.js';
+import {
+    default as _isArray
+} from 'lodash-es/isArray.js';
+
 import {
     polygonToFeaturePolygon,
     verticesInPolygon,
@@ -13,7 +22,7 @@ export function drawFeature(Feature, strokeColor, numerateMarkers) {
         Feature = polygonToFeaturePolygon(Feature);
     }
     if (numerateMarkers) {
-        Feature.geometry.coordinates[0].forEach(function(punto, index) {
+        Feature.geometry.coordinates[0].forEach(function (punto, index) {
 
             var marker = new gmaps.Marker({
                 map: globalvars.globalmap,
@@ -27,9 +36,9 @@ export function drawFeature(Feature, strokeColor, numerateMarkers) {
     }
     var GPolygon = Wicket().fromJson(Feature).toObject();
     debug('GPolygon', GPolygon);
-    if (_.isArray(GPolygon)) {
+    if (_isArray(GPolygon)) {
         var Polygon;
-        _.each(GPolygon, function(iPolygon, index) {
+        _each(GPolygon, function (iPolygon, index) {
             var hue = parseInt(360 * index / GPolygon.length, 10);
             strokeColor = "hsl(" + hue + ", 40%, 45%)";
             iPolygon.set('fillColor', 'transparent');
