@@ -16,11 +16,16 @@ import {
 import {
     default as _sum
 } from 'lodash-es/sum.js';
+export {
+    default as _reduce
+}
+from 'lodash-es/reduce.js';
 
 import turf_linestring from 'turf-linestring';
 import turf_polygon from 'turf-polygon';
-import turf_merge from 'turf-merge';
 import turf_centroid from 'turf-centroid';
+
+import turf_union from 'turf-union';
 
 var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;"),
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
@@ -52,12 +57,13 @@ function wktArrayToFeatureCollection(wktArray) {
  * @return {object}               [description]
  */
 function representGeometry(mapInstance, callback) {
-
+    var resultado = {};
     /**
      * geometryMultipolygon: Obtiene las geometrias de los poligonos seleccionados
      * @return {array} Array de Geometria/s
      */
     var geometryMultipolygon = function (map) {
+            // reads the multipolygon array (where we store objects on shift+click)
             var multipolygon = map.multipolygon;
             var geometry = [];
 
@@ -77,31 +83,41 @@ function representGeometry(mapInstance, callback) {
         arraygeometry = geometryMultipolygon(mapInstance);
 
     if (arraygeometry.length === 0) {
-        if (callback) {
-            callback({
-                arraygeometry: arraygeometry
-            });
-        }
+
+        resultado = {
+            arraygeometry: arraygeometry
+        };
 
     } else if (arraygeometry.length === 1) {
-        callback({
+
+        resultado = {
             arraygeometry: arraygeometry,
             wkt: arraygeometry[0]
-        });
+        };
 
     } else {
-        var FC = wktArrayToFeatureCollection(arraygeometry);
+        var FC = wktArrayToFeatureCollection(arraygeometry),
+            geom_zero = FC.features.pop();
 
-        var mergedFeature = turf_merge(FC);
-        WKTmerged = Wicket().fromJson(mergedFeature.geometry).toString();
+        var theUnion = _reduce(FC.features, function (acumulado, feature, index) {
+            acumulado = turf_union(acumulado, feature);
+            return acumulado;
+        }, geom_zero);
 
-        callback({
+        WKTmerged = Wicket().fromJson(theUnion.geometry).toString();
+
+        resultado = {
             arraygeometry: arraygeometry,
             wkt: WKTmerged
-        });
+        };
 
     }
-    return;
+
+    if (callback) {
+        callback(resultado);
+    }
+
+    return resultado;
 }
 
 /**

@@ -153,7 +153,6 @@ SystemJS.config({
         "process": "github:jspm/nodelibs-process@0.2.0-alpha",
         "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
         "string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
-        "turf-merge": "npm:turf-merge@1.0.2",
         "util": "github:jspm/nodelibs-util@0.2.0-alpha",
         "vm": "github:jspm/nodelibs-vm@0.2.0-alpha"
     },
@@ -183,22 +182,6 @@ SystemJS.config({
                 "process-nextick-args": "npm:process-nextick-args@1.0.7",
                 "buffer-shims": "npm:buffer-shims@1.0.0",
                 "util-deprecate": "npm:util-deprecate@1.0.2"
-            }
-        },
-        "npm:turf-merge@1.0.2": {
-            "map": {
-                "clone": "npm:clone@0.2.0",
-                "turf-union": "npm:turf-union@1.0.2"
-            }
-        },
-        "npm:turf-union@1.0.2": {
-            "map": {
-                "jsts": "npm:jsts@0.15.0"
-            }
-        },
-        "npm:jsts@0.15.0": {
-            "map": {
-                "javascript.util": "npm:javascript.util@0.12.12"
             }
         },
         "npm:buffer@4.9.0": {

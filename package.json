@@ -1,6 +1,6 @@
 {
     "name": "turfhelper-lib-js",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "description": "A bridge to use Turf along with google Maps API",
     "scripts": {
         "test": "grunt karma"
@@ -42,9 +42,7 @@
         "name": "turfhelper-lib-js",
         "main": "dist/index.js",
         "format": "amd",
-        "dependencies": {
-            "turf-merge": "npm:turf-merge@^1.0.2"
-        },
+        "dependencies": {},
         "devDependencies": {
             "lodash-es": "npm:lodash-es@^4.14.2",
             "turf-along": "npm:turf-along@^3.0.12",
