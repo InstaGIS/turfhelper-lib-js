@@ -8,7 +8,10 @@ function toLatLng(point) {
 	if (point.lat) {
 		return point;
 	} else {
-		return new gmaps.LatLng(point[1], point[0]);
+		return {
+			lat: point[1],
+			lng: point[0]
+		};
 	}
 }
 
@@ -22,10 +25,10 @@ function toLatLngs(coordinates) {
 }
 
 function toCoord(LatLng) {
-	if (LatLng instanceof gmaps.LatLng) {
-		return [LatLng.lng(), LatLng.lat()];
-	} else if (LatLng.lat && LatLng.lng) {
+	if (LatLng.lat && LatLng.lng) {
 		return [LatLng.lng, LatLng.lat];
+	} else if (gmaps && gmaps.LatLng && LatLng instanceof gmaps.LatLng) {
+		return [LatLng.lng(), LatLng.lat()];
 	} else {
 		return LatLng;
 	}
@@ -44,13 +47,14 @@ function toCoords(arrayLatLng, closeRing) {
 }
 
 function latlngToPoint(latLng) {
-	var feature = {
-		type: "Feature",
-		geometry: {
-			type: "Point",
-			coordinates: [latLng.lng(), latLng.lat()]
-		}
-	};
+	var coords = toCoord(latLng),
+		feature = {
+			type: "Feature",
+			geometry: {
+				type: "Point",
+				coordinates: coords
+			}
+		};
 
 	return feature;
 }
