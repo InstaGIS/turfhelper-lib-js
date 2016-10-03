@@ -1,9 +1,14 @@
+import gmaps from 'gmaps';
+
 import {
     toCoords
 } from './coords_to_latlng.js';
 import turf_buffer from 'turf-buffer';
 import turf_polygon from 'turf-polygon';
-import { debug, warn } from './utils.js';
+import {
+    debug,
+    warn
+} from './utils.js';
 
 /**
  * Convierte un path de google LatLng en un Feature.<Polygon>

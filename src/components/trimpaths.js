@@ -33,13 +33,7 @@ function polylineToFeatureLinestring(polyline) {
  * @return {Array}             [description]
  */
 export function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
-	/*if (googleGeom1 instanceof gmaps.Polyline) {
-		googleGeom1 = polylineToFeatureLinestring(googleGeom1);
-	}
 
-	if (googleGeom2 instanceof gmaps.Polyline) {
-		googleGeom2 = polylineToFeatureLinestring(googleGeom2);
-	}*/
 	var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
 	var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
 

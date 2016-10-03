@@ -25,10 +25,10 @@ function toLatLngs(coordinates) {
 }
 
 function toCoord(LatLng) {
-	if (LatLng.lat && LatLng.lng) {
-		return [LatLng.lng, LatLng.lat];
-	} else if (gmaps && gmaps.LatLng && LatLng instanceof gmaps.LatLng) {
+	if (gmaps && gmaps.LatLng && LatLng instanceof gmaps.LatLng) {
 		return [LatLng.lng(), LatLng.lat()];
+	} else if (LatLng.lat && LatLng.lng) {
+		return [LatLng.lng, LatLng.lat];
 	} else {
 		return LatLng;
 	}

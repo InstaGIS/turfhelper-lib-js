@@ -1,3 +1,5 @@
+import gmaps from 'gmaps';
+
 import {
     Wicket
 } from './wicket_helper.js';
@@ -9,6 +11,9 @@ import {
 import {
     default as _each
 } from 'lodash-es/forEach.js';
+import {
+    toCoords
+} from './coords_to_latlng.js';
 
 import {
     default as _size

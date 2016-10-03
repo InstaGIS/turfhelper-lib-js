@@ -1,5 +1,5 @@
 import turf_featurecollection from 'turf-featurecollection';
-
+import turf_point from 'turf-point';
 import {
 	default as _isEqual
 }
