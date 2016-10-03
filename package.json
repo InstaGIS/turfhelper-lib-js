@@ -1,6 +1,6 @@
 {
     "name": "turfhelper-lib-js",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "A bridge to use Turf along with google Maps API",
     "scripts": {
         "test": "grunt karma"
@@ -21,7 +21,7 @@
         "url": "https://github.com/InstaGIS/turfhelper-lib-js/issues"
     },
     "homepage": "https://github.com/InstaGIS/turfhelper-lib-js#readme",
-    "main": "dist/index.js",
+    "main": "dist/ig_turfhelper.min.js",
     "private": true,
     "dependencies": {
         "grunt": "^1",
@@ -40,7 +40,7 @@
     },
     "jspm": {
         "name": "turfhelper-lib-js",
-        "main": "dist/index.js",
+        "main": "dist/ig_turfhelper.min.js",
         "files": ["src", "dist"],
         "format": "amd",
         "dependencies": {},
