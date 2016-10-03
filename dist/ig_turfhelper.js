@@ -21431,6 +21431,65 @@ if(typeof value=='function'){return value;}if(value==null){return identity;}if(t
  * _.sum([4, 2, 8, 6]);
  * // => 20
  */function sum(array){return array&&array.length?baseSum(array,identity):0;}/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */function arrayReduce(array,iteratee,accumulator,initAccum){var index=-1,length=array?array.length:0;if(initAccum&&length){accumulator=array[++index];}while(++index<length){accumulator=iteratee(accumulator,array[index],index,array);}return accumulator;}/**
+ * The base implementation of `_.reduce` and `_.reduceRight`, without support
+ * for iteratee shorthands, which iterates over `collection` using `eachFunc`.
+ *
+ * @private
+ * @param {Array|Object} collection The collection to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} accumulator The initial value.
+ * @param {boolean} initAccum Specify using the first or last element of
+ *  `collection` as the initial value.
+ * @param {Function} eachFunc The function to iterate over `collection`.
+ * @returns {*} Returns the accumulated value.
+ */function baseReduce(collection,iteratee,accumulator,initAccum,eachFunc){eachFunc(collection,function(value,index,collection){accumulator=initAccum?(initAccum=false,value):iteratee(accumulator,value,index,collection);});return accumulator;}/**
+ * Reduces `collection` to a value which is the accumulated result of running
+ * each element in `collection` thru `iteratee`, where each successive
+ * invocation is supplied the return value of the previous. If `accumulator`
+ * is not given, the first element of `collection` is used as the initial
+ * value. The iteratee is invoked with four arguments:
+ * (accumulator, value, index|key, collection).
+ *
+ * Many lodash methods are guarded to work as iteratees for methods like
+ * `_.reduce`, `_.reduceRight`, and `_.transform`.
+ *
+ * The guarded methods are:
+ * `assign`, `defaults`, `defaultsDeep`, `includes`, `merge`, `orderBy`,
+ * and `sortBy`
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object} collection The collection to iterate over.
+ * @param {Function} [iteratee=_.identity] The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @returns {*} Returns the accumulated value.
+ * @see _.reduceRight
+ * @example
+ *
+ * _.reduce([1, 2], function(sum, n) {
+ *   return sum + n;
+ * }, 0);
+ * // => 3
+ *
+ * _.reduce({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+ *   (result[value] || (result[value] = [])).push(key);
+ *   return result;
+ * }, {});
+ * // => { '1': ['a', 'c'], '2': ['b'] } (iteration order is not guaranteed)
+ */function reduce(collection,iteratee,accumulator){var func=isArray(collection)?arrayReduce:baseReduce,initAccum=arguments.length<3;return func(collection,baseIteratee(iteratee,4),accumulator,initAccum,baseEach);}/**
  * Transforma un array de geometrías WKT en un FeatureCollection
  * @param  {Array<String>} wktArray Array de string WKT
  * @return {Object}          FeatureCollection
@@ -21443,7 +21502,7 @@ if(typeof value=='function'){return value;}if(value==null){return identity;}if(t
      * geometryMultipolygon: Obtiene las geometrias de los poligonos seleccionados
      * @return {array} Array de Geometria/s
      */var geometryMultipolygon=function geometryMultipolygon(map){// reads the multipolygon array (where we store objects on shift+click)
-var multipolygon=map.multipolygon;var geometry=[];if(size(multipolygon)===0){if(map.contextMenu.Polygons&&map.contextMenu.Polygons.jqMenu.data('geometry')){geometry.push(map.contextMenu.Polygons.jqMenu.data('geometry'));}}else{forEach(multipolygon,function(obj){geometry.push(obj.geometry);});}return geometry;},WKTmerged,arraygeometry=geometryMultipolygon(mapInstance);if(arraygeometry.length===0){resultado={arraygeometry:arraygeometry};}else if(arraygeometry.length===1){resultado={arraygeometry:arraygeometry,wkt:arraygeometry[0]};}else{var FC=wktArrayToFeatureCollection(arraygeometry),geom_zero=FC.features.pop();var theUnion=_reduce(FC.features,function(acumulado,feature,index){acumulado=turf_union(acumulado,feature);return acumulado;},geom_zero);WKTmerged=Wicket().fromJson(theUnion.geometry).toString();resultado={arraygeometry:arraygeometry,wkt:WKTmerged};}if(callback){callback(resultado);}return resultado;}/**
+var multipolygon=map.multipolygon;var geometry=[];if(size(multipolygon)===0){if(map.contextMenu.Polygons&&map.contextMenu.Polygons.jqMenu.data('geometry')){geometry.push(map.contextMenu.Polygons.jqMenu.data('geometry'));}}else{forEach(multipolygon,function(obj){geometry.push(obj.geometry);});}return geometry;},WKTmerged,arraygeometry=geometryMultipolygon(mapInstance);if(arraygeometry.length===0){resultado={arraygeometry:arraygeometry};}else if(arraygeometry.length===1){resultado={arraygeometry:arraygeometry,wkt:arraygeometry[0]};}else{var FC=wktArrayToFeatureCollection(arraygeometry),geom_zero=FC.features.pop();var theUnion=reduce(FC.features,function(acumulado,feature,index){acumulado=turf_union(acumulado,feature);return acumulado;},geom_zero);WKTmerged=Wicket().fromJson(theUnion.geometry).toString();resultado={arraygeometry:arraygeometry,wkt:WKTmerged};}if(callback){callback(resultado);}return resultado;}/**
  * Simplifica una geometría usando Douglas Peucker
  * @param  {Feature.<Polygon|MultiPolygon>} geometry    polígono o multipolígono geoJson
  * @param  {number} tolerance   [description]

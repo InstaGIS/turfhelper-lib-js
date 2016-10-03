@@ -21,7 +21,7 @@ import {
 import {
     default as _sum
 } from 'lodash-es/sum.js';
-export {
+import {
     default as _reduce
 }
 from 'lodash-es/reduce.js';
