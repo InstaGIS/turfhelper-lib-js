@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "16.1.8",
+  "version": "16.1.9",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -43,6 +43,7 @@
     "lodash": "^4"
   },
   "jspm": {
+    "registry": "jspm",
     "name": "turfhelper-lib-js",
     "main": "dist/ig_turfhelper.min.js",
     "files": [
@@ -64,7 +65,7 @@
       "turf-polygon": "npm:turf-polygon@^1.0.3",
       "turf-simplify": "npm:turf-simplify@^3.0.12",
       "turf-union": "npm:turf-union@^3.0.12",
-      "gmap": "npm:amd-googlemaps-loader@^1.6"
+      "gmap": "npm:amd-googlemaps-loader@^1.8.5"
     },
     "peerDependencies": {
       "assert": "npm:jspm-nodelibs-assert@^0.2.0",

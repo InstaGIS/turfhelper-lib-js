@@ -32,7 +32,7 @@ SystemJS.config({
             "turf-point": "npm:turf-point@2.0.1",
             "turf-simplify": "npm:turf-simplify@3.0.12",
             "turf-union": "npm:turf-union@3.0.12",
-            "gmap": "npm:amd-googlemaps-loader@1.7.1",
+            "gmap": "npm:amd-googlemaps-loader@1.8.6",
             "lodash-es": "npm:lodash-es@4.16.6"
         },
         "packages": {
