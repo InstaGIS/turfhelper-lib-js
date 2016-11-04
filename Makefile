@@ -18,6 +18,7 @@ test:
 	
 build:
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.js  --skip-source-maps --global-name turfHelper --global-deps '{"gmaps": "gmaps"}'
+	jspm build src/ig_turfhelper.js dist/ig_turfhelper.bundle.js  --global-name turfHelper --global-deps '{"gmaps": "gmaps"}'
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.min.js  -m --global-name turfHelper --global-deps '{"gmaps": "gmaps"}'
 
 
