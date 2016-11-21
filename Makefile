@@ -35,6 +35,7 @@ tag_and_push:
 		git push
 		git push --tags
 
-tag: update_version build tag_and_push		
 
+tag: update_version build tag_and_push		
+release: update_version  tag_and_push		
 	
