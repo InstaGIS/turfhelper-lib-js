@@ -30,7 +30,7 @@ SystemJS.config({
             "turf-simplify": "npm:turf-simplify@3.0.12",
             "turf-union": "npm:turf-union@3.0.12",
             "gmap": "npm:amd-googlemaps-loader@1.8.6",
-            "lodash-es": "npm:lodash-es@4.17.2",
+            "lodash-es": "npm:lodash-es@4.17.4",
             "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
             "turf-featurecollection": "npm:turf-featurecollection@1.0.1"
@@ -243,7 +243,7 @@ SystemJS.config({
                 "create-hash": "npm:create-hash@1.1.2",
                 "pbkdf2": "npm:pbkdf2@3.0.9",
                 "evp_bytestokey": "npm:evp_bytestokey@1.0.0",
-                "asn1.js": "npm:asn1.js@4.9.0"
+                "asn1.js": "npm:asn1.js@4.9.1"
             }
         },
         "npm:browserify-aes@1.0.6": {
@@ -350,7 +350,7 @@ SystemJS.config({
                 "inherits": "npm:inherits@2.0.3"
             }
         },
-        "npm:asn1.js@4.9.0": {
+        "npm:asn1.js@4.9.1": {
             "map": {
                 "bn.js": "npm:bn.js@4.11.6",
                 "inherits": "npm:inherits@2.0.3",
