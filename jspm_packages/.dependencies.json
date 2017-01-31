@@ -107,10 +107,6 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:systemjs-plugin-babel@0.0.17": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:jspm-nodelibs-path@0.2.1": {
     "deps": {},
     "peerDeps": {
@@ -634,6 +630,10 @@
     }
   },
   "npm:minimalistic-assert@1.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:systemjs-plugin-babel@0.0.20": {
     "deps": {},
     "peerDeps": {}
   }
