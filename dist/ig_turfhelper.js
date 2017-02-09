@@ -23995,7 +23995,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
         } else {
             var theFeature = mergeWKTGeoms(arraygeometry);
             try {
-                WKTmerged = Wicket().read(theFeature.geometry).toString();
+                WKTmerged = Wicket().fromJson(theFeature.geometry).toString();
             } catch (err) {
                 console.warn('Exception wicket reading ', theFeature.geometry);
             }
