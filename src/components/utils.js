@@ -11,6 +11,7 @@ import {
 import {
     default as _each
 } from 'lodash-es/forEach.js';
+
 import {
     toCoords
 } from './coords_to_latlng.js';
@@ -18,9 +19,7 @@ import {
 import {
     default as _size
 } from 'lodash-es/size.js';
-import {
-    default as _sum
-} from 'lodash-es/sum.js';
+
 import {
     default as _reduce
 }
@@ -203,12 +202,6 @@ var polygonToFeaturePolygon = function (polygon) {
 
     centroid = function (FeatureCollection) {
         return turf_centroid(FeatureCollection);
-    },
-
-    verticesInPolygon = function (polygon) {
-        return _sum(_map(polygon.coordinates, function (ring) {
-            return ring.length;
-        }));
     },
 
     /**

@@ -7,7 +7,6 @@ import {
 } from './coords_to_latlng.js'
 import {
 	polygonToFeaturePolygon,
-	verticesInPolygon,
 	debug,
 	warn
 } from './utils.js';
@@ -32,7 +31,6 @@ export function simplifyGeometry(geometry, tolerance, highQuality) {
 		};
 	}
 
-	debug('simplifyGeometry before', geometry, verticesInPolygon(geometry));
 	var simplifiedFeature = turf_simplify(Feature, tolerance, highQuality);
 
 	if (simplifiedFeature && simplifiedFeature.geometry) {

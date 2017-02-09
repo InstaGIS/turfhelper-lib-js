@@ -59,16 +59,6 @@ import {
 import {
     trimPaths
 } from './components/trimpaths.js';
-import {
-    cleanFeaturePolygon
-} from './components/cleanfeaturepolygon.js';
-
-import {
-    Wkt,
-    Wicket,
-    WKT2Object
-}
-from './components/wicket_helper.js';
 
 /**
  * @alias module:turfHelper
@@ -79,7 +69,6 @@ export {
     along,
     arrayToFeaturePoints,
     centroid,
-    cleanFeaturePolygon,
     createbuffer,
     pointInPolygon,
     polygonToFeaturePolygon,
@@ -89,17 +78,13 @@ export {
     toLatLngs,
     toCoords,
     trimPaths,
-    union,
-    Wicket,
-    Wkt,
-    WKT2Object
+    union
 };
 
 export default {
     along: along,
     arrayToFeaturePoints: arrayToFeaturePoints,
     centroid: centroid,
-    cleanFeaturePolygon: cleanFeaturePolygon,
     createbuffer: createbuffer,
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,
@@ -109,8 +94,5 @@ export default {
     toLatLngs: toLatLngs,
     toCoords: toCoords,
     trimPaths: trimPaths,
-    union: union,
-    Wicket: Wicket,
-    WKT2Object: WKT2Object,
-    Wkt: Wkt
+    union: union
 };

@@ -14,9 +14,6 @@
     QUnit.test('turfHelpers.centroid should be if type function', function (assert) {
         assert.equal(typeof turfHelper.centroid, 'function', 'turfHelpers.centroid should be if type function');
     });
-    QUnit.test('turfHelpers.cleanFeaturePolygon should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.cleanFeaturePolygon, 'function', 'turfHelpers.cleanFeaturePolygon should be if type function');
-    });
 
     QUnit.test('turfHelpers.pointInPolygon should be if type function', function (assert) {
         assert.equal(typeof turfHelper.pointInPolygon, 'function', 'turfHelpers.pointInPolygon should be if type function');
