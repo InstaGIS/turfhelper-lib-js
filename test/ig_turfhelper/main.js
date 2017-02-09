@@ -17,9 +17,7 @@
     QUnit.test('turfHelpers.cleanFeaturePolygon should be if type function', function (assert) {
         assert.equal(typeof turfHelper.cleanFeaturePolygon, 'function', 'turfHelpers.cleanFeaturePolygon should be if type function');
     });
-    QUnit.test('turfHelpers.latlngToPoint should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.latlngToPoint, 'function', 'turfHelpers.latlngToPoint should be if type function');
-    });
+
     QUnit.test('turfHelpers.pointInPolygon should be if type function', function (assert) {
         assert.equal(typeof turfHelper.pointInPolygon, 'function', 'turfHelpers.pointInPolygon should be if type function');
     });
@@ -30,15 +28,6 @@
         assert.equal(typeof turfHelper.representGeometry, 'function', 'turfHelpers.representGeometry should be if type function');
     });
 
-    QUnit.test('turfHelpers.toCoord should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.toCoord, 'function', 'turfHelpers.toCoord should be if type function');
-    });
-    QUnit.test('turfHelpers.toCoords should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.toCoords, 'function', 'turfHelpers.toCoords should be if type function');
-    });
-    QUnit.test('turfHelpers.toLatLng should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.toLatLng, 'function', 'turfHelpers.toLatLng should be if type function');
-    });
     QUnit.test('turfHelpers.toLatLngs should be if type function', function (assert) {
         assert.equal(typeof turfHelper.toLatLngs, 'function', 'turfHelpers.toLatLngs should be if type function');
     });
@@ -47,9 +36,6 @@
     });
     QUnit.test('turfHelpers.union should be if type function', function (assert) {
         assert.equal(typeof turfHelper.union, 'function', 'turfHelpers.union should be if type function');
-    });
-    QUnit.test('turfHelpers.verticesInPolygon should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.verticesInPolygon, 'function', 'turfHelpers.verticesInPolygon should be if type function');
     });
 
 })(QUnit);

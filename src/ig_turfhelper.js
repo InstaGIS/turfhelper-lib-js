@@ -35,6 +35,7 @@ import {
 
 import {
     toLatLngs,
+    toCoords
 } from './components/coords_to_latlng.js';
 
 import {
@@ -86,6 +87,7 @@ export {
     simplifyFeature,
     simplifyPointArray,
     toLatLngs,
+    toCoords,
     trimPaths,
     union,
     Wicket,
@@ -105,6 +107,7 @@ export default {
     simplifyFeature: simplifyFeature,
     simplifyPointArray: simplifyPointArray,
     toLatLngs: toLatLngs,
+    toCoords: toCoords,
     trimPaths: trimPaths,
     union: union,
     Wicket: Wicket,

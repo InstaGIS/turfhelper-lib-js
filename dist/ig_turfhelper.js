@@ -27007,6 +27007,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                 simplifyFeature: simplifyFeature,
                 simplifyPointArray: simplifyPointArray,
                 toLatLngs: toLatLngs,
+                toCoords: toCoords,
                 trimPaths: trimPaths,
                 union: union,
                 Wicket: Wicket,
@@ -27035,6 +27036,8 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             _export('simplifyPointArray', simplifyPointArray);
 
             _export('toLatLngs', toLatLngs);
+
+            _export('toCoords', toCoords);
 
             _export('trimPaths', trimPaths);
 
