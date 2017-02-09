@@ -23658,19 +23658,6 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
         return ring;
     }
 
-    function latlngToPoint(latLng) {
-        var coords = toCoord(latLng),
-            feature = {
-            type: "Feature",
-            geometry: {
-                type: "Point",
-                coordinates: coords
-            }
-        };
-
-        return feature;
-    }
-
     /** `Object#toString` result references. */
 
 
@@ -24028,30 +24015,6 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * @param  {boolean} highQuality [description]
      * @return {object}             [description]
      */
-    function simplifyGeometry(geometry, tolerance, highQuality) {
-        tolerance = tolerance || 0.00001;
-        highQuality = highQuality || false;
-        var Feature;
-        if (geometry.type === 'Feature') {
-            Feature = geometry;
-        } else {
-            Feature = {
-                type: "Feature",
-                geometry: geometry
-            };
-        }
-
-        debug$1('simplifyGeometry before', geometry, verticesInPolygon(geometry));
-        var simplifiedFeature = turf_simplify(Feature, tolerance, highQuality);
-
-        if (simplifiedFeature && simplifiedFeature.geometry) {
-            //debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-            return simplifiedFeature.geometry;
-        } else {
-            warn('Cannot simplify  Feature', Feature);
-            return geometry;
-        }
-    }
 
     /**
      * Simplifica un conjunto de coordenadas
@@ -26554,11 +26517,11 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                 return turf_centroid(FeatureCollection);
             });
 
-            _export('verticesInPolygon', verticesInPolygon = function verticesInPolygon(polygon) {
+            verticesInPolygon = function verticesInPolygon(polygon) {
                 return sum(map(polygon.coordinates, function (ring) {
                     return ring.length;
                 }));
-            });
+            };
 
             defaults = {
                 h: 1,
@@ -27033,50 +26996,33 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                 }
             };
             ig_turfhelper = {
-                Wkt: Wkt,
-                Wicket: Wicket,
-                WKT2Object: WKT2Object,
                 along: along,
                 arrayToFeaturePoints: arrayToFeaturePoints,
-                createbuffer: createbuffer,
                 centroid: centroid,
                 cleanFeaturePolygon: cleanFeaturePolygon,
-                latlngToPoint: latlngToPoint,
-                mergeWKTGeoms: mergeWKTGeoms,
+                createbuffer: createbuffer,
                 pointInPolygon: pointInPolygon,
                 polygonToFeaturePolygon: polygonToFeaturePolygon,
                 representGeometry: representGeometry,
                 simplifyFeature: simplifyFeature,
-                simplifyGeometry: simplifyGeometry,
                 simplifyPointArray: simplifyPointArray,
-                toCoord: toCoord,
-                toCoords: toCoords,
-                toLatLng: toLatLng$1,
                 toLatLngs: toLatLngs,
                 trimPaths: trimPaths,
                 union: union,
-                verticesInPolygon: verticesInPolygon
+                Wicket: Wicket,
+                WKT2Object: WKT2Object,
+                Wkt: Wkt
             };
-
-            _export('Wkt', Wkt);
-
-            _export('Wicket', Wicket);
-
-            _export('WKT2Object', WKT2Object);
 
             _export('along', along);
 
             _export('arrayToFeaturePoints', arrayToFeaturePoints);
 
-            _export('createbuffer', createbuffer);
-
             _export('centroid', centroid);
 
             _export('cleanFeaturePolygon', cleanFeaturePolygon);
 
-            _export('latlngToPoint', latlngToPoint);
-
-            _export('mergeWKTGeoms', mergeWKTGeoms);
+            _export('createbuffer', createbuffer);
 
             _export('pointInPolygon', pointInPolygon);
 
@@ -27086,15 +27032,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
             _export('simplifyFeature', simplifyFeature);
 
-            _export('simplifyGeometry', simplifyGeometry);
-
             _export('simplifyPointArray', simplifyPointArray);
-
-            _export('toCoord', toCoord);
-
-            _export('toCoords', toCoords);
-
-            _export('toLatLng', toLatLng$1);
 
             _export('toLatLngs', toLatLngs);
 
@@ -27102,7 +27040,11 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
             _export('union', union);
 
-            _export('verticesInPolygon', verticesInPolygon);
+            _export('Wicket', Wicket);
+
+            _export('Wkt', Wkt);
+
+            _export('WKT2Object', WKT2Object);
 
             _export('default', ig_turfhelper);
         }

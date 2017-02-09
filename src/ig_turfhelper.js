@@ -28,23 +28,16 @@
 
 import {
     representGeometry,
-    mergeWKTGeoms,
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
-    centroid,
-    verticesInPolygon
+    centroid
 } from './components/utils.js';
 
 import {
-    latlngToPoint,
-    toLatLng,
     toLatLngs,
-    toCoord,
-    toCoords
 } from './components/coords_to_latlng.js';
 
 import {
-    simplifyGeometry,
     simplifyFeature,
     simplifyPointArray
 } from './components/simplify_things.js';
@@ -70,10 +63,6 @@ import {
 } from './components/cleanfeaturepolygon.js';
 
 import {
-    drawFeature
-} from './components/drawfeature.js';
-
-import {
     Wkt,
     Wicket,
     WKT2Object
@@ -86,52 +75,39 @@ from './components/wicket_helper.js';
  */
 
 export {
-    Wkt,
-    Wicket,
-    WKT2Object,
     along,
     arrayToFeaturePoints,
-    createbuffer,
     centroid,
     cleanFeaturePolygon,
-    latlngToPoint,
-    mergeWKTGeoms,
+    createbuffer,
     pointInPolygon,
     polygonToFeaturePolygon,
     representGeometry,
     simplifyFeature,
-    simplifyGeometry,
     simplifyPointArray,
-    toCoord,
-    toCoords,
-    toLatLng,
     toLatLngs,
     trimPaths,
     union,
-    verticesInPolygon
+    Wicket,
+    Wkt,
+    WKT2Object
 };
+
 export default {
-    Wkt: Wkt,
-    Wicket: Wicket,
-    WKT2Object: WKT2Object,
     along: along,
     arrayToFeaturePoints: arrayToFeaturePoints,
-    createbuffer: createbuffer,
     centroid: centroid,
     cleanFeaturePolygon: cleanFeaturePolygon,
-    latlngToPoint: latlngToPoint,
-    mergeWKTGeoms: mergeWKTGeoms,
+    createbuffer: createbuffer,
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,
     representGeometry: representGeometry,
     simplifyFeature: simplifyFeature,
-    simplifyGeometry: simplifyGeometry,
     simplifyPointArray: simplifyPointArray,
-    toCoord: toCoord,
-    toCoords: toCoords,
-    toLatLng: toLatLng,
     toLatLngs: toLatLngs,
     trimPaths: trimPaths,
     union: union,
-    verticesInPolygon: verticesInPolygon
+    Wicket: Wicket,
+    WKT2Object: WKT2Object,
+    Wkt: Wkt
 };
