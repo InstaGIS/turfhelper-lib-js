@@ -72,35 +72,38 @@ function mergeWKTGeoms(WKTArray, debug) {
 
 /**
  * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
- * @param  {InstaMap}   mapInstance instancia de {@link InstaMap}
+ * @param  {Object}   parentObj object with a key named multipolygon
  * @param  {Function} callback    [description]
  * @return {object}               [description]
  */
-function representGeometry(mapInstance, callback) {
+function representGeometry(parentObj, callback) {
     var resultado = {};
     /**
      * geometryMultipolygon: Obtiene las geometrias de los poligonos seleccionados
+     * @param  {Object}   multipolygon object where each value is a google.maps.Polygon
      * @return {array} Array de Geometria/s
      */
-    var geometryMultipolygon = function (map) {
+    var geometryMultipolygon = function (multipolygon) {
             // reads the multipolygon array (where we store objects on shift+click)
-            var multipolygon = map.multipolygon;
+
             var geometry = [];
 
             if (_size(multipolygon) === 0) {
-                if (map.contextMenu.Polygons && map.contextMenu.Polygons.jqMenu.data('geometry')) {
-                    geometry.push(map.contextMenu.Polygons.jqMenu.data('geometry'));
+
+                if (map.contextMenu.Polygons && map.contextMenu.Polygons.jqMenu.data('feature')) {
+                    var theFeature = map.contextMenu.Polygons.jqMenu.data('feature');
+                    geometry.push(Wicket().fromObject(theFeature).toString());
                 }
 
             } else {
                 _each(multipolygon, function (obj) {
-                    geometry.push(obj.geometry);
+                    geometry.push(Wicket().fromObject(obj).toString());
                 });
             }
             return geometry;
         },
         WKTmerged,
-        arraygeometry = geometryMultipolygon(mapInstance);
+        arraygeometry = geometryMultipolygon(parentObj.multipolygon);
 
     if (arraygeometry.length === 0) {
 

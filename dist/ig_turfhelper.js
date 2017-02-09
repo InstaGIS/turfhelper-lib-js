@@ -23544,7 +23544,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * _.map(users, 'user');
      * // => ['barney', 'fred']
      */
-    function map(collection, iteratee) {
+    function map$1(collection, iteratee) {
         var func = isArray(collection) ? arrayMap : baseMap;
         return func(collection, baseIteratee(iteratee, 3));
     }
@@ -23633,7 +23633,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * @return {Array.<external:google.maps.LatLng>} array de posiciones {@link external:google.maps.LatLng}
      */
     function toLatLngs(coordinates) {
-        return map(coordinates, toLatLng$1);
+        return map$1(coordinates, toLatLng$1);
     }
 
     function toCoord(LatLng) {
@@ -23651,7 +23651,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * @return {Array.<Array.<Number>>} [description]
      */
     function toCoords(arrayLatLng, closeRing) {
-        var ring = map(arrayLatLng, toCoord);
+        var ring = map$1(arrayLatLng, toCoord);
         if (closeRing === true) {
             ring.push(ring[0]);
         }
@@ -23922,7 +23922,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             "type": "FeatureCollection"
         };
 
-        FeatureCollection.features = map(wktArray, function (WKTString) {
+        FeatureCollection.features = map$1(wktArray, function (WKTString) {
             var geoJsonPolygon = Wicket().read(WKTString).toJson();
             return {
                 type: "Feature",
@@ -23949,34 +23949,37 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
     /**
      * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
-     * @param  {InstaMap}   mapInstance instancia de {@link InstaMap}
+     * @param  {Object}   parentObj object with a key named multipolygon
      * @param  {Function} callback    [description]
      * @return {object}               [description]
      */
-    function representGeometry(mapInstance, callback) {
+    function representGeometry(parentObj, callback) {
         var resultado = {};
         /**
          * geometryMultipolygon: Obtiene las geometrias de los poligonos seleccionados
+         * @param  {Object}   multipolygon object where each value is a google.maps.Polygon
          * @return {array} Array de Geometria/s
          */
-        var geometryMultipolygon = function geometryMultipolygon(map$$1) {
+        var geometryMultipolygon = function geometryMultipolygon(multipolygon) {
             // reads the multipolygon array (where we store objects on shift+click)
-            var multipolygon = map$$1.multipolygon;
+
             var geometry = [];
 
             if (size(multipolygon) === 0) {
-                if (map$$1.contextMenu.Polygons && map$$1.contextMenu.Polygons.jqMenu.data('geometry')) {
-                    geometry.push(map$$1.contextMenu.Polygons.jqMenu.data('geometry'));
+
+                if (map.contextMenu.Polygons && map.contextMenu.Polygons.jqMenu.data('feature')) {
+                    var theFeature = map.contextMenu.Polygons.jqMenu.data('feature');
+                    geometry.push(Wicket().fromObject(theFeature).toString());
                 }
             } else {
                 forEach(multipolygon, function (obj) {
-                    geometry.push(obj.geometry);
+                    geometry.push(Wicket().fromObject(obj).toString());
                 });
             }
             return geometry;
         },
             WKTmerged,
-            arraygeometry = geometryMultipolygon(mapInstance);
+            arraygeometry = geometryMultipolygon(parentObj.multipolygon);
 
         if (arraygeometry.length === 0) {
 
@@ -25188,7 +25191,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                             };
                         }
                     } else {
-                        console.log('Invalid WKT string provided to read() ' + str);
+                        console.log('Invalid WKT string provided to read() ', str);
                         throw {
                             name: 'WKTError',
                             message: 'Invalid WKT string provided to read()'
@@ -26533,7 +26536,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                     "type": "FeatureCollection",
                     "features": []
                 };
-                var features = map(latLngArray, function (latLng) {
+                var features = map$1(latLngArray, function (latLng) {
                     return {
                         type: "Feature",
                         geometry: {
@@ -26552,7 +26555,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             });
 
             _export('verticesInPolygon', verticesInPolygon = function verticesInPolygon(polygon) {
-                return sum(map(polygon.coordinates, function (ring) {
+                return sum(map$1(polygon.coordinates, function (ring) {
                     return ring.length;
                 }));
             });
