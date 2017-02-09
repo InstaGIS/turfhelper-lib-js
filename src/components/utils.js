@@ -72,7 +72,7 @@ function mergeWKTGeoms(WKTArray, debug) {
 
 /**
  * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
- * @param  {Object}   parentObj object with a key named multipolygon
+ * @param  {Object}   parentObj object with a key named multipolygon and other calles contextMenu
  * @param  {Function} callback    [description]
  * @return {object}               [description]
  */
@@ -90,8 +90,8 @@ function representGeometry(parentObj, callback) {
 
             if (_size(multipolygon) === 0) {
 
-                if (map.contextMenu.Polygons && map.contextMenu.Polygons.jqMenu.data('feature')) {
-                    var theFeature = map.contextMenu.Polygons.jqMenu.data('feature');
+                if (parentObj.contextMenu.Polygons && parentObj.contextMenu.Polygons.jqMenu.data('feature')) {
+                    var theFeature = parentObj.contextMenu.Polygons.jqMenu.data('feature');
                     geometry.push(Wicket().fromObject(theFeature).toString());
                 }
 

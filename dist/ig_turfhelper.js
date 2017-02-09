@@ -23544,7 +23544,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * _.map(users, 'user');
      * // => ['barney', 'fred']
      */
-    function map$1(collection, iteratee) {
+    function map(collection, iteratee) {
         var func = isArray(collection) ? arrayMap : baseMap;
         return func(collection, baseIteratee(iteratee, 3));
     }
@@ -23633,7 +23633,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * @return {Array.<external:google.maps.LatLng>} array de posiciones {@link external:google.maps.LatLng}
      */
     function toLatLngs(coordinates) {
-        return map$1(coordinates, toLatLng$1);
+        return map(coordinates, toLatLng$1);
     }
 
     function toCoord(LatLng) {
@@ -23651,7 +23651,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
      * @return {Array.<Array.<Number>>} [description]
      */
     function toCoords(arrayLatLng, closeRing) {
-        var ring = map$1(arrayLatLng, toCoord);
+        var ring = map(arrayLatLng, toCoord);
         if (closeRing === true) {
             ring.push(ring[0]);
         }
@@ -23922,7 +23922,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             "type": "FeatureCollection"
         };
 
-        FeatureCollection.features = map$1(wktArray, function (WKTString) {
+        FeatureCollection.features = map(wktArray, function (WKTString) {
             var geoJsonPolygon = Wicket().read(WKTString).toJson();
             return {
                 type: "Feature",
@@ -23949,7 +23949,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
     /**
      * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
-     * @param  {Object}   parentObj object with a key named multipolygon
+     * @param  {Object}   parentObj object with a key named multipolygon and other calles contextMenu
      * @param  {Function} callback    [description]
      * @return {object}               [description]
      */
@@ -23967,8 +23967,8 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
             if (size(multipolygon) === 0) {
 
-                if (map.contextMenu.Polygons && map.contextMenu.Polygons.jqMenu.data('feature')) {
-                    var theFeature = map.contextMenu.Polygons.jqMenu.data('feature');
+                if (parentObj.contextMenu.Polygons && parentObj.contextMenu.Polygons.jqMenu.data('feature')) {
+                    var theFeature = parentObj.contextMenu.Polygons.jqMenu.data('feature');
                     geometry.push(Wicket().fromObject(theFeature).toString());
                 }
             } else {
@@ -26536,7 +26536,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                     "type": "FeatureCollection",
                     "features": []
                 };
-                var features = map$1(latLngArray, function (latLng) {
+                var features = map(latLngArray, function (latLng) {
                     return {
                         type: "Feature",
                         geometry: {
@@ -26555,7 +26555,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             });
 
             _export('verticesInPolygon', verticesInPolygon = function verticesInPolygon(polygon) {
-                return sum(map$1(polygon.coordinates, function (ring) {
+                return sum(map(polygon.coordinates, function (ring) {
                     return ring.length;
                 }));
             });
