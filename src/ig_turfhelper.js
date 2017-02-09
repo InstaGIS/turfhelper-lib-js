@@ -28,6 +28,7 @@
 
 import {
     representGeometry,
+    mergeWKTGeoms,
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
     centroid,
@@ -94,6 +95,7 @@ export {
     centroid,
     cleanFeaturePolygon,
     latlngToPoint,
+    mergeWKTGeoms,
     pointInPolygon,
     polygonToFeaturePolygon,
     representGeometry,
@@ -118,6 +120,7 @@ export default {
     centroid: centroid,
     cleanFeaturePolygon: cleanFeaturePolygon,
     latlngToPoint: latlngToPoint,
+    mergeWKTGeoms: mergeWKTGeoms,
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,
     representGeometry: representGeometry,

@@ -23932,6 +23932,21 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
         return FeatureCollection;
     }
 
+    function mergeWKTGeoms(WKTArray, debug) {
+        if (debug) {
+            console.log('merging', WKTArray);
+        }
+        var FC = wktArrayToFeatureCollection(WKTArray),
+            geom_zero = FC.features.pop();
+
+        var theUnion = reduce(FC.features, function (acumulado, feature, index) {
+            acumulado = turf_union(acumulado, feature);
+            return acumulado;
+        }, geom_zero);
+
+        return theUnion;
+    }
+
     /**
      * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
      * @param  {InstaMap}   mapInstance instancia de {@link InstaMap}
@@ -23975,18 +23990,16 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                 wkt: arraygeometry[0]
             };
         } else {
-            var FC = wktArrayToFeatureCollection(arraygeometry),
-                geom_zero = FC.features.pop();
-
-            var theUnion = reduce(FC.features, function (acumulado, feature, index) {
-                acumulado = turf_union(acumulado, feature);
-                return acumulado;
-            }, geom_zero);
-
-            WKTmerged = Wicket().fromJson(theUnion.geometry).toString();
+            var theFeature = mergeWKTGeoms(arraygeometry);
+            try {
+                WKTmerged = Wicket().read(theFeature.geometry).toString();
+            } catch (err) {
+                console.warn('Exception wicket reading ', theFeature.geometry);
+            }
 
             resultado = {
                 arraygeometry: arraygeometry,
+                theFeature: theFeature,
                 wkt: WKTmerged
             };
         }
@@ -24927,8 +24940,8 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
 
             /**
              * Parses a JSON representation as an Object.
-             * @param	obj	{Object}	An Object with the GeoJSON schema
-             * @return	{this.Wkt.Wkt}	The object itself
+             * @param   obj {Object}    An Object with the GeoJSON schema
+             * @return  {this.Wkt.Wkt}  The object itself
              * @memberof this.Wkt.Wkt
              * @method
              */
@@ -25112,7 +25125,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
              * For example, creates a MULTIPOLYGON from a POLYGON type merged with another
              * POLYGON type, or adds a POLYGON instance to a MULTIPOLYGON instance.
              * @param   wkt {String}    A Wkt.Wkt object
-             * @return	{this.Wkt.Wkt}	The object itself
+             * @return  {this.Wkt.Wkt}  The object itself
              * @memberof this.Wkt.Wkt
              * @method
              */
@@ -25150,7 +25163,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             /**
              * Reads a WKT string, validating and incorporating it.
              * @param   str {String}    A WKT or GeoJSON string
-             * @return	{this.Wkt.Wkt}	The object itself
+             * @return  {this.Wkt.Wkt}  The object itself
              * @memberof this.Wkt.Wkt
              * @method
              */
@@ -25175,7 +25188,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                             };
                         }
                     } else {
-                        console.log('Invalid WKT string provided to read()');
+                        console.log('Invalid WKT string provided to read() ' + str);
                         throw {
                             name: 'WKTError',
                             message: 'Invalid WKT string provided to read()'
@@ -27026,6 +27039,7 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
                 centroid: centroid,
                 cleanFeaturePolygon: cleanFeaturePolygon,
                 latlngToPoint: latlngToPoint,
+                mergeWKTGeoms: mergeWKTGeoms,
                 pointInPolygon: pointInPolygon,
                 polygonToFeaturePolygon: polygonToFeaturePolygon,
                 representGeometry: representGeometry,
@@ -27058,6 +27072,8 @@ $__System.register('1', ['2', '3', '5', '7', '10', '11', '14', '15', '16', '17',
             _export('cleanFeaturePolygon', cleanFeaturePolygon);
 
             _export('latlngToPoint', latlngToPoint);
+
+            _export('mergeWKTGeoms', mergeWKTGeoms);
 
             _export('pointInPolygon', pointInPolygon);
 

@@ -29,7 +29,7 @@ var beginsWith, endsWith;
  * @namespace
  * @global
  */
-const Wkt = function(obj) {
+const Wkt = function (obj) {
     if (obj instanceof Wkt) return obj;
     if (!(this instanceof Wkt)) return new Wkt(obj);
     this._wrapped = obj;
@@ -42,7 +42,7 @@ const Wkt = function(obj) {
  * @return      {Boolean}
  * @private
  */
-beginsWith = function(str, sub) {
+beginsWith = function (str, sub) {
     return str.substring(0, sub.length) === sub;
 };
 
@@ -53,7 +53,7 @@ beginsWith = function(str, sub) {
  * @return      {Boolean}
  * @private
  */
-endsWith = function(str, sub) {
+endsWith = function (str, sub) {
     return str.substring(str.length - sub.length) === sub;
 };
 
@@ -70,7 +70,7 @@ Wkt.delimiter = ' ';
  * @member Wkt.isArray
  * @method
  */
-Wkt.isArray = function(obj) {
+Wkt.isArray = function (obj) {
     return !!(obj && obj.constructor === Array);
 };
 
@@ -82,7 +82,7 @@ Wkt.isArray = function(obj) {
  * @member Wkt.trim
  * @method
  */
-Wkt.trim = function(str, sub) {
+Wkt.trim = function (str, sub) {
     sub = sub || ' '; // Defaults to trimming spaces
     // Trim beginning spaces
     while (beginsWith(str, sub)) {
@@ -107,7 +107,7 @@ Wkt.trim = function(str, sub) {
  * @return              {this.Wkt.Wkt}
  * @memberof Wkt
  */
-Wkt.Wkt = function(initializer) {
+Wkt.Wkt = function (initializer) {
 
     /**
      * The default delimiter between X and Y coordinates.
@@ -162,17 +162,17 @@ Wkt.Wkt = function(initializer) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.isCollection = function() {
+Wkt.Wkt.prototype.isCollection = function () {
     switch (this.type.slice(0, 5)) {
-        case 'multi':
-            // Trivial; any multi-geometry is a collection
-            return true;
-        case 'polyg':
-            // Polygons with holes are "collections" of rings
-            return true;
-        default:
-            // Any other geometry is not a collection
-            return false;
+    case 'multi':
+        // Trivial; any multi-geometry is a collection
+        return true;
+    case 'polyg':
+        // Polygons with holes are "collections" of rings
+        return true;
+    default:
+        // Any other geometry is not a collection
+        return false;
     }
 };
 
@@ -184,7 +184,7 @@ Wkt.Wkt.prototype.isCollection = function() {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.sameCoords = function(a, b) {
+Wkt.Wkt.prototype.sameCoords = function (a, b) {
     return (a.x === b.x && a.y === b.y);
 };
 
@@ -196,7 +196,7 @@ Wkt.Wkt.prototype.sameCoords = function(a, b) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.fromObject = function(obj) {
+Wkt.Wkt.prototype.fromObject = function (obj) {
     var result;
 
     if (obj.hasOwnProperty('type') && obj.hasOwnProperty('coordinates')) {
@@ -219,7 +219,7 @@ Wkt.Wkt.prototype.fromObject = function(obj) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.toObject = function(config) {
+Wkt.Wkt.prototype.toObject = function (config) {
     var obj = this.construct[this.type].call(this, config);
     // Don't assign the "properties" property to an Array
     if (typeof obj === 'object' && !Wkt.isArray(obj)) {
@@ -233,18 +233,18 @@ Wkt.Wkt.prototype.toObject = function(config) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.toString = function(config) {
+Wkt.Wkt.prototype.toString = function (config) {
     return this.write();
 };
 
 /**
  * Parses a JSON representation as an Object.
- * @param	obj	{Object}	An Object with the GeoJSON schema
- * @return	{this.Wkt.Wkt}	The object itself
+ * @param   obj {Object}    An Object with the GeoJSON schema
+ * @return  {this.Wkt.Wkt}  The object itself
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.fromJson = function(obj) {
+Wkt.Wkt.prototype.fromJson = function (obj) {
     var i, j, k, coords, iring, oring;
 
     this.type = obj.type.toLowerCase();
@@ -332,13 +332,13 @@ Wkt.Wkt.prototype.fromJson = function(obj) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.toJson = function() {
+Wkt.Wkt.prototype.toJson = function () {
     var cs, json, i, j, k, ring, rings;
 
     cs = this.components;
     json = {
         coordinates: [],
-        type: (function() {
+        type: (function () {
             var i, type, s;
 
             type = this.regExes.ogcTypes.exec(this.type).slice(1);
@@ -437,11 +437,11 @@ Wkt.Wkt.prototype.toJson = function() {
  * For example, creates a MULTIPOLYGON from a POLYGON type merged with another
  * POLYGON type, or adds a POLYGON instance to a MULTIPOLYGON instance.
  * @param   wkt {String}    A Wkt.Wkt object
- * @return	{this.Wkt.Wkt}	The object itself
+ * @return  {this.Wkt.Wkt}  The object itself
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.merge = function(wkt) {
+Wkt.Wkt.prototype.merge = function (wkt) {
     var prefix = this.type.slice(0, 5);
 
     if (this.type !== wkt.type) {
@@ -452,20 +452,20 @@ Wkt.Wkt.prototype.merge = function(wkt) {
 
     switch (prefix) {
 
-        case 'point':
-            this.components = [this.components.concat(wkt.components)];
-            break;
+    case 'point':
+        this.components = [this.components.concat(wkt.components)];
+        break;
 
-        case 'multi':
-            this.components = this.components.concat((wkt.type.slice(0, 5) === 'multi') ? wkt.components : [wkt.components]);
-            break;
+    case 'multi':
+        this.components = this.components.concat((wkt.type.slice(0, 5) === 'multi') ? wkt.components : [wkt.components]);
+        break;
 
-        default:
-            this.components = [
-                this.components,
-                wkt.components
-            ];
-            break;
+    default:
+        this.components = [
+            this.components,
+            wkt.components
+        ];
+        break;
 
     }
 
@@ -478,11 +478,11 @@ Wkt.Wkt.prototype.merge = function(wkt) {
 /**
  * Reads a WKT string, validating and incorporating it.
  * @param   str {String}    A WKT or GeoJSON string
- * @return	{this.Wkt.Wkt}	The object itself
+ * @return  {this.Wkt.Wkt}  The object itself
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.read = function(str) {
+Wkt.Wkt.prototype.read = function (str) {
     var matches;
     matches = this.regExes.typeStr.exec(str);
     if (matches) {
@@ -506,7 +506,7 @@ Wkt.Wkt.prototype.read = function(str) {
             }
 
         } else {
-            console.log('Invalid WKT string provided to read()');
+            console.log('Invalid WKT string provided to read() ' + str);
             throw {
                 name: 'WKTError',
                 message: 'Invalid WKT string provided to read()'
@@ -524,7 +524,7 @@ Wkt.Wkt.prototype.read = function(str) {
  * @memberof this.Wkt.Wkt
  * @method
  */
-Wkt.Wkt.prototype.write = function(components) {
+Wkt.Wkt.prototype.write = function (components) {
     var i, pieces, data;
 
     components = components || this.components;
@@ -578,7 +578,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    point: function(point) {
+    point: function (point) {
         return String(point.x) + this.delimiter + String(point.y);
     },
 
@@ -589,7 +589,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    multipoint: function(multipoint) {
+    multipoint: function (multipoint) {
         var i, parts = [],
             s;
 
@@ -613,7 +613,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    linestring: function(linestring) {
+    linestring: function (linestring) {
         // Extraction of linestrings is the same as for points
         return this.extract.point.apply(this, [linestring]);
     },
@@ -625,7 +625,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    multilinestring: function(multilinestring) {
+    multilinestring: function (multilinestring) {
         var i, parts = [];
 
         if (multilinestring.length) {
@@ -646,7 +646,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    polygon: function(polygon) {
+    polygon: function (polygon) {
         // Extraction of polygons is the same as for multilinestrings
         return this.extract.multilinestring.apply(this, [polygon]);
     },
@@ -658,7 +658,7 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    multipolygon: function(multipolygon) {
+    multipolygon: function (multipolygon) {
         var i, parts = [];
         for (i = 0; i < multipolygon.length; i += 1) {
             parts.push('(' + this.extract.polygon.apply(this, [multipolygon[i]]) + ')');
@@ -673,11 +673,11 @@ Wkt.Wkt.prototype.extract = {
      * @memberof this.Wkt.Wkt.extract
      * @instance
      */
-    box: function(box) {
+    box: function (box) {
         return this.extract.linestring.apply(this, [box]);
     },
 
-    geometrycollection: function(str) {
+    geometrycollection: function (str) {
         console.log('The geometrycollection WKT type is not yet supported.');
     }
 };
@@ -697,7 +697,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    point: function(str) {
+    point: function (str) {
         var coords = Wkt.trim(str).split(this.regExes.spaces);
         // In case a parenthetical group of coordinates is passed...
         return [{ // ...Search for numeric substrings
@@ -712,7 +712,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    multipoint: function(str) {
+    multipoint: function (str) {
         var i, components, points;
         components = [];
         points = Wkt.trim(str).split(this.regExes.comma);
@@ -728,7 +728,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    linestring: function(str) {
+    linestring: function (str) {
         var i, multipoints, components;
 
         // In our x-and-y representation of components, parsing
@@ -749,7 +749,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    multilinestring: function(str) {
+    multilinestring: function (str) {
         var i, components, line, lines;
         components = [];
 
@@ -772,7 +772,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    polygon: function(str) {
+    polygon: function (str) {
         var i, j, components, subcomponents, ring, rings;
         rings = Wkt.trim(str).split(this.regExes.parenComma);
         components = []; // Holds one or more rings
@@ -784,7 +784,7 @@ Wkt.Wkt.prototype.ingest = {
                 var split = ring[j].split(this.regExes.spaces);
                 if (split.length > 2) {
                     //remove the elements which are blanks
-                    split = split.filter(function(n) {
+                    split = split.filter(function (n) {
                         return n != ""
                     });
                 }
@@ -810,7 +810,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    box: function(str) {
+    box: function (str) {
         var i, multipoints, components;
 
         // In our x-and-y representation of components, parsing
@@ -832,7 +832,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    multipolygon: function(str) {
+    multipolygon: function (str) {
         var i, components, polygon, polygons;
         components = [];
         polygons = Wkt.trim(str).split(this.regExes.doubleParenComma);
@@ -849,7 +849,7 @@ Wkt.Wkt.prototype.ingest = {
      * @memberof this.Wkt.Wkt.ingest
      * @instance
      */
-    geometrycollection: function(str) {
+    geometrycollection: function (str) {
         console.log('The geometrycollection WKT type is not yet supported.');
     }
 
@@ -874,7 +874,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   component   {Object}    An optional component to build from
      * @return              {gmaps.Marker}
      */
-    point: function(config, component) {
+    point: function (config, component) {
         var c = component || this.components;
 
         config = config || {
@@ -891,7 +891,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   config  {Object}    An optional properties hash the object should use
      * @return          {Array}     Array containing multiple gmaps.Marker
      */
-    multipoint: function(config) {
+    multipoint: function (config) {
         var i, c, arr;
 
         c = this.components;
@@ -913,7 +913,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   component   {Object}    An optional component to build from
      * @return              {gmaps.Polyline}
      */
-    linestring: function(config, component) {
+    linestring: function (config, component) {
         var i, c;
 
         c = component || this.components;
@@ -936,7 +936,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   config  {Object}    An optional properties hash the object should use
      * @return          {Array}     Array containing multiple gmaps.Polyline instances
      */
-    multilinestring: function(config) {
+    multilinestring: function (config) {
         var i, c, arr;
 
         c = this.components;
@@ -962,7 +962,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   component   {Object}    An optional component to build from
      * @return              {gmaps.Rectangle}
      */
-    box: function(config, component) {
+    box: function (config, component) {
         var c = component || this.components;
 
         config = config || {};
@@ -980,7 +980,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   component   {Object}    An optional component to build from
      * @return              {gmaps.Polygon}
      */
-    polygon: function(config, component) {
+    polygon: function (config, component) {
         var j, k, c, rings, verts;
 
         c = component || this.components;
@@ -1013,7 +1013,7 @@ Wkt.Wkt.prototype.construct = {
         config.paths = config.paths.concat(rings);
 
         if (this.isRectangle) {
-            return (function() {
+            return (function () {
                 var bounds, v;
 
                 bounds = new gmaps.LatLngBounds();
@@ -1038,7 +1038,7 @@ Wkt.Wkt.prototype.construct = {
      * @param   config  {Object}    An optional properties hash the object should use
      * @return          {Array}     Array containing multiple gmaps.Polygon
      */
-    multipolygon: function(config) {
+    multipolygon: function (config) {
         var i, c, arr;
 
         c = this.components;
@@ -1070,7 +1070,7 @@ Wkt.Wkt.prototype.construct = {
  * @param multiFlag {Boolean} If true, then the deconstructor will be forced to return a MultiGeometry (multipoint, multilinestring or multipolygon)
  * @return          {Object}    A hash of the 'type' and 'components' thus derived, plus the WKT string of the feature.
  */
-Wkt.Wkt.prototype.deconstruct = function(obj, multiFlag) {
+Wkt.Wkt.prototype.deconstruct = function (obj, multiFlag) {
     var features, i, j, verts, rings, sign, tmp, response, lat, lng, vertex, ring;
     var polygons, polygon, k, linestring, linestrings;
     // Shortcut to signed area function (determines clockwise vs counter-clock)
@@ -1140,7 +1140,7 @@ Wkt.Wkt.prototype.deconstruct = function(obj, multiFlag) {
         rings = [];
 
         if (multiFlag === undefined) {
-            multiFlag = (function() {
+            multiFlag = (function () {
                 var areas, l;
 
                 l = obj.getPaths().length;
@@ -1159,7 +1159,7 @@ Wkt.Wkt.prototype.deconstruct = function(obj, multiFlag) {
                 }
 
                 // Must be longer than 3 polygons at this point...
-                areas = obj.getPaths().getArray().map(function(k) {
+                areas = obj.getPaths().getArray().map(function (k) {
                     return sign(k) / Math.abs(sign(k)); // Unit normalization (outputs 1 or -1)
                 });
 
@@ -1508,7 +1508,7 @@ Wkt.Wkt.prototype.deconstruct = function(obj, multiFlag) {
 
         response = {
 
-            type: (function() {
+            type: (function () {
                 var k, type = obj[0].constructor;
 
                 for (k = 0; k < obj.length; k += 1) {
@@ -1520,18 +1520,18 @@ Wkt.Wkt.prototype.deconstruct = function(obj, multiFlag) {
                 }
 
                 switch (type) {
-                    case gmaps.Marker:
-                        return 'multipoint';
-                    case gmaps.Polyline:
-                        return 'multilinestring';
-                    case gmaps.Polygon:
-                        return 'multipolygon';
-                    default:
-                        return 'geometrycollection';
+                case gmaps.Marker:
+                    return 'multipoint';
+                case gmaps.Polyline:
+                    return 'multilinestring';
+                case gmaps.Polygon:
+                    return 'multipolygon';
+                default:
+                    return 'geometrycollection';
                 }
 
             }()),
-            components: (function() {
+            components: (function () {
                 // Pluck the components from each Wkt
                 var i, comps;
 

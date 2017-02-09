@@ -55,6 +55,21 @@ function wktArrayToFeatureCollection(wktArray) {
     return FeatureCollection;
 };
 
+function mergeWKTGeoms(WKTArray, debug) {
+    if (debug) {
+        console.log('merging', WKTArray);
+    }
+    var FC = wktArrayToFeatureCollection(WKTArray),
+        geom_zero = FC.features.pop();
+
+    var theUnion = _reduce(FC.features, function (acumulado, feature, index) {
+        acumulado = turf_union(acumulado, feature);
+        return acumulado;
+    }, geom_zero);
+
+    return theUnion;
+};
+
 /**
  * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
  * @param  {InstaMap}   mapInstance instancia de {@link InstaMap}
@@ -101,18 +116,16 @@ function representGeometry(mapInstance, callback) {
         };
 
     } else {
-        var FC = wktArrayToFeatureCollection(arraygeometry),
-            geom_zero = FC.features.pop();
-
-        var theUnion = _reduce(FC.features, function (acumulado, feature, index) {
-            acumulado = turf_union(acumulado, feature);
-            return acumulado;
-        }, geom_zero);
-
-        WKTmerged = Wicket().fromJson(theUnion.geometry).toString();
+        var theFeature = mergeWKTGeoms(arraygeometry);
+        try {
+            WKTmerged = Wicket().read(theFeature.geometry).toString();
+        } catch (err) {
+            console.warn('Exception wicket reading ', theFeature.geometry);
+        }
 
         resultado = {
             arraygeometry: arraygeometry,
+            theFeature: theFeature,
             wkt: WKTmerged
         };
 
@@ -231,5 +244,6 @@ export {
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
     centroid,
+    mergeWKTGeoms,
     verticesInPolygon
 };

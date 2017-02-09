@@ -198,7 +198,7 @@ SystemJS.config({
                 "inherits": "npm:inherits@2.0.3",
                 "bn.js": "npm:bn.js@4.11.6",
                 "browserify-rsa": "npm:browserify-rsa@4.0.1",
-                "elliptic": "npm:elliptic@6.3.2",
+                "elliptic": "npm:elliptic@6.3.3",
                 "parse-asn1": "npm:parse-asn1@5.0.0"
             }
         },
@@ -221,7 +221,7 @@ SystemJS.config({
         "npm:create-ecdh@4.0.0": {
             "map": {
                 "bn.js": "npm:bn.js@4.11.6",
-                "elliptic": "npm:elliptic@6.3.2"
+                "elliptic": "npm:elliptic@6.3.3"
             }
         },
         "npm:browserify-cipher@1.0.0": {
@@ -270,7 +270,7 @@ SystemJS.config({
         "npm:miller-rabin@4.0.0": {
             "map": {
                 "bn.js": "npm:bn.js@4.11.6",
-                "brorand": "npm:brorand@1.0.6"
+                "brorand": "npm:brorand@1.0.7"
             }
         },
         "npm:hash.js@1.0.3": {
@@ -316,14 +316,6 @@ SystemJS.config({
                 "create-hmac": "npm:create-hmac@1.1.4"
             }
         },
-        "npm:elliptic@6.3.2": {
-            "map": {
-                "inherits": "npm:inherits@2.0.3",
-                "bn.js": "npm:bn.js@4.11.6",
-                "hash.js": "npm:hash.js@1.0.3",
-                "brorand": "npm:brorand@1.0.6"
-            }
-        },
         "npm:cipher-base@1.0.3": {
             "map": {
                 "inherits": "npm:inherits@2.0.3"
@@ -355,6 +347,14 @@ SystemJS.config({
                 "bn.js": "npm:bn.js@4.11.6",
                 "inherits": "npm:inherits@2.0.3",
                 "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+            }
+        },
+        "npm:elliptic@6.3.3": {
+            "map": {
+                "inherits": "npm:inherits@2.0.3",
+                "bn.js": "npm:bn.js@4.11.6",
+                "brorand": "npm:brorand@1.0.7",
+                "hash.js": "npm:hash.js@1.0.3"
             }
         }
     }
