@@ -29,7 +29,6 @@ SystemJS.config({
             "turf-polygon": "npm:turf-polygon@1.0.3",
             "turf-simplify": "npm:turf-simplify@3.0.12",
             "turf-union": "npm:turf-union@3.0.12",
-            "gmap": "npm:amd-googlemaps-loader@1.8.6",
             "lodash-es": "npm:lodash-es@4.17.4",
             "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
@@ -356,7 +355,10 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
-        "plugin-babel": "npm:systemjs-plugin-babel@0.0.20"
+        "json": "github:systemjs/plugin-json@0.3.0",
+        "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
+        "gmap": "npm:amd-googlemaps-loader@1.8.6",
+        "text": "github:systemjs/plugin-text@0.0.7"
     },
     packages: {}
 });
