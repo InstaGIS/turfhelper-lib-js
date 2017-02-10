@@ -33,7 +33,9 @@ SystemJS.config({
             "lodash-es": "npm:lodash-es@4.17.4",
             "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
-            "turf-featurecollection": "npm:turf-featurecollection@1.0.1"
+            "turf-featurecollection": "npm:turf-featurecollection@1.0.1",
+            "fs": "npm:jspm-nodelibs-fs@0.2.0",
+            "process": "npm:jspm-nodelibs-process@0.2.0"
         },
         "packages": {
             "npm:turf-line-slice@3.0.12": {
@@ -129,34 +131,7 @@ SystemJS.config({
                     "loader": "plugin-babel"
                 }
             }
-        }
-    }
-});
-
-SystemJS.config({
-    packageConfigPaths: [
-        "npm:@*/*.json",
-        "npm:*.json",
-        "github:*/*.json"
-    ],
-    map: {
-        "assert": "npm:jspm-nodelibs-assert@0.2.0",
-        "buffer": "npm:jspm-nodelibs-buffer@0.2.1",
-        "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
-        "constants": "npm:jspm-nodelibs-constants@0.2.0",
-        "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
-        "events": "npm:jspm-nodelibs-events@0.2.0",
-        "fs": "npm:jspm-nodelibs-fs@0.2.0",
-        "os": "npm:jspm-nodelibs-os@0.2.0",
-        "path": "npm:jspm-nodelibs-path@0.2.1",
-        "plugin-babel": "npm:systemjs-plugin-babel@0.0.20",
-        "process": "npm:jspm-nodelibs-process@0.2.0",
-        "stream": "npm:jspm-nodelibs-stream@0.2.0",
-        "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
-        "util": "npm:jspm-nodelibs-util@0.2.1",
-        "vm": "npm:jspm-nodelibs-vm@0.2.0"
-    },
-    packages: {
+        },
         "npm:stream-browserify@2.0.1": {
             "map": {
                 "readable-stream": "npm:readable-stream@2.2.2",
@@ -357,5 +332,31 @@ SystemJS.config({
                 "hash.js": "npm:hash.js@1.0.3"
             }
         }
+    },
+    map: {
+        "assert": "npm:jspm-nodelibs-assert@0.2.0",
+        "buffer": "npm:jspm-nodelibs-buffer@0.2.1",
+        "child_process": "npm:jspm-nodelibs-child_process@0.2.0",
+        "constants": "npm:jspm-nodelibs-constants@0.2.0",
+        "crypto": "npm:jspm-nodelibs-crypto@0.2.0",
+        "events": "npm:jspm-nodelibs-events@0.2.0",
+        "os": "npm:jspm-nodelibs-os@0.2.0",
+        "path": "npm:jspm-nodelibs-path@0.2.1",
+        "stream": "npm:jspm-nodelibs-stream@0.2.0",
+        "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.0",
+        "util": "npm:jspm-nodelibs-util@0.2.1",
+        "vm": "npm:jspm-nodelibs-vm@0.2.0"
     }
+});
+
+SystemJS.config({
+    packageConfigPaths: [
+        "npm:@*/*.json",
+        "npm:*.json",
+        "github:*/*.json"
+    ],
+    map: {
+        "plugin-babel": "npm:systemjs-plugin-babel@0.0.20"
+    },
+    packages: {}
 });
