@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.0.16",
+  "version": "17.0.17",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -77,13 +77,6 @@
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21",
       "text": "github:systemjs/plugin-text@^0.0.7",
       "gmap": "npm:amd-googlemaps-loader@^1.8.5"
-    },
-    "overrides": {
-      "npm:inherits@2.0.3": {
-        "ignore": [
-          "test.js"
-        ]
-      }
     }
   }
 }
