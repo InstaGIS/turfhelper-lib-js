@@ -5,10 +5,14 @@ module.exports = function (grunt) {
             unit: {
                 options: {
                     basePath: './',
-                    plugins: ['karma-qunit', 'karma-phantomjs-launcher'],
+                    plugins: [
+                        'karma-qunit',
+                        'karma-phantomjs-launcher',
+                        'karma-mocha-reporter'
+                    ],
                     frameworks: ['qunit'],
 
-                    reporters: ['progress'],
+                    reporters: ['mocha'],
 
                     port: 9877,
                     colors: true,

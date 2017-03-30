@@ -1,20 +1,19 @@
 {
-  "npm:lodash-es@4.17.4": {
+  "npm:jspm-nodelibs-process@0.2.1": {
     "deps": {},
     "peerDeps": {}
   },
-  "npm:turf-inside@3.0.12": {
-    "deps": {
-      "turf-invariant": "npm:turf-invariant@^3.0.12"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
+  "npm:amd-googlemaps-loader@1.8.6": {
+    "deps": {},
+    "peerDeps": {}
   },
-  "npm:turf-centroid@3.0.12": {
+  "github:systemjs/plugin-text@0.0.7": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:turf-simplify@3.0.12": {
     "deps": {
-      "turf-meta": "npm:turf-meta@^3.0.12",
-      "turf-helpers": "npm:turf-helpers@^3.0.12"
+      "simplify-js": "npm:simplify-js@^1.2.1"
     },
     "peerDeps": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
@@ -32,18 +31,58 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:jspm-nodelibs-fs@0.2.0": {
-    "deps": {},
-    "peerDeps": {}
+  "npm:turf-buffer@3.0.12": {
+    "deps": {
+      "geojson-normalize": "npm:geojson-normalize@0.0.0",
+      "jsts": "npm:jsts@1.1.2",
+      "turf-combine": "npm:turf-combine@^3.0.12",
+      "turf-helpers": "npm:turf-helpers@^3.0.12"
+    },
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
   },
-  "npm:turf-featurecollection@1.0.1": {
+  "npm:turf-polygon@1.0.3": {
     "deps": {},
     "peerDeps": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
+  "npm:turf-point@2.0.1": {
+    "deps": {
+      "minimist": "npm:minimist@^1.1.0"
+    },
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
+  "npm:turf-centroid@3.0.12": {
+    "deps": {
+      "turf-meta": "npm:turf-meta@^3.0.12",
+      "turf-helpers": "npm:turf-helpers@^3.0.12"
+    },
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
+  "npm:systemjs-plugin-babel@0.0.21": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "github:systemjs/plugin-json@0.3.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
   "npm:turf-linestring@1.0.2": {
     "deps": {},
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
+  "npm:turf-union@3.0.12": {
+    "deps": {
+      "jsts": "npm:jsts@1.1.2"
+    },
     "peerDeps": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
@@ -59,81 +98,13 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:turf-buffer@3.0.12": {
-    "deps": {
-      "geojson-normalize": "npm:geojson-normalize@0.0.0",
-      "jsts": "npm:jsts@1.1.2",
-      "turf-combine": "npm:turf-combine@^3.0.12",
-      "turf-helpers": "npm:turf-helpers@^3.0.12"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:amd-googlemaps-loader@1.8.6": {
+  "npm:lodash-es@4.17.4": {
     "deps": {},
     "peerDeps": {}
   },
-  "npm:jspm-nodelibs-process@0.2.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:turf-simplify@3.0.12": {
-    "deps": {
-      "simplify-js": "npm:simplify-js@^1.2.1"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:turf-union@3.0.12": {
-    "deps": {
-      "jsts": "npm:jsts@1.1.2"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:turf-point@2.0.1": {
-    "deps": {
-      "minimist": "npm:minimist@^1.1.0"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:turf-polygon@1.0.3": {
-    "deps": {},
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "github:systemjs/plugin-text@0.0.7": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:turf-invariant@3.0.12": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:turf-helpers@3.0.12": {
-    "deps": {},
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:turf-bearing@3.0.12": {
+  "npm:turf-inside@3.0.12": {
     "deps": {
       "turf-invariant": "npm:turf-invariant@^3.0.12"
-    },
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:turf-distance@3.0.12": {
-    "deps": {
-      "turf-invariant": "npm:turf-invariant@^3.0.12",
-      "turf-helpers": "npm:turf-helpers@^3.0.12"
     },
     "peerDeps": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
@@ -148,22 +119,6 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:geojson-normalize@0.0.0": {
-    "deps": {},
-    "peerDeps": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
-    }
-  },
-  "npm:minimist@1.2.0": {
-    "deps": {},
-    "peerDeps": {
-      "process": "npm:jspm-nodelibs-process@^0.2.0"
-    }
-  },
-  "npm:simplify-js@1.2.1": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:turf-point-on-line@3.0.12": {
     "deps": {
       "turf-bearing": "npm:turf-bearing@^3.0.12",
@@ -175,15 +130,58 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
+  "npm:minimist@1.2.0": {
+    "deps": {},
+    "peerDeps": {
+      "process": "npm:jspm-nodelibs-process@^0.2.0"
+    }
+  },
+  "npm:jsts@1.1.2": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:simplify-js@1.2.1": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:turf-distance@3.0.12": {
+    "deps": {
+      "turf-invariant": "npm:turf-invariant@^3.0.12",
+      "turf-helpers": "npm:turf-helpers@^3.0.12"
+    },
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
+  "npm:geojson-normalize@0.0.0": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
   "npm:turf-meta@3.0.12": {
     "deps": {},
     "peerDeps": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:jsts@1.1.2": {
+  "npm:turf-bearing@3.0.12": {
+    "deps": {
+      "turf-invariant": "npm:turf-invariant@^3.0.12"
+    },
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
+  },
+  "npm:turf-invariant@3.0.12": {
     "deps": {},
     "peerDeps": {}
+  },
+  "npm:turf-helpers@3.0.12": {
+    "deps": {},
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
   },
   "npm:turf-combine@3.0.12": {
     "deps": {
@@ -193,11 +191,13 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0"
     }
   },
-  "npm:systemjs-plugin-babel@0.0.21": {
+  "npm:turf-featurecollection@1.0.1": {
     "deps": {},
-    "peerDeps": {}
+    "peerDeps": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0"
+    }
   },
-  "github:systemjs/plugin-json@0.3.0": {
+  "npm:jspm-nodelibs-fs@0.2.1": {
     "deps": {},
     "peerDeps": {}
   }

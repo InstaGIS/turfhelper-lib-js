@@ -32,9 +32,7 @@ SystemJS.config({
             "lodash-es": "npm:lodash-es@4.17.4",
             "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
-            "turf-featurecollection": "npm:turf-featurecollection@1.0.1",
-            "fs": "npm:jspm-nodelibs-fs@0.2.0",
-            "process": "npm:jspm-nodelibs-process@0.2.0"
+            "process": "npm:jspm-nodelibs-process@0.2.1"
         },
         "packages": {
             "npm:turf-line-slice@3.0.12": {
@@ -141,10 +139,12 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "fs": "npm:jspm-nodelibs-fs@0.2.1",
         "json": "github:systemjs/plugin-json@0.3.0",
         "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
         "gmap": "npm:amd-googlemaps-loader@1.8.6",
-        "text": "github:systemjs/plugin-text@0.0.7"
+        "text": "github:systemjs/plugin-text@0.0.7",
+        "turf-featurecollection": "npm:turf-featurecollection@1.0.1"
     },
     packages: {}
 });

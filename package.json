@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.0.17",
+  "version": "17.0.18",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -30,7 +30,7 @@
   "dependencies": {
     "grunt": "^1",
     "grunt-karma": "^2",
-    "jspm": "^0.17.0-beta.39",
+    "jspm": "^0.17.0-beta.41",
     "karma": "^1",
     "karma-phantomjs-launcher": "^1",
     "phantomjs-prebuilt": "^2",
@@ -49,21 +49,20 @@
   "jspm": {
     "registry": "jspm",
     "name": "turfhelper-lib-js",
-    "main": "dist/ig_turfhelper.min.js",
-    "files": [
-      "src",
-      "dist"
-    ],
+    "main": "ig_turfhelper.min.js",
+    "directories": {
+      "lib": "dist"
+    },
     "format": "amd",
-    "dependencies": {},
+    "dependencies": {
+      "turf-featurecollection": "npm:turf-featurecollection@^1.0.1"
+    },
     "devDependencies": {
-      "fs": "npm:jspm-nodelibs-fs@^0.2.0",
       "lodash-es": "npm:lodash-es@^4.14.2",
       "process": "npm:jspm-nodelibs-process@^0.2.0",
       "turf-along": "npm:turf-along@^3",
       "turf-buffer": "npm:turf-buffer@^3",
       "turf-centroid": "npm:turf-centroid@^3",
-      "turf-featurecollection": "npm:turf-featurecollection@^1.0.1",
       "turf-linestring": "npm:turf-linestring@^1.0.2",
       "turf-point": "npm:turf-point@^2.0.1",
       "turf-inside": "npm:turf-inside@^3",
@@ -73,6 +72,7 @@
       "turf-union": "npm:turf-union@^3"
     },
     "peerDependencies": {
+      "fs": "npm:jspm-nodelibs-fs@^0.2.0",
       "json": "github:systemjs/plugin-json@^0.3.0",
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21",
       "text": "github:systemjs/plugin-text@^0.0.7",
