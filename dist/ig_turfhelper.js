@@ -14876,13 +14876,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
             if (size(multipolygon) === 0) {
 
-                if (parentObj.contextMenu.Polygons && parentObj.contextMenu.Polygons.jqMenu.data('feature')) {
-                    var theFeature = parentObj.contextMenu.Polygons.jqMenu.data('feature');
-                    geometry.push(Wicket().fromObject(theFeature).toString());
+                if (parentObj.contextMenu.Polygons && parentObj.contextMenu.Polygons.jqMenu.data('geometry')) {
+                    geometry.push(parentObj.contextMenu.Polygons.jqMenu.data('geometry'));
                 }
             } else {
                 forEach(multipolygon, function (obj) {
-                    geometry.push(Wicket().fromObject(obj).toString());
+                    geometry.push(obj.geometry);
                 });
             }
             return geometry;
