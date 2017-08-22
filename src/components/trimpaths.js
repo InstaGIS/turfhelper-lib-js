@@ -8,6 +8,8 @@ import {
 	default as _min
 } from 'lodash-es/min.js';
 
+import turk_kinks from '@turf/kinks';
+
 import turf_line_slice from 'turf-line-slice';
 import turf_point from 'turf-point';
 import turf_linestring from 'turf-linestring';
@@ -21,9 +23,44 @@ import {
 	toLatLngs
 } from './coords_to_latlng.js';
 
+/**
+ * The Google Maps Namespace
+ * @external "google.maps"
+ * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+ */
+
+/**
+ * [polylineToFeatureLinestring description]
+ * @param  {Array.<external:google.maps.LatLng>} polyline [description]
+ * @return {Feature.Polyline}          [description]
+ */
 function polylineToFeatureLinestring(polyline) {
 	var vertices = toCoords(polyline.getPath().getArray());
 	return turf_linestring(vertices);
+}
+
+/**
+ * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
+ *
+ * @name kinks
+ * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
+ * @returns {FeatureCollection<Point>} self-intersections
+ * @example
+ * var poly = turf.polygon([[
+ *   [-12.034835, 8.901183],
+ *   [-12.060413, 8.899826],
+ *   [-12.03638, 8.873199],
+ *   [-12.059383, 8.871418],
+ *   [-12.034835, 8.901183]
+ * ]]);
+ *
+ * var kinks = turf.kinks(poly);
+ *
+ * //addToMap
+ * var addToMap = [poly, kinks]
+ */
+function kinks(featureIn) {
+	return turk_kinks(featureIn);
 }
 
 /**
@@ -32,7 +69,7 @@ function polylineToFeatureLinestring(polyline) {
  * @param  {Array.<external:google.maps.LatLng>} arrayLatLng2 array de posiciones {@link external:google.maps.LatLng}
  * @return {Array}             [description]
  */
-export function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
+function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 
 	var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
 	var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
@@ -68,3 +105,8 @@ export function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 	return [];
 
 };
+
+export {
+	trimPaths,
+	kinks
+}

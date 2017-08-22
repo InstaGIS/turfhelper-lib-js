@@ -15,6 +15,9 @@ install:
 
 test:
 	grunt karma
+
+docs:
+	grunt jsdoc2md	
 	
 build:
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.js      --global-name turfHelper --global-deps '{"gmaps": "gmaps"}' --skip-source-maps
@@ -41,6 +44,6 @@ tag_and_push:
 		git push --tags
 
 
-tag: update_version build tag_and_push		
+tag:  build docs update_version tag_and_push		
 release: update_version  tag_and_push		
 	

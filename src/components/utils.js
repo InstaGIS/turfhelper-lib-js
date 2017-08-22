@@ -35,6 +35,12 @@ var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;fo
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
 
 /**
+ * The Google Maps Namespace
+ * @external "google.maps"
+ * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+ */
+
+/**
  * Transforma un array de geometrías WKT en un FeatureCollection
  * @param  {Array<String>} wktArray Array de string WKT
  * @return {Object}          FeatureCollection

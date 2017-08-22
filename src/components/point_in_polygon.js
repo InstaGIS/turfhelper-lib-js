@@ -4,6 +4,12 @@ import {
 } from 'lodash-es/forEach.js';
 
 /**
+ * The Google Maps Namespace
+ * @external "google.maps"
+ * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+ */
+
+/**
  * Filtra un array determinando si los puntos están dentro de un Polígono GeoJSON
  * @param {Array<SimpleFeature>} sourceArray array de SimpleFeature
  * @param {geojson.Polygon|geojson.Multipolygon} geojsonPolygon  [description]

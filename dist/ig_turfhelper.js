@@ -1,6 +1,6 @@
 !function(e){function t(e){Object.defineProperty(this,e,{enumerable:!0,get:function(){return this[m][e]}})}function r(e){var t;if(e&&e.__esModule){t={};for(var r in e)Object.hasOwnProperty.call(e,r)&&(t[r]=e[r]);t.__useDefault&&delete t.__useDefault,t.__esModule=!0}else{if("[object Module]"===Object.prototype.toString.call(e)||"undefined"!=typeof System&&System.isModule&&System.isModule(e))return e;t={default:e,__useDefault:!0}}return new o(t)}function o(e){Object.defineProperty(this,m,{value:e}),Object.keys(e).forEach(t,this)}function n(e){return"@node/"===e.substr(0,6)?c(e,r(v(e.substr(6))),{}):p[e]}function u(e){var t=n(e);if(!t)throw new Error('Module "'+e+'" expected, but not contained in build.');if(t.module)return t.module;var r=t.linkRecord;return d(t,r),a(t,r,[]),t.module}function d(e,t){if(!t.depLoads){t.declare&&i(e,t),t.depLoads=[];for(var r=0;r<t.deps.length;r++){var o=n(t.deps[r]);t.depLoads.push(o),o.linkRecord&&d(o,o.linkRecord);var u=t.setters&&t.setters[r];u&&(u(o.module||o.linkRecord.moduleObj),o.importerSetters.push(u))}return e}}function i(t,r){var o=r.moduleObj,n=t.importerSetters,u=!1,d=r.declare.call(e,function(e,t){if(!u){if("object"==typeof e)for(var r in e)"__useDefault"!==r&&(o[r]=e[r]);else o[e]=t;u=!0;for(var d=0;d<n.length;d++)n[d](o);return u=!1,t}},{id:t.key});"function"!=typeof d?(r.setters=d.setters,r.execute=d.execute):(r.setters=[],r.execute=d)}function l(e,t,r){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:r,setters:void 0,execute:void 0,moduleObj:{}}}}function f(e,t,r,o){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:void 0,execute:o,executingRequire:r,moduleObj:{default:{},__useDefault:!0},setters:void 0}}}function s(e,t,r){return function(o){for(var n=0;n<e.length;n++)if(e[n]===o){var u,d=t[n],i=d.linkRecord;return u=i?-1===r.indexOf(d)?a(d,i,r):i.moduleObj:d.module,u.__useDefault?u.default:u}}}function a(t,r,n){if(n.push(t),t.module)return t.module;var u;if(r.setters){for(var d=0;d<r.deps.length;d++){var i=r.depLoads[d],l=i.linkRecord;l&&-1===n.indexOf(i)&&(u=a(i,l,l.setters?n:[]))}r.execute.call(y)}else{var f={id:t.key},c=r.moduleObj;Object.defineProperty(f,"exports",{configurable:!0,set:function(e){c.default=e},get:function(){return c.default}});var p=s(r.deps,r.depLoads,n);if(!r.executingRequire)for(var d=0;d<r.deps.length;d++)p(r.deps[d]);var m=r.execute.call(e,p,c.default,f);if(void 0!==m?c.default=m:f.exports!==c.default&&(c.default=f.exports),c.default&&c.default.__esModule)for(var v in c.default)Object.hasOwnProperty.call(c.default,v)&&"default"!==v&&(c[v]=c.default[v])}var f=t.module=new o(r.moduleObj);if(!r.setters)for(var d=0;d<t.importerSetters.length;d++)t.importerSetters[d](f);return f}function c(e,t){return p[e]={key:e,module:t,importerSetters:[],linkRecord:void 0}}var p={},m="undefined"!=typeof Symbol?Symbol():"@@baseObject";o.prototype=Object.create(null),"undefined"!=typeof Symbol&&Symbol.toStringTag&&(o.prototype[Symbol.toStringTag]="Module");var v="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,y={};return Object.freeze&&Object.freeze(y),function(e,t,n,d){return function(i){i(function(i){var s={_nodeRequire:v,register:l,registerDynamic:f,registry:{get:function(e){return p[e].module},set:c},newModule:function(e){return new o(e)}};c("@empty",new o({}));for(var a=0;a<t.length;a++)c(t[a],r(arguments[a],{}));d(s);var m=u(e[0]);if(e.length>1)for(var a=1;a<e.length;a++)u(e[a]);return n?m.default:(m instanceof o&&Object.defineProperty(m,"__esModule",{value:!0}),m)})}}}("undefined"!=typeof self?self:global)
 
-(["a"], ["20"], false, function($__System) {
+(["a"], ["22"], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
 $__System.registerDynamic("b", [], true, function ($__require, exports, module) {
   var global = this || self,
@@ -11294,6 +11294,657 @@ $__System.registerDynamic('1a', ['1b'], true, function ($__require, exports, mod
         return isInside;
     }
 });
+$__System.registerDynamic('1c', [], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    /**
+     * Wraps a GeoJSON {@link Geometry} in a GeoJSON {@link Feature}.
+     *
+     * @name feature
+     * @param {Geometry} geometry input geometry
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature} a GeoJSON Feature
+     * @example
+     * var geometry = {
+     *   "type": "Point",
+     *   "coordinates": [110, 50]
+     * };
+     *
+     * var feature = turf.feature(geometry);
+     *
+     * //=feature
+     */
+    function feature(geometry, properties, bbox, id) {
+        if (geometry === undefined) throw new Error('geometry is required');
+        if (properties && properties.constructor !== Object) throw new Error('properties must be an Object');
+
+        var feat = {
+            type: 'Feature',
+            properties: properties || {},
+            geometry: geometry
+        };
+        if (bbox) {
+            if (bbox.length !== 4) throw new Error('bbox must be an Array of 4 numbers');
+            feat.bbox = bbox;
+        }
+        if (id) feat.id = id;
+        return feat;
+    }
+
+    /**
+     * Creates a GeoJSON {@link Geometry} from a Geometry string type & coordinates.
+     * For GeometryCollection type use `helpers.geometryCollection`
+     *
+     * @name geometry
+     * @param {string} type Geometry Type
+     * @param {Array<number>} coordinates Coordinates
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @returns {Geometry} a GeoJSON Geometry
+     * @example
+     * var type = 'Point';
+     * var coordinates = [110, 50];
+     *
+     * var geometry = turf.geometry(type, coordinates);
+     *
+     * //=geometry
+     */
+    function geometry(type, coordinates, bbox) {
+        // Validation
+        if (!type) throw new Error('type is required');
+        if (!coordinates) throw new Error('coordinates is required');
+        if (!Array.isArray(coordinates)) throw new Error('coordinates must be an Array');
+
+        var geom;
+        switch (type) {
+            case 'Point':
+                geom = point(coordinates).geometry;break;
+            case 'LineString':
+                geom = lineString(coordinates).geometry;break;
+            case 'Polygon':
+                geom = polygon(coordinates).geometry;break;
+            case 'MultiPoint':
+                geom = multiPoint(coordinates).geometry;break;
+            case 'MultiLineString':
+                geom = multiLineString(coordinates).geometry;break;
+            case 'MultiPolygon':
+                geom = multiPolygon(coordinates).geometry;break;
+            default:
+                throw new Error(type + ' is invalid');
+        }
+        if (bbox) {
+            if (bbox.length !== 4) throw new Error('bbox must be an Array of 4 numbers');
+            geom.bbox = bbox;
+        }
+        return geom;
+    }
+
+    /**
+     * Takes coordinates and properties (optional) and returns a new {@link Point} feature.
+     *
+     * @name point
+     * @param {Array<number>} coordinates longitude, latitude position (each in decimal degrees)
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<Point>} a Point feature
+     * @example
+     * var point = turf.point([-75.343, 39.984]);
+     *
+     * //=point
+     */
+    function point(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+        if (coordinates.length === undefined) throw new Error('Coordinates must be an array');
+        if (coordinates.length < 2) throw new Error('Coordinates must be at least 2 numbers long');
+        if (typeof coordinates[0] !== 'number' || typeof coordinates[1] !== 'number') throw new Error('Coordinates must contain numbers');
+
+        return feature({
+            type: 'Point',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Takes an array of LinearRings and optionally an {@link Object} with properties and returns a {@link Polygon} feature.
+     *
+     * @name polygon
+     * @param {Array<Array<Array<number>>>} coordinates an array of LinearRings
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<Polygon>} a Polygon feature
+     * @throws {Error} throw an error if a LinearRing of the polygon has too few positions
+     * or if a LinearRing of the Polygon does not have matching Positions at the beginning & end.
+     * @example
+     * var polygon = turf.polygon([[
+     *   [-2.275543, 53.464547],
+     *   [-2.275543, 53.489271],
+     *   [-2.215118, 53.489271],
+     *   [-2.215118, 53.464547],
+     *   [-2.275543, 53.464547]
+     * ]], { name: 'poly1', population: 400});
+     *
+     * //=polygon
+     */
+    function polygon(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+
+        for (var i = 0; i < coordinates.length; i++) {
+            var ring = coordinates[i];
+            if (ring.length < 4) {
+                throw new Error('Each LinearRing of a Polygon must have 4 or more Positions.');
+            }
+            for (var j = 0; j < ring[ring.length - 1].length; j++) {
+                if (ring[ring.length - 1][j] !== ring[0][j]) {
+                    throw new Error('First and last Position are not equivalent.');
+                }
+            }
+        }
+
+        return feature({
+            type: 'Polygon',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Creates a {@link LineString} based on a
+     * coordinate array. Properties can be added optionally.
+     *
+     * @name lineString
+     * @param {Array<Array<number>>} coordinates an array of Positions
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<LineString>} a LineString feature
+     * @throws {Error} if no coordinates are passed
+     * @example
+     * var linestring1 = turf.lineString([
+     *   [-21.964416, 64.148203],
+     *   [-21.956176, 64.141316],
+     *   [-21.93901, 64.135924],
+     *   [-21.927337, 64.136673]
+     * ]);
+     * var linestring2 = turf.lineString([
+     *   [-21.929054, 64.127985],
+     *   [-21.912918, 64.134726],
+     *   [-21.916007, 64.141016],
+     *   [-21.930084, 64.14446]
+     * ], {name: 'line 1', distance: 145});
+     *
+     * //=linestring1
+     *
+     * //=linestring2
+     */
+    function lineString(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+        if (coordinates.length < 2) throw new Error('Coordinates must be an array of two or more positions');
+
+        return feature({
+            type: 'LineString',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Takes one or more {@link Feature|Features} and creates a {@link FeatureCollection}.
+     *
+     * @name featureCollection
+     * @param {Feature[]} features input features
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @returns {FeatureCollection} a FeatureCollection of input features
+     * @example
+     * var features = [
+     *  turf.point([-75.343, 39.984], {name: 'Location A'}),
+     *  turf.point([-75.833, 39.284], {name: 'Location B'}),
+     *  turf.point([-75.534, 39.123], {name: 'Location C'})
+     * ];
+     *
+     * var collection = turf.featureCollection(features);
+     *
+     * //=collection
+     */
+    function featureCollection(features, bbox) {
+        if (!features) throw new Error('No features passed');
+        if (!Array.isArray(features)) throw new Error('features must be an Array');
+
+        var fc = {
+            type: 'FeatureCollection',
+            features: features
+        };
+        if (bbox) fc.bbox = bbox;
+        return fc;
+    }
+
+    /**
+     * Creates a {@link Feature<MultiLineString>} based on a
+     * coordinate array. Properties can be added optionally.
+     *
+     * @name multiLineString
+     * @param {Array<Array<Array<number>>>} coordinates an array of LineStrings
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<MultiLineString>} a MultiLineString feature
+     * @throws {Error} if no coordinates are passed
+     * @example
+     * var multiLine = turf.multiLineString([[[0,0],[10,10]]]);
+     *
+     * //=multiLine
+     */
+    function multiLineString(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+
+        return feature({
+            type: 'MultiLineString',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Creates a {@link Feature<MultiPoint>} based on a
+     * coordinate array. Properties can be added optionally.
+     *
+     * @name multiPoint
+     * @param {Array<Array<number>>} coordinates an array of Positions
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<MultiPoint>} a MultiPoint feature
+     * @throws {Error} if no coordinates are passed
+     * @example
+     * var multiPt = turf.multiPoint([[0,0],[10,10]]);
+     *
+     * //=multiPt
+     */
+    function multiPoint(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+
+        return feature({
+            type: 'MultiPoint',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Creates a {@link Feature<MultiPolygon>} based on a
+     * coordinate array. Properties can be added optionally.
+     *
+     * @name multiPolygon
+     * @param {Array<Array<Array<Array<number>>>>} coordinates an array of Polygons
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<MultiPolygon>} a multipolygon feature
+     * @throws {Error} if no coordinates are passed
+     * @example
+     * var multiPoly = turf.multiPolygon([[[[0,0],[0,10],[10,10],[10,0],[0,0]]]]);
+     *
+     * //=multiPoly
+     *
+     */
+    function multiPolygon(coordinates, properties, bbox, id) {
+        if (!coordinates) throw new Error('No coordinates passed');
+
+        return feature({
+            type: 'MultiPolygon',
+            coordinates: coordinates
+        }, properties, bbox, id);
+    }
+
+    /**
+     * Creates a {@link Feature<GeometryCollection>} based on a
+     * coordinate array. Properties can be added optionally.
+     *
+     * @name geometryCollection
+     * @param {Array<Geometry>} geometries an array of GeoJSON Geometries
+     * @param {Object} [properties={}] an Object of key-value pairs to add as properties
+     * @param {Array<number>} [bbox] BBox [west, south, east, north]
+     * @param {string|number} [id] Identifier
+     * @returns {Feature<GeometryCollection>} a GeoJSON GeometryCollection Feature
+     * @example
+     * var pt = {
+     *     "type": "Point",
+     *       "coordinates": [100, 0]
+     *     };
+     * var line = {
+     *     "type": "LineString",
+     *     "coordinates": [ [101, 0], [102, 1] ]
+     *   };
+     * var collection = turf.geometryCollection([pt, line]);
+     *
+     * //=collection
+     */
+    function geometryCollection(geometries, properties, bbox, id) {
+        if (!geometries) throw new Error('geometries is required');
+        if (!Array.isArray(geometries)) throw new Error('geometries must be an Array');
+
+        return feature({
+            type: 'GeometryCollection',
+            geometries: geometries
+        }, properties, bbox, id);
+    }
+
+    // https://en.wikipedia.org/wiki/Great-circle_distance#Radius_for_spherical_Earth
+    var factors = {
+        miles: 3960,
+        nauticalmiles: 3441.145,
+        degrees: 57.2957795,
+        radians: 1,
+        inches: 250905600,
+        yards: 6969600,
+        meters: 6373000,
+        metres: 6373000,
+        centimeters: 6.373e+8,
+        centimetres: 6.373e+8,
+        kilometers: 6373,
+        kilometres: 6373,
+        feet: 20908792.65
+    };
+
+    var areaFactors = {
+        kilometers: 0.000001,
+        kilometres: 0.000001,
+        meters: 1,
+        metres: 1,
+        centimetres: 10000,
+        millimeter: 1000000,
+        acres: 0.000247105,
+        miles: 3.86e-7,
+        yards: 1.195990046,
+        feet: 10.763910417,
+        inches: 1550.003100006
+    };
+    /**
+     * Round number to precision
+     *
+     * @param {number} num Number
+     * @param {number} [precision=0] Precision
+     * @returns {number} rounded number
+     * @example
+     * turf.round(120.4321)
+     * //=120
+     *
+     * turf.round(120.4321, 2)
+     * //=120.43
+     */
+    function round(num, precision) {
+        if (num === undefined || num === null || isNaN(num)) throw new Error('num is required');
+        if (precision && !(precision >= 0)) throw new Error('precision must be a positive number');
+        var multiplier = Math.pow(10, precision || 0);
+        return Math.round(num * multiplier) / multiplier;
+    }
+
+    /**
+     * Convert a distance measurement (assuming a spherical Earth) from radians to a more friendly unit.
+     * Valid units: miles, nauticalmiles, inches, yards, meters, metres, kilometers, centimeters, feet
+     *
+     * @name radiansToDistance
+     * @param {number} radians in radians across the sphere
+     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers inches, yards, metres, meters, kilometres, kilometers.
+     * @returns {number} distance
+     */
+    function radiansToDistance(radians, units) {
+        if (radians === undefined || radians === null) throw new Error('radians is required');
+
+        var factor = factors[units || 'kilometers'];
+        if (!factor) throw new Error('units is invalid');
+        return radians * factor;
+    }
+
+    /**
+     * Convert a distance measurement (assuming a spherical Earth) from a real-world unit into radians
+     * Valid units: miles, nauticalmiles, inches, yards, meters, metres, kilometers, centimeters, feet
+     *
+     * @name distanceToRadians
+     * @param {number} distance in real units
+     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers inches, yards, metres, meters, kilometres, kilometers.
+     * @returns {number} radians
+     */
+    function distanceToRadians(distance, units) {
+        if (distance === undefined || distance === null) throw new Error('distance is required');
+
+        var factor = factors[units || 'kilometers'];
+        if (!factor) throw new Error('units is invalid');
+        return distance / factor;
+    }
+
+    /**
+     * Convert a distance measurement (assuming a spherical Earth) from a real-world unit into degrees
+     * Valid units: miles, nauticalmiles, inches, yards, meters, metres, centimeters, kilometres, feet
+     *
+     * @name distanceToDegrees
+     * @param {number} distance in real units
+     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers inches, yards, metres, meters, kilometres, kilometers.
+     * @returns {number} degrees
+     */
+    function distanceToDegrees(distance, units) {
+        return radians2degrees(distanceToRadians(distance, units));
+    }
+
+    /**
+     * Converts any bearing angle from the north line direction (positive clockwise)
+     * and returns an angle between 0-360 degrees (positive clockwise), 0 being the north line
+     *
+     * @name bearingToAngle
+     * @param {number} bearing angle, between -180 and +180 degrees
+     * @returns {number} angle between 0 and 360 degrees
+     */
+    function bearingToAngle(bearing) {
+        if (bearing === null || bearing === undefined) throw new Error('bearing is required');
+
+        var angle = bearing % 360;
+        if (angle < 0) angle += 360;
+        return angle;
+    }
+
+    /**
+     * Converts an angle in radians to degrees
+     *
+     * @name radians2degrees
+     * @param {number} radians angle in radians
+     * @returns {number} degrees between 0 and 360 degrees
+     */
+    function radians2degrees(radians) {
+        if (radians === null || radians === undefined) throw new Error('radians is required');
+
+        var degrees = radians % (2 * Math.PI);
+        return degrees * 180 / Math.PI;
+    }
+
+    /**
+     * Converts an angle in degrees to radians
+     *
+     * @name degrees2radians
+     * @param {number} degrees angle between 0 and 360 degrees
+     * @returns {number} angle in radians
+     */
+    function degrees2radians(degrees) {
+        if (degrees === null || degrees === undefined) throw new Error('degrees is required');
+
+        var radians = degrees % 360;
+        return radians * Math.PI / 180;
+    }
+
+    /**
+     * Converts a distance to the requested unit.
+     * Valid units: miles, nauticalmiles, inches, yards, meters, metres, kilometers, centimeters, feet
+     *
+     * @param {number} distance to be converted
+     * @param {string} originalUnit of the distance
+     * @param {string} [finalUnit=kilometers] returned unit
+     * @returns {number} the converted distance
+     */
+    function convertDistance(distance, originalUnit, finalUnit) {
+        if (distance === null || distance === undefined) throw new Error('distance is required');
+        if (!(distance >= 0)) throw new Error('distance must be a positive number');
+
+        var convertedDistance = radiansToDistance(distanceToRadians(distance, originalUnit), finalUnit || 'kilometers');
+        return convertedDistance;
+    }
+
+    /**
+     * Converts a area to the requested unit.
+     * Valid units: kilometers, kilometres, meters, metres, centimetres, millimeter, acre, mile, yard, foot, inch
+     * @param {number} area to be converted
+     * @param {string} [originalUnit=meters] of the distance
+     * @param {string} [finalUnit=kilometers] returned unit
+     * @returns {number} the converted distance
+     */
+    function convertArea(area, originalUnit, finalUnit) {
+        if (area === null || area === undefined) throw new Error('area is required');
+        if (!(area >= 0)) throw new Error('area must be a positive number');
+
+        var startFactor = areaFactors[originalUnit || 'meters'];
+        if (!startFactor) throw new Error('invalid original units');
+
+        var finalFactor = areaFactors[finalUnit || 'kilometers'];
+        if (!finalFactor) throw new Error('invalid final units');
+
+        return area / startFactor * finalFactor;
+    }
+
+    module.exports = {
+        feature: feature,
+        geometry: geometry,
+        featureCollection: featureCollection,
+        geometryCollection: geometryCollection,
+        point: point,
+        multiPoint: multiPoint,
+        lineString: lineString,
+        multiLineString: multiLineString,
+        polygon: polygon,
+        multiPolygon: multiPolygon,
+        radiansToDistance: radiansToDistance,
+        distanceToRadians: distanceToRadians,
+        distanceToDegrees: distanceToDegrees,
+        radians2degrees: radians2degrees,
+        degrees2radians: degrees2radians,
+        bearingToAngle: bearingToAngle,
+        convertDistance: convertDistance,
+        convertArea: convertArea,
+        round: round
+    };
+});
+$__System.registerDynamic('1d', ['1c'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var point = $__require('1c').point;
+
+    /**
+     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
+     *
+     * @name kinks
+     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
+     * @returns {FeatureCollection<Point>} self-intersections
+     * @example
+     * var poly = turf.polygon([[
+     *   [-12.034835, 8.901183],
+     *   [-12.060413, 8.899826],
+     *   [-12.03638, 8.873199],
+     *   [-12.059383, 8.871418],
+     *   [-12.034835, 8.901183]
+     * ]]);
+     *
+     * var kinks = turf.kinks(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, kinks]
+     */
+    module.exports = function (featureIn) {
+        var coordinates;
+        var feature;
+        var results = {
+            type: 'FeatureCollection',
+            features: []
+        };
+        if (featureIn.type === 'Feature') {
+            feature = featureIn.geometry;
+        } else {
+            feature = featureIn;
+        }
+        if (feature.type === 'LineString') {
+            coordinates = [feature.coordinates];
+        } else if (feature.type === 'MultiLineString') {
+            coordinates = feature.coordinates;
+        } else if (feature.type === 'MultiPolygon') {
+            coordinates = [].concat.apply([], feature.coordinates);
+        } else if (feature.type === 'Polygon') {
+            coordinates = feature.coordinates;
+        } else {
+            throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
+        }
+        coordinates.forEach(function (segment1) {
+            coordinates.forEach(function (segment2) {
+                for (var i = 0; i < segment1.length - 1; i++) {
+                    for (var k = 0; k < segment2.length - 1; k++) {
+                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
+                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
+                            continue;
+                        }
+
+                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
+                        if (intersection) {
+                            results.features.push(point([intersection[0], intersection[1]]));
+                        }
+                    }
+                }
+            });
+        });
+        return results;
+    };
+
+    // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
+    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+        var denominator,
+            a,
+            b,
+            numerator1,
+            numerator2,
+            result = {
+            x: null,
+            y: null,
+            onLine1: false,
+            onLine2: false
+        };
+        denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY);
+        if (denominator === 0) {
+            if (result.x !== null && result.y !== null) {
+                return result;
+            } else {
+                return false;
+            }
+        }
+        a = line1StartY - line2StartY;
+        b = line1StartX - line2StartX;
+        numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b;
+        numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b;
+        a = numerator1 / denominator;
+        b = numerator2 / denominator;
+
+        // if we cast these lines infinitely in both directions, they intersect here:
+        result.x = line1StartX + a * (line1EndX - line1StartX);
+        result.y = line1StartY + a * (line1EndY - line1StartY);
+
+        // if line1 is a segment and line2 is infinite, they intersect if:
+        if (a >= 0 && a <= 1) {
+            result.onLine1 = true;
+        }
+        // if line2 is a segment and line1 is infinite, they intersect if:
+        if (b >= 0 && b <= 1) {
+            result.onLine2 = true;
+        }
+        // if line1 and line2 are segments, they intersect if both of the above are true
+        if (result.onLine1 && result.onLine2) {
+            return [result.x, result.y];
+        } else {
+            return false;
+        }
+    }
+});
 $__System.registerDynamic('15', ['1b', 'f'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
@@ -11899,7 +12550,7 @@ $__System.registerDynamic('17', ['1b', 'f'], true, function ($__require, exports
         return point([radians2degrees * longitude2, radians2degrees * latitude2]);
     };
 });
-$__System.registerDynamic('1c', ['15', 'f', '16', '17'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1e', ['15', 'f', '16', '17'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var distance = $__require('15');
@@ -12049,11 +12700,11 @@ $__System.registerDynamic('1c', ['15', 'f', '16', '17'], true, function ($__requ
         }
     }
 });
-$__System.registerDynamic('1d', ['f', '1c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1f', ['f', '1e'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var linestring = $__require('f').lineString;
-    var pointOnLine = $__require('1c');
+    var pointOnLine = $__require('1e');
 
     /**
      * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
@@ -12133,7 +12784,7 @@ $__System.registerDynamic('1d', ['f', '1c'], true, function ($__require, exports
         return clipLine;
     };
 });
-$__System.registerDynamic('1e', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('20', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -12167,7 +12818,7 @@ $__System.registerDynamic('1e', [], true, function ($__require, exports, module)
     };
   };
 });
-$__System.registerDynamic("1f", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("21", [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -12195,10 +12846,10 @@ $__System.registerDynamic("1f", [], true, function ($__require, exports, module)
     };
   };
 });
-$__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d', '1e', '1f'], function (_export, _context) {
+$__System.register('a', ['22', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d', '1f', '20', '21'], function (_export, _context) {
     "use strict";
 
-    var gmaps, turf_linestring, turf_polygon, turf_centroid, turf_union, turf_simplify, turf_along, turf_buffer, turf_inside, turf_line_slice, turf_point, turf_featurecollection, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, polygonToFeaturePolygon, arrayToFeaturePoints, centroid, ig_turfhelper;
+    var gmaps, turf_linestring, turf_polygon, turf_centroid, turf_union, turf_simplify, turf_along, turf_buffer, turf_inside, turk_kinks, turf_line_slice, turf_point, turf_featurecollection, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, polygonToFeaturePolygon, arrayToFeaturePoints, centroid, ig_turfhelper;
 
 
     function Wicket() {
@@ -14589,6 +15240,11 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             };
         }
     }
+    /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
 
     /**
      * Transforma un array de LatLng en un array de coordenadas [lng,lat]
@@ -14822,6 +15478,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
     }
 
     /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
+
+    /**
      * Transforma un array de geometrías WKT en un FeatureCollection
      * @param  {Array<String>} wktArray Array de string WKT
      * @return {Object}          FeatureCollection
@@ -14930,6 +15592,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
 
     /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
+
+    /**
      * Simplifica una geometría usando Douglas Peucker
      * @param  {Feature.<Polygon|MultiPolygon>} geometry    polígono o multipolígono geoJson
      * @param  {number} tolerance   [description]
@@ -14983,6 +15651,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
         }
     }
 
+    /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
+
     function along(arrayLatLng, distance) {
 
         if (arrayLatLng instanceof gmaps.Polyline) {
@@ -14995,6 +15669,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
     }
 
     /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
+
+    /**
      * Superpone dos Feature.<Polygon>
      * @param  {Feature.<Polygon>} poly1 [description]
      * @param  {Feature.<Polygon>} poly2 [description]
@@ -15004,6 +15684,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
         var FeatureUnion = turf_union(poly1, poly2);
         return FeatureUnion;
     }
+
+    /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
 
     /**
      * Convierte un path de google LatLng en un Feature.<Polygon>
@@ -15048,6 +15734,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
         //debug('after buffer ' + comment, buffered, 'will return', buffered.features[0]);
     }
+
+    /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
 
     /**
      * Filtra un array determinando si los puntos están dentro de un Polígono GeoJSON
@@ -15272,6 +15964,12 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
         return baseIsEqual(value, other);
     }
 
+    /**
+     * The Google Maps Namespace
+     * @external "google.maps"
+     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+     */
+
     function diffCoords(coord1, coord2) {
         var vector = [Math.abs(coord1[0] - coord2[0]), Math.abs(coord1[1] - coord2[1])];
         return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
@@ -15380,6 +16078,30 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
     }
 
     /**
+     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
+     *
+     * @name kinks
+     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
+     * @returns {FeatureCollection<Point>} self-intersections
+     * @example
+     * var poly = turf.polygon([[
+     *   [-12.034835, 8.901183],
+     *   [-12.060413, 8.899826],
+     *   [-12.03638, 8.873199],
+     *   [-12.059383, 8.871418],
+     *   [-12.034835, 8.901183]
+     * ]]);
+     *
+     * var kinks = turf.kinks(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, kinks]
+     */
+    function kinks(featureIn) {
+        return turk_kinks(featureIn);
+    }
+
+    /**
      * Encuentra los puntos en donde dos polilíneas se cruzan
      * @param  {Array.<external:google.maps.LatLng>} arrayLatLng1 array de posiciones {@link external:google.maps.LatLng}
      * @param  {Array.<external:google.maps.LatLng>} arrayLatLng2 array de posiciones {@link external:google.maps.LatLng}
@@ -15465,11 +16187,13 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
         }, function (_a) {
             turf_inside = _a.default;
         }, function (_d) {
-            turf_line_slice = _d.default;
-        }, function (_e2) {
-            turf_point = _e2.default;
+            turk_kinks = _d.default;
         }, function (_f) {
-            turf_featurecollection = _f.default;
+            turf_line_slice = _f.default;
+        }, function (_6) {
+            turf_point = _6.default;
+        }, function (_7) {
+            turf_featurecollection = _7.default;
         }],
         execute: function () {
             Wkt = function Wkt(obj) {
@@ -15540,14 +16264,14 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
             /**
              * An object for reading WKT strings and writing geographic features
-             * @constructor this.Wkt.Wkt
+             * @constructor Wkt.Wkt
              * @param   initializer {String}    An optional WKT string for immediate read
              * @property            {Array}     components      - Holder for atomic geometry objects (internal representation of geometric components)
              * @property            {String}    delimiter       - The default delimiter for separating components of atomic geometry (coordinates)
              * @property            {Object}    regExes         - Some regular expressions copied from OpenLayers.Format.WKT.js
              * @property            {String}    type            - The Well-Known Text name (e.g. 'point') of the geometry
              * @property            {Boolean}   wrapVerticies   - True to wrap vertices in MULTIPOINT geometries; If true: MULTIPOINT((30 10),(10 30),(40 40)); If false: MULTIPOINT(30 10,10 30,40 40)
-             * @return              {this.Wkt.Wkt}
+             * @return              {Wkt.Wkt}
              * @memberof Wkt
              */
             Wkt.Wkt = function (initializer) {
@@ -15601,7 +16325,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * Returns true if the internal geometry is a collection of geometries.
              * @return  {Boolean}   Returns true when it is a collection
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.isCollection = function () {
@@ -15623,7 +16347,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
              * @param   a   {Object}    An object with x and y properties
              * @param   b   {Object}    An object with x and y properties
              * @return      {Boolean}
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.sameCoords = function (a, b) {
@@ -15634,8 +16358,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
              * Sets internal geometry (components) from framework geometry (e.g.
              * Google Polygon objects or google.maps.Polygon).
              * @param   obj {Object}    The framework-dependent geometry representation
-             * @return      {this.Wkt.Wkt}   The object itself
-             * @memberof this.Wkt.Wkt
+             * @return      {Wkt.Wkt}   The object itself
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.fromObject = function (obj) {
@@ -15658,7 +16382,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
              * construction methods and available geometry classes.
              * @param   config  {Object}    An optional framework-dependent properties specification
              * @return          {Object}    The framework-dependent geometry representation
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.toObject = function (config) {
@@ -15672,7 +16396,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
             /**
              * Returns the WKT string representation; the same as the write() method.
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.toString = function (config) {
@@ -15682,8 +16406,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * Parses a JSON representation as an Object.
              * @param   obj {Object}    An Object with the GeoJSON schema
-             * @return  {this.Wkt.Wkt}  The object itself
-             * @memberof this.Wkt.Wkt
+             * @return  {Wkt.Wkt}  The object itself
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.fromJson = function (obj) {
@@ -15766,7 +16490,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * Creates a JSON representation, with the GeoJSON schema, of the geometry.
              * @return    {Object}    The corresponding GeoJSON representation
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.toJson = function () {
@@ -15861,13 +16585,13 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             };
 
             /**
-             * Absorbs the geometry of another this.Wkt.Wkt instance, merging it with its own,
+             * Absorbs the geometry of another Wkt.Wkt instance, merging it with its own,
              * creating a collection (MULTI-geometry) based on their types, which must agree.
              * For example, creates a MULTIPOLYGON from a POLYGON type merged with another
              * POLYGON type, or adds a POLYGON instance to a MULTIPOLYGON instance.
              * @param   wkt {String}    A Wkt.Wkt object
-             * @return  {this.Wkt.Wkt}  The object itself
-             * @memberof this.Wkt.Wkt
+             * @return  {Wkt.Wkt}  The object itself
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.merge = function (wkt) {
@@ -15875,7 +16599,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
 
                 if (this.type !== wkt.type) {
                     if (this.type.slice(5, this.type.length) !== wkt.type) {
-                        throw TypeError('The input geometry types must agree or the calling this.Wkt.Wkt instance must be a multigeometry of the other');
+                        throw TypeError('The input geometry types must agree or the calling Wkt.Wkt instance must be a multigeometry of the other');
                     }
                 }
 
@@ -15904,8 +16628,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * Reads a WKT string, validating and incorporating it.
              * @param   str {String}    A WKT or GeoJSON string
-             * @return  {this.Wkt.Wkt}  The object itself
-             * @memberof this.Wkt.Wkt
+             * @return  {Wkt.Wkt}  The object itself
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.read = function (str) {
@@ -15944,7 +16668,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
              * Writes a WKT string.
              * @param   components  {Array}     An Array of internal geometry objects
              * @return              {String}    The corresponding WKT representation
-             * @memberof this.Wkt.Wkt
+             * @memberof Wkt.Wkt
              * @method
              */
             Wkt.Wkt.prototype.write = function (components) {
@@ -15987,8 +16711,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * This object contains functions as property names that extract WKT
              * strings from the internal representation.
-             * @memberof this.Wkt.Wkt
-             * @namespace this.Wkt.Wkt.extract
+             * @memberof Wkt.Wkt
+             * @namespace Wkt.Wkt.extract
              * @instance
              */
             Wkt.Wkt.prototype.extract = {
@@ -15996,7 +16720,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing atomic (point) geometry
                  * @param   point   {Object}    An object with x and y properties
                  * @return          {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 point: function point(_point) {
@@ -16007,7 +16731,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing multiple atoms (points)
                  * @param   multipoint  {Array}     Multiple x-and-y objects
                  * @return              {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 multipoint: function multipoint(_multipoint) {
@@ -16032,7 +16756,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing a chain (linestring) of atoms
                  * @param   linestring  {Array}     Multiple x-and-y objects
                  * @return              {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 linestring: function linestring(_linestring) {
@@ -16044,7 +16768,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing multiple chains (multilinestring) of atoms
                  * @param   multilinestring {Array}     Multiple of multiple x-and-y objects
                  * @return                  {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 multilinestring: function multilinestring(_multilinestring) {
@@ -16066,7 +16790,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing multiple atoms in closed series (polygon)
                  * @param   polygon {Array}     Collection of ordered x-and-y objects
                  * @return          {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 polygon: function polygon(_polygon) {
@@ -16078,7 +16802,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing multiple closed series (multipolygons) of multiple atoms
                  * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
                  * @return                  {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 multipolygon: function multipolygon(_multipolygon) {
@@ -16094,7 +16818,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Return a WKT string representing a 2DBox
                  * @param   multipolygon    {Array}     Collection of ordered x-and-y objects
                  * @return                  {String}    The WKT representation
-                 * @memberof this.Wkt.Wkt.extract
+                 * @memberof Wkt.Wkt.extract
                  * @instance
                  */
                 box: function box(_box) {
@@ -16109,8 +16833,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             /**
              * This object contains functions as property names that ingest WKT
              * strings into the internal representation.
-             * @memberof this.Wkt.Wkt
-             * @namespace this.Wkt.Wkt.ingest
+             * @memberof Wkt.Wkt
+             * @namespace Wkt.Wkt.ingest
              * @instance
              */
             Wkt.Wkt.prototype.ingest = {
@@ -16118,7 +16842,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return point feature given a point WKT fragment.
                  * @param   str {String}    A WKT fragment representing the point
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 point: function point(str) {
@@ -16133,7 +16857,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return a multipoint feature given a multipoint WKT fragment.
                  * @param   str {String}    A WKT fragment representing the multipoint
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 multipoint: function multipoint(str) {
@@ -16149,7 +16873,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return a linestring feature given a linestring WKT fragment.
                  * @param   str {String}    A WKT fragment representing the linestring
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 linestring: function linestring(str) {
@@ -16170,7 +16894,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return a multilinestring feature given a multilinestring WKT fragment.
                  * @param   str {String}    A WKT fragment representing the multilinestring
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 multilinestring: function multilinestring(str) {
@@ -16194,7 +16918,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return a polygon feature given a polygon WKT fragment.
                  * @param   str {String}    A WKT fragment representing the polygon
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 polygon: function polygon(str) {
@@ -16232,7 +16956,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return box vertices (which would become the Rectangle bounds) given a Box WKT fragment.
                  * @param   str {String}    A WKT fragment representing the box
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 box: function box(str) {
@@ -16254,7 +16978,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return a multipolygon feature given a multipolygon WKT fragment.
                  * @param   str {String}    A WKT fragment representing the multipolygon
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 multipolygon: function multipolygon(str) {
@@ -16271,7 +16995,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 /**
                  * Return an array of features given a geometrycollection WKT fragment.
                  * @param   str {String}    A WKT fragment representing the geometry collection
-                 * @memberof this.Wkt.Wkt.ingest
+                 * @memberof Wkt.Wkt.ingest
                  * @instance
                  */
                 geometrycollection: function geometrycollection(str) {
@@ -16297,7 +17021,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Creates the framework's equivalent point geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {gmaps.Marker}
+                 * @return              {external:google.maps.Marker}
                  */
                 point: function point(config, component) {
                     var c = component || this.components;
@@ -16336,7 +17060,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Creates the framework's equivalent linestring geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {gmaps.Polyline}
+                 * @return              {external:google.maps.Polyline}
                  */
                 linestring: function linestring(config, component) {
                     var i, c;
@@ -16385,7 +17109,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Creates the framework's equivalent Box or Rectangle geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {gmaps.Rectangle}
+                 * @return              {external:google.maps.Rectangle}
                  */
                 box: function box(config, component) {
                     var c = component || this.components;
@@ -16401,7 +17125,7 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                  * Creates the framework's equivalent polygon geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {gmaps.Polygon}
+                 * @return              {external:google.maps.Polygon}
                  */
                 polygon: function polygon(config, component) {
                     var j, k, c, rings, verts;
@@ -17305,7 +18029,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
                 toLatLngs: toLatLngs,
                 toCoords: toCoords,
                 trimPaths: trimPaths,
-                union: union
+                union: union,
+                kinks: kinks
             };
 
             _export('along', along);
@@ -17331,6 +18056,8 @@ $__System.register('a', ['20', 'b', 'c', 'e', '10', '13', '14', '19', '1a', '1d'
             _export('toCoords', toCoords);
 
             _export('trimPaths', trimPaths);
+
+            _export('kinks', kinks);
 
             _export('union', union);
 

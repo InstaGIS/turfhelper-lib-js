@@ -12,6 +12,12 @@ import {
 } from './utils.js';
 
 /**
+ * The Google Maps Namespace
+ * @external "google.maps"
+ * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+ */
+
+/**
  * Simplifica una geometría usando Douglas Peucker
  * @param  {Feature.<Polygon|MultiPolygon>} geometry    polígono o multipolígono geoJson
  * @param  {number} tolerance   [description]

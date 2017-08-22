@@ -33,7 +33,8 @@ SystemJS.config({
             "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
             "process": "npm:jspm-nodelibs-process@0.2.1",
-            "turf-featurecollection": "npm:turf-featurecollection@1.0.1"
+            "turf-featurecollection": "npm:turf-featurecollection@1.0.1",
+            "@turf/kinks": "npm:@turf/kinks@4.6.0"
         },
         "packages": {
             "npm:turf-line-slice@3.0.12": {
@@ -115,6 +116,11 @@ SystemJS.config({
             "npm:turf-point@2.0.1": {
                 "map": {
                     "minimist": "npm:minimist@1.2.0"
+                }
+            },
+            "npm:@turf/kinks@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0"
                 }
             }
         }

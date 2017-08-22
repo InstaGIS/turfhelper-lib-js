@@ -5,6 +5,12 @@ import {
 }
 from 'lodash-es/isEqual.js';
 
+/**
+ * The Google Maps Namespace
+ * @external "google.maps"
+ * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
+ */
+
 function diffCoords(coord1, coord2) {
 	var vector = [Math.abs(coord1[0] - coord2[0]), Math.abs(coord1[1] - coord2[1])];
 	return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));

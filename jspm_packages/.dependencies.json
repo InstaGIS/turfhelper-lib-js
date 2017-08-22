@@ -200,5 +200,15 @@
   "npm:jspm-nodelibs-fs@0.2.1": {
     "deps": {},
     "peerDeps": {}
+  },
+  "npm:@turf/kinks@4.6.0": {
+    "deps": {
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/helpers@4.6.0": {
+    "deps": {},
+    "peerDeps": {}
   }
 }

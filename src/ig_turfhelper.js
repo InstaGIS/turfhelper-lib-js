@@ -57,6 +57,7 @@ import {
 } from './components/point_in_polygon.js';
 
 import {
+    kinks,
     trimPaths
 } from './components/trimpaths.js';
 
@@ -78,6 +79,7 @@ export {
     toLatLngs,
     toCoords,
     trimPaths,
+    kinks,
     union
 };
 
@@ -94,5 +96,6 @@ export default {
     toLatLngs: toLatLngs,
     toCoords: toCoords,
     trimPaths: trimPaths,
-    union: union
+    union: union,
+    kinks: kinks
 };
