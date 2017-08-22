@@ -23,9 +23,15 @@ build:
 
 
 update_version:
+ifeq ($(v),)
+	$(error v is undefined)
+else ifeq ($(v),${VERSION})
+	$(error that version is already the current version)
+endif
 	@echo "Current version is " ${VERSION}
 	@echo "Next version is " $(v)
 	sed -i s/"$(VERSION)"/"$(v)"/g package.json
+
 
 tag_and_push:
 		git add --all
