@@ -1,6 +1,6 @@
 (function (window, QUnit, undefined) {
 
-  QUnit.config.noglobals = true;
+  QUnit.config.noglobals = false;
 
   console.log('_ is', _.VERSION);
 

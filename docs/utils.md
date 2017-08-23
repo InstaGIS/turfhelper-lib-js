@@ -48,7 +48,7 @@ donde cada Feature es un punto del array de entrada
 
 **Parameters**
 
--   `latLngArray` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)>** array de posiciones [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)
+-   `latLngArray` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | google.maps.MVCArray)** array de posiciones [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)
 
 Returns **[FeatureCollection](http://geojson.org/geojson-spec.html#feature-collection-objects)** geojson FeatureCollection
 

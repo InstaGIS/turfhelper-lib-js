@@ -4,6 +4,7 @@ import {
     Wicket
 } from './wicket_helper.js';
 
+
 import {
     default as _map
 } from 'lodash-es/map.js';
@@ -13,6 +14,7 @@ import {
 } from 'lodash-es/forEach.js';
 
 import {
+    toCoord,
     toCoords
 } from './coords_to_latlng.js';
 
@@ -139,26 +141,27 @@ function polygonToFeaturePolygon(object) {
 /**
  * Transforma un array de gmaps.LatLng en un featurecollection geoJson
  * donde cada Feature es un punto del array de entrada
- * @param  {Array<google.maps.LatLng>} latLngArray array de posiciones {@link google.maps.LatLng}
+ * @param  {Array<google.maps.LatLng>|google.maps.MVCArray} latLngArray array de posiciones {@link google.maps.LatLng}
  * @return {FeatureCollection}             geojson FeatureCollection
  */
 function arrayToFeaturePoints(latLngArray) {
+
 
     var FeatureCollection = {
         "type": "FeatureCollection",
         "features": []
     };
-    var features = _map(latLngArray, function (latLng) {
-        return {
+    latLngArray.forEach(function (latLng) {
+        var Feature = {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: [latLng.lng(), latLng.lat()]
+                coordinates: toCoord(latLng)
             }
         };
+        FeatureCollection.features.push(Feature);
     });
 
-    FeatureCollection.features = features;
     return FeatureCollection;
 
 }

@@ -35,7 +35,7 @@ function toCoord(LatLng) {
 		return [LatLng.lng(), LatLng.lat()];
 	} else if (LatLng.lat && LatLng.lng) {
 		return [LatLng.lng, LatLng.lat];
-	} else if (LatLng.length && LatLng.length === 2) {
+	} else if (LatLng.length && LatLng.length >= 2) {
 		return LatLng;
 	} else {
 		throw new Error('google.maps is not present in the global scope')

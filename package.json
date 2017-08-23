@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.1.5",
+  "version": "17.1.6",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -60,12 +60,14 @@
     },
     "format": "amd",
     "dependencies": {
-      "@turf/truncate": "npm:@turf/truncate@^4.6.0"
+      "@turf/truncate": "npm:@turf/truncate@^4.6.0",
+      "@turf/unkink-polygon": "npm:@turf/unkink-polygon@^4.6.0"
     },
     "devDependencies": {
       "@turf/along": "npm:@turf/along@^4.6.0",
       "@turf/buffer": "npm:@turf/buffer@^4.6.1",
       "@turf/centroid": "npm:@turf/centroid@^4.6.1",
+      "@turf/concave": "npm:@turf/concave@^4.6.0",
       "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/inside": "npm:@turf/inside@^4.6.0",
       "@turf/kinks": "npm:@turf/kinks@^4.6.0",
@@ -78,6 +80,25 @@
       "fs": "npm:jspm-nodelibs-fs@^0.2.0",
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21",
       "gmap": "npm:amd-googlemaps-loader@^1.8.5"
+    },
+    "overrides": {
+      "npm:debug@2.6.8": {
+        "main": "src/browser.js",
+        "jspmNodeConversion": false,
+        "format": "cjs",
+        "map": {
+          "./src/browser.js": {
+            "node": "./src/node.js"
+          },
+          "./node.js": {
+            "browser": "./src/browser.js"
+          },
+          "fs": "@node/fs",
+          "net": "@node/net",
+          "tty": "@node/tty",
+          "util": "@node/util"
+        }
+      }
     }
   }
 }

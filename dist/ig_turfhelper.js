@@ -1,6 +1,6 @@
 !function(e){function t(e){Object.defineProperty(this,e,{enumerable:!0,get:function(){return this[m][e]}})}function r(e){var t;if(e&&e.__esModule){t={};for(var r in e)Object.hasOwnProperty.call(e,r)&&(t[r]=e[r]);t.__useDefault&&delete t.__useDefault,t.__esModule=!0}else{if("[object Module]"===Object.prototype.toString.call(e)||"undefined"!=typeof System&&System.isModule&&System.isModule(e))return e;t={default:e,__useDefault:!0}}return new o(t)}function o(e){Object.defineProperty(this,m,{value:e}),Object.keys(e).forEach(t,this)}function n(e){return"@node/"===e.substr(0,6)?c(e,r(v(e.substr(6))),{}):p[e]}function u(e){var t=n(e);if(!t)throw new Error('Module "'+e+'" expected, but not contained in build.');if(t.module)return t.module;var r=t.linkRecord;return d(t,r),a(t,r,[]),t.module}function d(e,t){if(!t.depLoads){t.declare&&i(e,t),t.depLoads=[];for(var r=0;r<t.deps.length;r++){var o=n(t.deps[r]);t.depLoads.push(o),o.linkRecord&&d(o,o.linkRecord);var u=t.setters&&t.setters[r];u&&(u(o.module||o.linkRecord.moduleObj),o.importerSetters.push(u))}return e}}function i(t,r){var o=r.moduleObj,n=t.importerSetters,u=!1,d=r.declare.call(e,function(e,t){if(!u){if("object"==typeof e)for(var r in e)"__useDefault"!==r&&(o[r]=e[r]);else o[e]=t;u=!0;for(var d=0;d<n.length;d++)n[d](o);return u=!1,t}},{id:t.key});"function"!=typeof d?(r.setters=d.setters,r.execute=d.execute):(r.setters=[],r.execute=d)}function l(e,t,r){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:r,setters:void 0,execute:void 0,moduleObj:{}}}}function f(e,t,r,o){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:void 0,execute:o,executingRequire:r,moduleObj:{default:{},__useDefault:!0},setters:void 0}}}function s(e,t,r){return function(o){for(var n=0;n<e.length;n++)if(e[n]===o){var u,d=t[n],i=d.linkRecord;return u=i?-1===r.indexOf(d)?a(d,i,r):i.moduleObj:d.module,u.__useDefault?u.default:u}}}function a(t,r,n){if(n.push(t),t.module)return t.module;var u;if(r.setters){for(var d=0;d<r.deps.length;d++){var i=r.depLoads[d],l=i.linkRecord;l&&-1===n.indexOf(i)&&(u=a(i,l,l.setters?n:[]))}r.execute.call(y)}else{var f={id:t.key},c=r.moduleObj;Object.defineProperty(f,"exports",{configurable:!0,set:function(e){c.default=e},get:function(){return c.default}});var p=s(r.deps,r.depLoads,n);if(!r.executingRequire)for(var d=0;d<r.deps.length;d++)p(r.deps[d]);var m=r.execute.call(e,p,c.default,f);if(void 0!==m?c.default=m:f.exports!==c.default&&(c.default=f.exports),c.default&&c.default.__esModule)for(var v in c.default)Object.hasOwnProperty.call(c.default,v)&&"default"!==v&&(c[v]=c.default[v])}var f=t.module=new o(r.moduleObj);if(!r.setters)for(var d=0;d<t.importerSetters.length;d++)t.importerSetters[d](f);return f}function c(e,t){return p[e]={key:e,module:t,importerSetters:[],linkRecord:void 0}}var p={},m="undefined"!=typeof Symbol?Symbol():"@@baseObject";o.prototype=Object.create(null),"undefined"!=typeof Symbol&&Symbol.toStringTag&&(o.prototype[Symbol.toStringTag]="Module");var v="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,y={};return Object.freeze&&Object.freeze(y),function(e,t,n,d){return function(i){i(function(i){var s={_nodeRequire:v,register:l,registerDynamic:f,registry:{get:function(e){return p[e].module},set:c},newModule:function(e){return new o(e)}};c("@empty",new o({}));for(var a=0;a<t.length;a++)c(t[a],r(arguments[a],{}));d(s);var m=u(e[0]);if(e.length>1)for(var a=1;a<e.length;a++)u(e[a]);return n?m.default:(m instanceof o&&Object.defineProperty(m,"__esModule",{value:!0}),m)})}}}("undefined"!=typeof self?self:global)
 
-(["a"], ["29"], false, function($__System) {
+(["a"], ["35"], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
 $__System.registerDynamic('b', ['c', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
@@ -36,10 +36,257 @@ $__System.registerDynamic('b', ['c', 'd'], true, function ($__require, exports, 
         return point([xSum / len, ySum / len], properties);
     };
 });
-$__System.registerDynamic('e', ['f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('e', ['d'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var jsts = $__require('f');
+    //http://en.wikipedia.org/wiki/Delaunay_triangulation
+    //https://github.com/ironwallaby/delaunay
+    var helpers = $__require('d');
+    var polygon = helpers.polygon;
+    var featurecollection = helpers.featureCollection;
+
+    /**
+     * Takes a set of {@link Point|points} and creates a
+     * [Triangulated Irregular Network](http://en.wikipedia.org/wiki/Triangulated_irregular_network),
+     * or a TIN for short, returned as a collection of Polygons. These are often used
+     * for developing elevation contour maps or stepped heat visualizations.
+     *
+     * If an optional z-value property is provided then it is added as properties called `a`, `b`,
+     * and `c` representing its value at each of the points that represent the corners of the
+     * triangle.
+     *
+     * @name tin
+     * @param {FeatureCollection<Point>} points input points
+     * @param {String} [z] name of the property from which to pull z values
+     * This is optional: if not given, then there will be no extra data added to the derived triangles.
+     * @returns {FeatureCollection<Polygon>} TIN output
+     * @example
+     * // generate some random point data
+     * var points = turf.random('points', 30, {
+     *   bbox: [50, 30, 70, 50]
+     * });
+     * // add a random property to each point between 0 and 9
+     * for (var i = 0; i < points.features.length; i++) {
+     *   points.features[i].properties.z = ~~(Math.random() * 9);
+     * }
+     * var tin = turf.tin(points, 'z');
+     *
+     * //addToMap
+     * var addToMap = [tin, points]
+     * for (var i = 0; i < tin.features.length; i++) {
+     *   var properties  = tin.features[i].properties;
+     *   properties.fill = '#' + properties.a + properties.b + properties.c;
+     * }
+     */
+    module.exports = function (points, z) {
+        if (points.type !== 'FeatureCollection') throw new Error('points must be a FeatureCollection');
+        //break down points
+        var isPointZ = false;
+        return featurecollection(triangulate(points.features.map(function (p) {
+            var point = {
+                x: p.geometry.coordinates[0],
+                y: p.geometry.coordinates[1]
+            };
+            if (z) {
+                point.z = p.properties[z];
+            } else if (p.geometry.coordinates.length === 3) {
+                isPointZ = true;
+                point.z = p.geometry.coordinates[2];
+            }
+            return point;
+        })).map(function (triangle) {
+
+            var a = [triangle.a.x, triangle.a.y];
+            var b = [triangle.b.x, triangle.b.y];
+            var c = [triangle.c.x, triangle.c.y];
+            var properties = {};
+
+            // Add z coordinates to triangle points if user passed
+            // them in that way otherwise add it as a property.
+            if (isPointZ) {
+                a.push(triangle.a.z);
+                b.push(triangle.b.z);
+                c.push(triangle.c.z);
+            } else {
+                properties = {
+                    a: triangle.a.z,
+                    b: triangle.b.z,
+                    c: triangle.c.z
+                };
+            }
+
+            return polygon([[a, b, c, a]], properties);
+        }));
+    };
+
+    function Triangle(a, b, c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+
+        var A = b.x - a.x,
+            B = b.y - a.y,
+            C = c.x - a.x,
+            D = c.y - a.y,
+            E = A * (a.x + b.x) + B * (a.y + b.y),
+            F = C * (a.x + c.x) + D * (a.y + c.y),
+            G = 2 * (A * (c.y - b.y) - B * (c.x - b.x)),
+            dx,
+            dy;
+
+        // If the points of the triangle are collinear, then just find the
+        // extremes and use the midpoint as the center of the circumcircle.
+        this.x = (D * E - B * F) / G;
+        this.y = (A * F - C * E) / G;
+        dx = this.x - a.x;
+        dy = this.y - a.y;
+        this.r = dx * dx + dy * dy;
+    }
+
+    function byX(a, b) {
+        return b.x - a.x;
+    }
+
+    function dedup(edges) {
+        var j = edges.length,
+            a,
+            b,
+            i,
+            m,
+            n;
+
+        outer: while (j) {
+            b = edges[--j];
+            a = edges[--j];
+            i = j;
+            while (i) {
+                n = edges[--i];
+                m = edges[--i];
+                if (a === m && b === n || a === n && b === m) {
+                    edges.splice(j, 2);
+                    edges.splice(i, 2);
+                    j -= 2;
+                    continue outer;
+                }
+            }
+        }
+    }
+
+    function triangulate(vertices) {
+        // Bail if there aren't enough vertices to form any triangles.
+        if (vertices.length < 3) return [];
+
+        // Ensure the vertex array is in order of descending X coordinate
+        // (which is needed to ensure a subquadratic runtime), and then find
+        // the bounding box around the points.
+        vertices.sort(byX);
+
+        var i = vertices.length - 1,
+            xmin = vertices[i].x,
+            xmax = vertices[0].x,
+            ymin = vertices[i].y,
+            ymax = ymin,
+            epsilon = 1e-12;
+
+        var a, b, c, A, B, G;
+
+        while (i--) {
+            if (vertices[i].y < ymin) ymin = vertices[i].y;
+            if (vertices[i].y > ymax) ymax = vertices[i].y;
+        }
+
+        //Find a supertriangle, which is a triangle that surrounds all the
+        //vertices. This is used like something of a sentinel value to remove
+        //cases in the main algorithm, and is removed before we return any
+        // results.
+
+        // Once found, put it in the "open" list. (The "open" list is for
+        // triangles who may still need to be considered; the "closed" list is
+        // for triangles which do not.)
+        var dx = xmax - xmin,
+            dy = ymax - ymin,
+            dmax = dx > dy ? dx : dy,
+            xmid = (xmax + xmin) * 0.5,
+            ymid = (ymax + ymin) * 0.5,
+            open = [new Triangle({
+            x: xmid - 20 * dmax,
+            y: ymid - dmax,
+            __sentinel: true
+        }, {
+            x: xmid,
+            y: ymid + 20 * dmax,
+            __sentinel: true
+        }, {
+            x: xmid + 20 * dmax,
+            y: ymid - dmax,
+            __sentinel: true
+        })],
+            closed = [],
+            edges = [],
+            j;
+
+        // Incrementally add each vertex to the mesh.
+        i = vertices.length;
+        while (i--) {
+            // For each open triangle, check to see if the current point is
+            // inside it's circumcircle. If it is, remove the triangle and add
+            // it's edges to an edge list.
+            edges.length = 0;
+            j = open.length;
+            while (j--) {
+                // If this point is to the right of this triangle's circumcircle,
+                // then this triangle should never get checked again. Remove it
+                // from the open list, add it to the closed list, and skip.
+                dx = vertices[i].x - open[j].x;
+                if (dx > 0 && dx * dx > open[j].r) {
+                    closed.push(open[j]);
+                    open.splice(j, 1);
+                    continue;
+                }
+
+                // If not, skip this triangle.
+                dy = vertices[i].y - open[j].y;
+                if (dx * dx + dy * dy > open[j].r) continue;
+
+                // Remove the triangle and add it's edges to the edge list.
+                edges.push(open[j].a, open[j].b, open[j].b, open[j].c, open[j].c, open[j].a);
+                open.splice(j, 1);
+            }
+
+            // Remove any doubled edges.
+            dedup(edges);
+
+            // Add a new triangle for each edge.
+            j = edges.length;
+            while (j) {
+                b = edges[--j];
+                a = edges[--j];
+                c = vertices[i];
+                // Avoid adding colinear triangles (which have error-prone
+                // circumcircles)
+                A = b.x - a.x;
+                B = b.y - a.y;
+                G = 2 * (A * (c.y - b.y) - B * (c.x - b.x));
+                if (Math.abs(G) > epsilon) {
+                    open.push(new Triangle(a, b, c));
+                }
+            }
+        }
+
+        // Copy any remaining open triangles to the closed list, and then
+        // remove any triangles that share a vertex with the supertriangle.
+        Array.prototype.push.apply(closed, open);
+
+        i = closed.length;
+        while (i--) if (closed[i].a.__sentinel || closed[i].b.__sentinel || closed[i].c.__sentinel) closed.splice(i, 1);
+
+        return closed;
+    }
+});
+$__System.registerDynamic('f', ['10'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var jsts = $__require('10');
 
     /**
      * Takes two or more {@link Polygon|polygons} and returns a combined polygon. If the input polygons are not contiguous, this function returns a {@link MultiPolygon} feature.
@@ -86,7 +333,81 @@ $__System.registerDynamic('e', ['f'], true, function ($__require, exports, modul
         };
     };
 });
-$__System.registerDynamic('10', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('11', ['e', 'f', '12'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    // 1. run tin on points
+    // 2. calculate lenth of all edges and area of all triangles
+    // 3. remove triangles that fail the max length test
+    // 4. buffer the results slightly
+    // 5. merge the results
+    var tin = $__require('e');
+    var union = $__require('f');
+    var distance = $__require('12');
+
+    /**
+     * Takes a set of {@link Point|points} and returns a concave hull polygon.
+     * Internally, this uses [turf-tin](https://github.com/Turfjs/turf-tin) to generate geometries.
+     *
+     * @param {FeatureCollection<Point>} points input points
+     * @param {number} maxEdge the size of an edge necessary for part of the hull to become concave (in miles)
+     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers
+     * @returns {Feature<Polygon>} a concave hull
+     * @throws {Error} if maxEdge parameter is missing or unable to compute hull
+     * @example
+     * var points = turf.featureCollection([
+     *   turf.point([-63.601226, 44.642643]),
+     *   turf.point([-63.591442, 44.651436]),
+     *   turf.point([-63.580799, 44.648749]),
+     *   turf.point([-63.573589, 44.641788]),
+     *   turf.point([-63.587665, 44.64533]),
+     *   turf.point([-63.595218, 44.64765])
+     * ]);
+     *
+     * var hull = turf.concave(points, 1, 'miles');
+     *
+     * //addToMap
+     * var addToMap = [points, hull]
+     */
+    function concave(points, maxEdge, units) {
+        if (typeof maxEdge !== 'number') throw new Error('maxEdge parameter is required');
+
+        var tinPolys = tin(points);
+        var filteredPolys = tinPolys.features.filter(filterTriangles);
+        tinPolys.features = filteredPolys;
+        if (tinPolys.features.length < 1) {
+            throw new Error('too few polygons found to compute concave hull');
+        }
+
+        function filterTriangles(triangle) {
+            var pt1 = triangle.geometry.coordinates[0][0];
+            var pt2 = triangle.geometry.coordinates[0][1];
+            var pt3 = triangle.geometry.coordinates[0][2];
+            var dist1 = distance(pt1, pt2, units);
+            var dist2 = distance(pt2, pt3, units);
+            var dist3 = distance(pt1, pt3, units);
+            return dist1 <= maxEdge && dist2 <= maxEdge && dist3 <= maxEdge;
+        }
+
+        return merge(tinPolys);
+    }
+
+    function merge(polygons) {
+        var merged = JSON.parse(JSON.stringify(polygons.features[0])),
+            features = polygons.features;
+
+        for (var i = 0, len = features.length; i < len; i++) {
+            var poly = features[i];
+            if (poly.geometry) {
+                merged = union(merged, poly);
+            }
+        }
+        return merged;
+    }
+
+    module.exports = concave;
+});
+$__System.registerDynamic('13', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /*
@@ -223,10 +544,10 @@ $__System.registerDynamic('10', [], true, function ($__require, exports, module)
         });else if (typeof module !== 'undefined') module.exports = simplify;else if (typeof self !== 'undefined') self.simplify = simplify;else window.simplify = simplify;
     })();
 });
-$__System.registerDynamic('11', ['10'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14', ['13'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var simplify = $__require('10');
+    var simplify = $__require('13');
 
     // supported GeoJSON geometries, used to check whether to wrap in simpleFeature()
     var supportedTypes = ['LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'];
@@ -392,13 +713,13 @@ $__System.registerDynamic('11', ['10'], true, function ($__require, exports, mod
         });
     }
 });
-$__System.registerDynamic('12', ['13', 'd', '14', '15'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15', ['12', 'd', '16', '17'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var measureDistance = $__require('13');
+    var measureDistance = $__require('12');
     var point = $__require('d').point;
-    var bearing = $__require('14');
-    var destination = $__require('15');
+    var bearing = $__require('16');
+    var destination = $__require('17');
 
     /**
      * Takes a {@link LineString|line} and returns a {@link Point|point} at a specified distance along the line.
@@ -436,7 +757,7 @@ $__System.registerDynamic('12', ['13', 'd', '14', '15'], true, function ($__requ
         return point(coords[coords.length - 1]);
     };
 });
-$__System.registerDynamic('16', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('18', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://d3js.org/d3-array/ Version 1.2.0. Copyright 2017 Mike Bostock.
@@ -1021,12 +1342,12 @@ $__System.registerDynamic('16', [], true, function ($__require, exports, module)
     Object.defineProperty(exports, '__esModule', { value: true });
   });
 });
-$__System.registerDynamic('17', ['16'], true, function ($__require, exports, module) {
+$__System.registerDynamic('19', ['18'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://d3js.org/d3-geo/ Version 1.6.4. Copyright 2017 Mike Bostock.
   (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('16')) : typeof undefined === 'function' && define.amd ? define(['exports', 'd3-array'], factory) : factory(global.d3 = global.d3 || {}, global.d3);
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('18')) : typeof undefined === 'function' && define.amd ? define(['exports', 'd3-array'], factory) : factory(global.d3 = global.d3 || {}, global.d3);
   })(exports, function (exports, d3Array) {
     'use strict';
 
@@ -4038,7 +4359,7 @@ $__System.registerDynamic('17', ['16'], true, function ($__require, exports, mod
 // https://github.com/bjornharrtell/jsts/blob/master/LICENSE_EPLv1.txt
 // https://github.com/bjornharrtell/jsts/blob/master/LICENSE_LICENSE_ES6_COLLECTIONS.txt
 !function (t, e) {
-  "object" == typeof exports && "undefined" != typeof module ? e(exports) : "function" == "function" && true ? $__System.registerDynamic("f", [], false, function ($__require, $__exports, $__module) {
+  "object" == typeof exports && "undefined" != typeof module ? e(exports) : "function" == "function" && true ? $__System.registerDynamic("10", [], false, function ($__require, $__exports, $__module) {
     if (typeof e === "function") {
       return e.call($__exports, $__exports);
     } else {
@@ -14327,7 +14648,7 @@ $__System.registerDynamic('17', ['16'], true, function ($__require, exports, mod
       return this.getClass() === t.getClass();
     } });var Go = "1.3.0 (6e65adb)";t.version = Go, t.algorithm = co, t.densify = fo, t.dissolve = go, t.geom = lo, t.geomgraph = po, t.index = yo, t.io = No, t.noding = Co, t.operation = _o, t.precision = Mo, t.simplify = Do, t.triangulate = Fo, Object.defineProperty(t, "__esModule", { value: !0 });
 });
-$__System.registerDynamic('18', ['c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1a', ['c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var coordEach = $__require('c').coordEach;
@@ -14357,10 +14678,10 @@ $__System.registerDynamic('18', ['c'], true, function ($__require, exports, modu
         return bbox;
     };
 });
-$__System.registerDynamic('19', ['18', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1b', ['1a', 'd'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var bbox = $__require('18');
+  var bbox = $__require('1a');
   var point = $__require('d').point;
 
   /**
@@ -14391,13 +14712,13 @@ $__System.registerDynamic('19', ['18', 'd'], true, function ($__require, exports
     return point([x, y], properties);
   };
 });
-$__System.registerDynamic('1a', ['17', 'f', 'c', '19', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1c', ['19', '10', 'c', '1b', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var d3 = $__require('17');
-    var jsts = $__require('f');
+    var d3 = $__require('19');
+    var jsts = $__require('10');
     var meta = $__require('c');
-    var center = $__require('19');
+    var center = $__require('1b');
     var helpers = $__require('d');
     var feature = helpers.feature;
     var geomEach = meta.geomEach;
@@ -14571,10 +14892,158 @@ $__System.registerDynamic('1a', ['17', 'f', 'c', '19', 'd'], true, function ($__
         return projection;
     }
 });
-$__System.registerDynamic('1b', ['1c'], true, function ($__require, exports, module) {
+$__System.registerDynamic("1d", ["1e"], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  // Find self-intersections in geojson polygon (possibly with interior rings)
+  var rbush = $__require("1e");
+
+  module.exports = function (feature, filterFn, useSpatialIndex) {
+    if (feature.geometry.type != "Polygon") throw new Error("The input feature must be a Polygon");
+    if (useSpatialIndex == undefined) useSpatialIndex = 1;
+
+    var coord = feature.geometry.coordinates;
+
+    var output = [];
+    var seen = {};
+
+    if (useSpatialIndex) {
+      var allEdgesAsRbushTreeItems = [];
+      for (var ring0 = 0; ring0 < coord.length; ring0++) {
+        for (var edge0 = 0; edge0 < coord[ring0].length - 1; edge0++) {
+          allEdgesAsRbushTreeItems.push(rbushTreeItem(ring0, edge0));
+        }
+      }
+      var tree = rbush();
+      tree.load(allEdgesAsRbushTreeItems);
+    }
+
+    for (var ring0 = 0; ring0 < coord.length; ring0++) {
+      for (var edge0 = 0; edge0 < coord[ring0].length - 1; edge0++) {
+        if (useSpatialIndex) {
+          var bboxOverlaps = tree.search(rbushTreeItem(ring0, edge0));
+          bboxOverlaps.forEach(function (bboxIsect) {
+            var ring1 = bboxIsect.ring;
+            var edge1 = bboxIsect.edge;
+            ifIsectAddToOutput(ring0, edge0, ring1, edge1);
+          });
+        } else {
+          for (var ring1 = 0; ring1 < coord.length; ring1++) {
+            for (var edge1 = 0; edge1 < coord[ring1].length - 1; edge1++) {
+              // TODO: speedup possible if only interested in unique: start last two loops at ring0 and edge0+1
+              ifIsectAddToOutput(ring0, edge0, ring1, edge1);
+            }
+          }
+        }
+      }
+    }
+
+    if (!filterFn) output = { type: "Feature", geometry: { type: "MultiPoint", coordinates: output } };
+    return output;
+
+    // Function to check if two edges intersect and add the intersection to the output
+    function ifIsectAddToOutput(ring0, edge0, ring1, edge1) {
+      var start0 = coord[ring0][edge0];
+      var end0 = coord[ring0][edge0 + 1];
+      var start1 = coord[ring1][edge1];
+      var end1 = coord[ring1][edge1 + 1];
+
+      var isect = intersect(start0, end0, start1, end1);
+
+      if (isect == null) return; // discard parallels and coincidence
+      frac0, frac1;
+      if (end0[0] != start0[0]) {
+        var frac0 = (isect[0] - start0[0]) / (end0[0] - start0[0]);
+      } else {
+        var frac0 = (isect[1] - start0[1]) / (end0[1] - start0[1]);
+      };
+      if (end1[0] != start1[0]) {
+        var frac1 = (isect[0] - start1[0]) / (end1[0] - start1[0]);
+      } else {
+        var frac1 = (isect[1] - start1[1]) / (end1[1] - start1[1]);
+      };
+      if (frac0 >= 1 || frac0 <= 0 || frac1 >= 1 || frac1 <= 0) return; // require segment intersection
+
+      var key = isect;
+      var unique = !seen[key];
+      if (unique) {
+        seen[key] = true;
+      }
+
+      if (filterFn) {
+        output.push(filterFn(isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique));
+      } else {
+        output.push(isect);
+      }
+    }
+
+    // Function to return a rbush tree item given an ring and edge number
+    function rbushTreeItem(ring, edge) {
+
+      var start = coord[ring][edge];
+      var end = coord[ring][edge + 1];
+
+      if (start[0] < end[0]) {
+        var minX = start[0],
+            maxX = end[0];
+      } else {
+        var minX = end[0],
+            maxX = start[0];
+      };
+      if (start[1] < end[1]) {
+        var minY = start[1],
+            maxY = end[1];
+      } else {
+        var minY = end[1],
+            maxY = start[1];
+      }
+      return { minX: minX, minY: minY, maxX: maxX, maxY: maxY, ring: ring, edge: edge };
+    }
+  };
+
+  // Function to compute where two lines (not segments) intersect. From https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
+  function intersect(start0, end0, start1, end1) {
+    if (equalArrays(start0, start1) || equalArrays(start0, end1) || equalArrays(end0, start1) || equalArrays(end1, start1)) return null;
+    var x0 = start0[0],
+        y0 = start0[1],
+        x1 = end0[0],
+        y1 = end0[1],
+        x2 = start1[0],
+        y2 = start1[1],
+        x3 = end1[0],
+        y3 = end1[1];
+    var denom = (x0 - x1) * (y2 - y3) - (y0 - y1) * (x2 - x3);
+    if (denom == 0) return null;
+    var x4 = ((x0 * y1 - y0 * x1) * (x2 - x3) - (x0 - x1) * (x2 * y3 - y2 * x3)) / denom;
+    var y4 = ((x0 * y1 - y0 * x1) * (y2 - y3) - (y0 - y1) * (x2 * y3 - y2 * x3)) / denom;
+    return [x4, y4];
+  }
+
+  // Function to compare Arrays of numbers. From http://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+  function equalArrays(array1, array2) {
+    // if the other array is a falsy value, return
+    if (!array1 || !array2) return false;
+
+    // compare lengths - can save a lot of time
+    if (array1.length != array2.length) return false;
+
+    for (var i = 0, l = array1.length; i < l; i++) {
+      // Check if we have nested arrays
+      if (array1[i] instanceof Array && array2[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!equalArrays(array1[i], array2[i])) return false;
+      } else if (array1[i] != array2[i]) {
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;
+      }
+    }
+    return true;
+  }
+});
+$__System.registerDynamic('1f', ['20'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var invariant = $__require('1c');
+    var invariant = $__require('20');
     var getCoord = invariant.getCoord;
     var getCoords = invariant.getCoords;
 
@@ -14676,7 +15145,1210 @@ $__System.registerDynamic('1b', ['1c'], true, function ($__require, exports, mod
         return bbox[0] <= pt[0] && bbox[1] <= pt[1] && bbox[2] >= pt[0] && bbox[3] >= pt[1];
     }
 });
-$__System.registerDynamic('1d', ['d'], true, function ($__require, exports, module) {
+$__System.registerDynamic("21", [], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  module.exports.RADIUS = 6378137;
+  module.exports.FLATTENING = 1 / 298.257223563;
+  module.exports.POLAR_RADIUS = 6356752.3142;
+});
+$__System.registerDynamic('22', ['21'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var wgs84 = $__require('21');
+
+    module.exports.geometry = geometry;
+    module.exports.ring = ringArea;
+
+    function geometry(_) {
+        var area = 0,
+            i;
+        switch (_.type) {
+            case 'Polygon':
+                return polygonArea(_.coordinates);
+            case 'MultiPolygon':
+                for (i = 0; i < _.coordinates.length; i++) {
+                    area += polygonArea(_.coordinates[i]);
+                }
+                return area;
+            case 'Point':
+            case 'MultiPoint':
+            case 'LineString':
+            case 'MultiLineString':
+                return 0;
+            case 'GeometryCollection':
+                for (i = 0; i < _.geometries.length; i++) {
+                    area += geometry(_.geometries[i]);
+                }
+                return area;
+        }
+    }
+
+    function polygonArea(coords) {
+        var area = 0;
+        if (coords && coords.length > 0) {
+            area += Math.abs(ringArea(coords[0]));
+            for (var i = 1; i < coords.length; i++) {
+                area -= Math.abs(ringArea(coords[i]));
+            }
+        }
+        return area;
+    }
+
+    /**
+     * Calculate the approximate area of the polygon were it projected onto
+     *     the earth.  Note that this area will be positive if ring is oriented
+     *     clockwise, otherwise it will be negative.
+     *
+     * Reference:
+     * Robert. G. Chamberlain and William H. Duquette, "Some Algorithms for
+     *     Polygons on a Sphere", JPL Publication 07-03, Jet Propulsion
+     *     Laboratory, Pasadena, CA, June 2007 http://trs-new.jpl.nasa.gov/dspace/handle/2014/40409
+     *
+     * Returns:
+     * {float} The approximate signed geodesic area of the polygon in square
+     *     meters.
+     */
+
+    function ringArea(coords) {
+        var p1,
+            p2,
+            p3,
+            lowerIndex,
+            middleIndex,
+            upperIndex,
+            i,
+            area = 0,
+            coordsLength = coords.length;
+
+        if (coordsLength > 2) {
+            for (i = 0; i < coordsLength; i++) {
+                if (i === coordsLength - 2) {
+                    // i = N-2
+                    lowerIndex = coordsLength - 2;
+                    middleIndex = coordsLength - 1;
+                    upperIndex = 0;
+                } else if (i === coordsLength - 1) {
+                    // i = N-1
+                    lowerIndex = coordsLength - 1;
+                    middleIndex = 0;
+                    upperIndex = 1;
+                } else {
+                    // i = 0 to N-3
+                    lowerIndex = i;
+                    middleIndex = i + 1;
+                    upperIndex = i + 2;
+                }
+                p1 = coords[lowerIndex];
+                p2 = coords[middleIndex];
+                p3 = coords[upperIndex];
+                area += (rad(p3[0]) - rad(p1[0])) * Math.sin(rad(p2[1]));
+            }
+
+            area = area * wgs84.RADIUS * wgs84.RADIUS / 2;
+        }
+
+        return area;
+    }
+
+    function rad(_) {
+        return _ * Math.PI / 180;
+    }
+});
+$__System.registerDynamic('23', ['22', '24'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var area = $__require('22').geometry;
+    var geomReduce = $__require('24').geomReduce;
+
+    /**
+     * Takes one or more features and returns their area in square meters.
+     *
+     * @name area
+     * @param {FeatureCollection|Feature<any>} geojson input GeoJSON feature(s)
+     * @returns {number} area in square meters
+     * @addToMap polygon
+     * @example
+     * var polygon = {
+     *   "type": "Feature",
+     *   "properties": {},
+     *   "geometry": {
+     *     "type": "Polygon",
+     *     "coordinates": [
+     *       [
+     *         [125, -15],
+     *         [113, -22],
+     *         [117, -37],
+     *         [130, -33],
+     *         [148, -39],
+     *         [154, -27],
+     *         [144, -15],
+     *         [125, -15]
+     *       ]
+     *     ]
+     *   }
+     * }
+     * var area = turf.area(polygon);
+     * //=area => square meters
+     * //=polygon
+     */
+    module.exports = function (geojson) {
+        return geomReduce(geojson, function (value, geometry) {
+            return value + area(geometry);
+        }, 0);
+    };
+});
+$__System.registerDynamic('25', [], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  /**
+   * Helpers.
+   */
+
+  var s = 1000;
+  var m = s * 60;
+  var h = m * 60;
+  var d = h * 24;
+  var y = d * 365.25;
+
+  /**
+   * Parse or format the given `val`.
+   *
+   * Options:
+   *
+   *  - `long` verbose formatting [false]
+   *
+   * @param {String|Number} val
+   * @param {Object} [options]
+   * @throws {Error} throw an error if val is not a non-empty string or a number
+   * @return {String|Number}
+   * @api public
+   */
+
+  module.exports = function (val, options) {
+    options = options || {};
+    var type = typeof val;
+    if (type === 'string' && val.length > 0) {
+      return parse(val);
+    } else if (type === 'number' && isNaN(val) === false) {
+      return options.long ? fmtLong(val) : fmtShort(val);
+    }
+    throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
+  };
+
+  /**
+   * Parse the given `str` and return milliseconds.
+   *
+   * @param {String} str
+   * @return {Number}
+   * @api private
+   */
+
+  function parse(str) {
+    str = String(str);
+    if (str.length > 100) {
+      return;
+    }
+    var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+    if (!match) {
+      return;
+    }
+    var n = parseFloat(match[1]);
+    var type = (match[2] || 'ms').toLowerCase();
+    switch (type) {
+      case 'years':
+      case 'year':
+      case 'yrs':
+      case 'yr':
+      case 'y':
+        return n * y;
+      case 'days':
+      case 'day':
+      case 'd':
+        return n * d;
+      case 'hours':
+      case 'hour':
+      case 'hrs':
+      case 'hr':
+      case 'h':
+        return n * h;
+      case 'minutes':
+      case 'minute':
+      case 'mins':
+      case 'min':
+      case 'm':
+        return n * m;
+      case 'seconds':
+      case 'second':
+      case 'secs':
+      case 'sec':
+      case 's':
+        return n * s;
+      case 'milliseconds':
+      case 'millisecond':
+      case 'msecs':
+      case 'msec':
+      case 'ms':
+        return n;
+      default:
+        return undefined;
+    }
+  }
+
+  /**
+   * Short format for `ms`.
+   *
+   * @param {Number} ms
+   * @return {String}
+   * @api private
+   */
+
+  function fmtShort(ms) {
+    if (ms >= d) {
+      return Math.round(ms / d) + 'd';
+    }
+    if (ms >= h) {
+      return Math.round(ms / h) + 'h';
+    }
+    if (ms >= m) {
+      return Math.round(ms / m) + 'm';
+    }
+    if (ms >= s) {
+      return Math.round(ms / s) + 's';
+    }
+    return ms + 'ms';
+  }
+
+  /**
+   * Long format for `ms`.
+   *
+   * @param {Number} ms
+   * @return {String}
+   * @api private
+   */
+
+  function fmtLong(ms) {
+    return plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms';
+  }
+
+  /**
+   * Pluralization helper.
+   */
+
+  function plural(ms, n, name) {
+    if (ms < n) {
+      return;
+    }
+    if (ms < n * 1.5) {
+      return Math.floor(ms / n) + ' ' + name;
+    }
+    return Math.ceil(ms / n) + ' ' + name + 's';
+  }
+});
+$__System.registerDynamic('26', ['25'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+
+  /**
+   * This is the common logic for both the Node.js and web browser
+   * implementations of `debug()`.
+   *
+   * Expose `debug()` as the module.
+   */
+
+  exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+  exports.coerce = coerce;
+  exports.disable = disable;
+  exports.enable = enable;
+  exports.enabled = enabled;
+  exports.humanize = $__require('25');
+
+  /**
+   * The currently active debug mode names, and names to skip.
+   */
+
+  exports.names = [];
+  exports.skips = [];
+
+  /**
+   * Map of special "%n" handling functions, for the debug "format" argument.
+   *
+   * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+   */
+
+  exports.formatters = {};
+
+  /**
+   * Previous log timestamp.
+   */
+
+  var prevTime;
+
+  /**
+   * Select a color.
+   * @param {String} namespace
+   * @return {Number}
+   * @api private
+   */
+
+  function selectColor(namespace) {
+    var hash = 0,
+        i;
+
+    for (i in namespace) {
+      hash = (hash << 5) - hash + namespace.charCodeAt(i);
+      hash |= 0; // Convert to 32bit integer
+    }
+
+    return exports.colors[Math.abs(hash) % exports.colors.length];
+  }
+
+  /**
+   * Create a debugger with the given `namespace`.
+   *
+   * @param {String} namespace
+   * @return {Function}
+   * @api public
+   */
+
+  function createDebug(namespace) {
+
+    function debug() {
+      // disabled?
+      if (!debug.enabled) return;
+
+      var self = debug;
+
+      // set `diff` timestamp
+      var curr = +new Date();
+      var ms = curr - (prevTime || curr);
+      self.diff = ms;
+      self.prev = prevTime;
+      self.curr = curr;
+      prevTime = curr;
+
+      // turn the `arguments` into a proper Array
+      var args = new Array(arguments.length);
+      for (var i = 0; i < args.length; i++) {
+        args[i] = arguments[i];
+      }
+
+      args[0] = exports.coerce(args[0]);
+
+      if ('string' !== typeof args[0]) {
+        // anything else let's inspect with %O
+        args.unshift('%O');
+      }
+
+      // apply any `formatters` transformations
+      var index = 0;
+      args[0] = args[0].replace(/%([a-zA-Z%])/g, function (match, format) {
+        // if we encounter an escaped % then don't increase the array index
+        if (match === '%%') return match;
+        index++;
+        var formatter = exports.formatters[format];
+        if ('function' === typeof formatter) {
+          var val = args[index];
+          match = formatter.call(self, val);
+
+          // now we need to remove `args[index]` since it's inlined in the `format`
+          args.splice(index, 1);
+          index--;
+        }
+        return match;
+      });
+
+      // apply env-specific formatting (colors, etc.)
+      exports.formatArgs.call(self, args);
+
+      var logFn = debug.log || exports.log || console.log.bind(console);
+      logFn.apply(self, args);
+    }
+
+    debug.namespace = namespace;
+    debug.enabled = exports.enabled(namespace);
+    debug.useColors = exports.useColors();
+    debug.color = selectColor(namespace);
+
+    // env-specific initialization logic for debug instances
+    if ('function' === typeof exports.init) {
+      exports.init(debug);
+    }
+
+    return debug;
+  }
+
+  /**
+   * Enables a debug mode by namespaces. This can include modes
+   * separated by a colon and wildcards.
+   *
+   * @param {String} namespaces
+   * @api public
+   */
+
+  function enable(namespaces) {
+    exports.save(namespaces);
+
+    exports.names = [];
+    exports.skips = [];
+
+    var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+    var len = split.length;
+
+    for (var i = 0; i < len; i++) {
+      if (!split[i]) continue; // ignore empty strings
+      namespaces = split[i].replace(/\*/g, '.*?');
+      if (namespaces[0] === '-') {
+        exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+      } else {
+        exports.names.push(new RegExp('^' + namespaces + '$'));
+      }
+    }
+  }
+
+  /**
+   * Disable debug output.
+   *
+   * @api public
+   */
+
+  function disable() {
+    exports.enable('');
+  }
+
+  /**
+   * Returns true if the given mode name is enabled, false otherwise.
+   *
+   * @param {String} name
+   * @return {Boolean}
+   * @api public
+   */
+
+  function enabled(name) {
+    var i, len;
+    for (i = 0, len = exports.skips.length; i < len; i++) {
+      if (exports.skips[i].test(name)) {
+        return false;
+      }
+    }
+    for (i = 0, len = exports.names.length; i < len; i++) {
+      if (exports.names[i].test(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Coerce `val`.
+   *
+   * @param {Mixed} val
+   * @return {Mixed}
+   * @api private
+   */
+
+  function coerce(val) {
+    if (val instanceof Error) return val.stack || val.message;
+    return val;
+  }
+});
+$__System.registerDynamic('27', ['26'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  /**
+   * This is the web browser implementation of `debug()`.
+   *
+   * Expose `debug()` as the module.
+   */
+
+  exports = module.exports = $__require('26');
+  exports.log = log;
+  exports.formatArgs = formatArgs;
+  exports.save = save;
+  exports.load = load;
+  exports.useColors = useColors;
+  exports.storage = 'undefined' != typeof chrome && 'undefined' != typeof chrome.storage ? chrome.storage.local : localstorage();
+
+  /**
+   * Colors.
+   */
+
+  exports.colors = ['lightseagreen', 'forestgreen', 'goldenrod', 'dodgerblue', 'darkorchid', 'crimson'];
+
+  /**
+   * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+   * and the Firebug extension (any Firefox version) are known
+   * to support "%c" CSS customizations.
+   *
+   * TODO: add a `localStorage` variable to explicitly enable/disable colors
+   */
+
+  function useColors() {
+    // NB: In an Electron preload script, document will be defined but not fully
+    // initialized. Since we know we're in Chrome, we'll just detect this case
+    // explicitly
+    if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+      return true;
+    }
+
+    // is webkit? http://stackoverflow.com/a/16459606/376773
+    // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+    return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
+    // double check webkit in userAgent just in case we are in a worker
+    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
+  }
+
+  /**
+   * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+   */
+
+  exports.formatters.j = function (v) {
+    try {
+      return JSON.stringify(v);
+    } catch (err) {
+      return '[UnexpectedJSONParseError]: ' + err.message;
+    }
+  };
+
+  /**
+   * Colorize log arguments if enabled.
+   *
+   * @api public
+   */
+
+  function formatArgs(args) {
+    var useColors = this.useColors;
+
+    args[0] = (useColors ? '%c' : '') + this.namespace + (useColors ? ' %c' : ' ') + args[0] + (useColors ? '%c ' : ' ') + '+' + exports.humanize(this.diff);
+
+    if (!useColors) return;
+
+    var c = 'color: ' + this.color;
+    args.splice(1, 0, c, 'color: inherit');
+
+    // the final "%c" is somewhat tricky, because there could be other
+    // arguments passed either before or after the %c, so we need to
+    // figure out the correct index to insert the CSS into
+    var index = 0;
+    var lastC = 0;
+    args[0].replace(/%[a-zA-Z%]/g, function (match) {
+      if ('%%' === match) return;
+      index++;
+      if ('%c' === match) {
+        // we only are interested in the *last* %c
+        // (the user may have provided their own)
+        lastC = index;
+      }
+    });
+
+    args.splice(lastC, 0, c);
+  }
+
+  /**
+   * Invokes `console.log()` when available.
+   * No-op when `console.log` is not a "function".
+   *
+   * @api public
+   */
+
+  function log() {
+    // this hackery is required for IE8/9, where
+    // the `console.log` function doesn't have 'apply'
+    return 'object' === typeof console && console.log && Function.prototype.apply.call(console.log, console, arguments);
+  }
+
+  /**
+   * Save `namespaces`.
+   *
+   * @param {String} namespaces
+   * @api private
+   */
+
+  function save(namespaces) {
+    try {
+      if (null == namespaces) {
+        exports.storage.removeItem('debug');
+      } else {
+        exports.storage.debug = namespaces;
+      }
+    } catch (e) {}
+  }
+
+  /**
+   * Load `namespaces`.
+   *
+   * @return {String} returns the previously persisted debug modes
+   * @api private
+   */
+
+  function load() {
+    var r;
+    try {
+      r = exports.storage.debug;
+    } catch (e) {}
+
+    // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+    if (!r && typeof process !== 'undefined' && 'env' in process) {
+      r = process.env.DEBUG;
+    }
+
+    return r;
+  }
+
+  /**
+   * Enable namespaces listed in `localStorage.debug` initially.
+   */
+
+  exports.enable(load());
+
+  /**
+   * Localstorage attempts to return the localstorage.
+   *
+   * This is necessary because safari throws
+   * when a user disables cookies/localstorage
+   * and you attempt to access it.
+   *
+   * @return {LocalStorage}
+   * @api private
+   */
+
+  function localstorage() {
+    try {
+      return window.localStorage;
+    } catch (e) {}
+  }
+});
+$__System.registerDynamic('28', ['1d', '29', '1f', '23', '1e', '27'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  var isects = $__require('1d');
+  var helpers = $__require('29');
+  var inside = $__require('1f');
+  var area = $__require('23');
+  var rbush = $__require('1e');
+  var debug = $__require('27')('simplepolygon');
+  var debugAll = $__require('27')('simplepolygon:all');
+
+  /**
+  * Takes a complex (i.e. self-intersecting) geojson polygon, and breaks it down into its composite simple, non-self-intersecting one-ring polygons.
+  *
+  * @module simplepolygon
+  * @param {Feature} feature Input polygon. This polygon may be unconform the {@link https://en.wikipedia.org/wiki/Simple_Features|Simple Features standard} in the sense that it's inner and outer rings may cross-intersect or self-intersect, that the outer ring must not contain the optional inner rings and that the winding number must not be positive for the outer and negative for the inner rings.
+  * @return {FeatureCollection} Feature collection containing the simple, non-self-intersecting one-ring polygon features that the complex polygon is composed of. These simple polygons have properties such as their parent polygon, winding number and net winding number.
+  *
+  * @example
+  * var poly = {
+  *   "type": "Feature",
+  *   "geometry": {
+  *     "type": "Polygon",
+  *     "coordinates": [[[0,0],[2,0],[0,2],[2,2],[0,0]]]
+  *   }
+  * };
+  *
+  * var result = simplepolygon(poly);
+  *
+  * // =result
+  * // which will be a featureCollection of two polygons, one with coordinates [[[0,0],[2,0],[1,1],[0,0]]], parent -1, winding 1 and net winding 1, and one with coordinates [[[1,1],[0,2],[2,2],[1,1]]], parent -1, winding -1 and net winding -1
+  */
+
+  module.exports = function (feature) {
+    // Check input
+    if (feature.type != "Feature") throw new Error("The input must a geojson object of type Feature");
+    if (feature.geometry === undefined || feature.geometry == null) throw new Error("The input must a geojson object with a non-empty geometry");
+    if (feature.geometry.type != "Polygon") throw new Error("The input must be a geojson Polygon");
+
+    // Process input
+    var numRings = feature.geometry.coordinates.length;
+    var vertices = [];
+    for (var i = 0; i < numRings; i++) {
+      var ring = feature.geometry.coordinates[i];
+      if (!equalArrays(ring[0], ring[ring.length - 1])) {
+        ring.push(ring[0]); // Close input ring if it is not
+      }
+      vertices.push.apply(vertices, ring.slice(0, ring.length - 1));
+    }
+    if (!isUnique(vertices)) throw new Error("The input polygon may not have duplicate vertices (except for the first and last vertex of each ring)");
+    var numvertices = vertices.length; // number of input ring vertices, with the last closing vertices not counted
+    debug("Processing input");
+
+    // Compute self-intersections
+    var selfIsectsData = isects(feature, function filterFn(isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique) {
+      return [isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique];
+    });
+    var numSelfIsect = selfIsectsData.length;
+    debug("Computing self-intersections");
+
+    // If no self-intersections are found, the input rings are the output rings. Hence, we must only compute their winding numbers, net winding numbers and (since ohers rings could lie outside the first ring) parents.
+    if (numSelfIsect == 0) {
+      var outputFeatureArray = [];
+      for (var i = 0; i < numRings; i++) {
+        outputFeatureArray.push(helpers.polygon([feature.geometry.coordinates[i]], { parent: -1, winding: windingOfRing(feature.geometry.coordinates[i]) }));
+      }
+      var output = helpers.featureCollection(outputFeatureArray);
+      determineParents();
+      setNetWinding();
+      debugAll("No self-intersections found. Input rings are output rings. Computed winding numbers, net winding numbers and parents");
+      debug("Finishing without self-intersections");
+      return output;
+    }
+
+    // If self-intersections are found, we will compute the output rings with the help of two intermediate variables
+    // First, we build the pseudo vertex list and intersection list
+    // The Pseudo vertex list is an array with for each ring an array with for each edge an array containing the pseudo-vertices (as made by their constructor) that have this ring and edge as ringAndEdgeIn, sorted for each edge by their fractional distance on this edge. It's length hence equals numRings.
+    var pseudoVtxListByRingAndEdge = [];
+    // The intersection list is an array containing intersections (as made by their constructor). First all numvertices ring-vertex-intersections, then all self-intersections (intra- and inter-ring). The order of the latter is not important but is permanent once given.
+    var isectList = [];
+    // Adding ring-pseudo-vertices to pseudoVtxListByRingAndEdge and ring-vertex-intersections to isectList
+    for (var i = 0; i < numRings; i++) {
+      pseudoVtxListByRingAndEdge.push([]);
+      for (var j = 0; j < feature.geometry.coordinates[i].length - 1; j++) {
+        // Each edge will feature one ring-pseudo-vertex in its array, on the last position. i.e. edge j features the ring-pseudo-vertex of the ring vertex j+1, which has ringAndEdgeIn = [i,j], on the last position.
+        pseudoVtxListByRingAndEdge[i].push([new PseudoVtx(feature.geometry.coordinates[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)], 1, [i, j], [i, (j + 1).modulo(feature.geometry.coordinates[i].length - 1)], undefined)]);
+        // The first numvertices elements in isectList correspond to the ring-vertex-intersections
+        isectList.push(new Isect(feature.geometry.coordinates[i][j], [i, (j - 1).modulo(feature.geometry.coordinates[i].length - 1)], [i, j], undefined, undefined, false, true));
+      }
+    }
+    // Adding intersection-pseudo-vertices to pseudoVtxListByRingAndEdge and self-intersections to isectList
+    for (var i = 0; i < numSelfIsect; i++) {
+      // Adding intersection-pseudo-vertices made using selfIsectsData to pseudoVtxListByRingAndEdge's array corresponding to the incomming ring and edge
+      pseudoVtxListByRingAndEdge[selfIsectsData[i][1]][selfIsectsData[i][2]].push(new PseudoVtx(selfIsectsData[i][0], selfIsectsData[i][5], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined));
+      // selfIsectsData contains double mentions of each intersection, but we only want to add them once to isectList
+      if (selfIsectsData[i][11]) isectList.push(new Isect(selfIsectsData[i][0], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined, undefined, true, true));
+    }
+    var numIsect = isectList.length;
+    // Sort edge arrays of pseudoVtxListByRingAndEdge by the fractional distance 'param'
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        pseudoVtxListByRingAndEdge[i][j].sort(function (a, b) {
+          return a.param < b.param ? -1 : 1;
+        });
+      }
+    }
+    debug("Setting up pseudoVtxListByRingAndEdge and isectList");
+
+    // Make a spatial index of intersections, in preperation for the following two steps
+    allIsectsAsIsectRbushTreeItem = [];
+    for (var i = 0; i < numIsect; i++) {
+      allIsectsAsIsectRbushTreeItem.push({ minX: isectList[i].coord[0], minY: isectList[i].coord[1], maxX: isectList[i].coord[0], maxY: isectList[i].coord[1], index: i }); // could pass isect: isectList[i], but not necessary
+    }
+    var isectRbushTree = rbush();
+    isectRbushTree.load(allIsectsAsIsectRbushTreeItem);
+
+    // Now we will teach each intersection in isectList which is the next intersection along both it's [ring, edge]'s, in two steps.
+    // First, we find the next intersection for each pseudo-vertex in pseudoVtxListByRingAndEdge:
+    // For each pseudovertex in pseudoVtxListByRingAndEdge (3 loops) look at the next pseudovertex on that edge and find the corresponding intersection by comparing coordinates
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
+          var coordToFind;
+          if (k == pseudoVtxListByRingAndEdge[i][j].length - 1) {
+            // If it's the last pseudoVertex on that edge, then the next pseudoVertex is the first one on the next edge of that ring.
+            coordToFind = pseudoVtxListByRingAndEdge[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)][0].coord;
+          } else {
+            coordToFind = pseudoVtxListByRingAndEdge[i][j][k + 1].coord;
+          }
+          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
+          pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn = IsectRbushTreeItemFound.index;
+        }
+      }
+    }
+    debug("Computing nextIsect for pseudoVtxListByRingAndEdge");
+
+    // Second, we port this knowledge of the next intersection over to the intersections in isectList, by finding the intersection corresponding to each pseudo-vertex and copying the pseudo-vertex' knownledge of the next-intersection over to the intersection
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
+          var coordToFind = pseudoVtxListByRingAndEdge[i][j][k].coord;
+          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
+          var l = IsectRbushTreeItemFound.index;
+          if (l < numvertices) {
+            // Special treatment at ring-vertices: we correct the misnaming that happened in the previous block, since ringAndEdgeOut = ringAndEdge2 for ring vertices.
+            isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+          } else {
+            // Port the knowledge of the next intersection from the pseudo-vertices to the intersections, depending on how the edges are labeled in the pseudo-vertex and intersection.
+            if (equalArrays(isectList[l].ringAndEdge1, pseudoVtxListByRingAndEdge[i][j][k].ringAndEdgeIn)) {
+              isectList[l].nxtIsectAlongRingAndEdge1 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+            } else {
+              isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+            }
+          }
+        }
+      }
+    }
+    // This explains why, eventhough when we will walk away from an intersection, we will walk way from the corresponding pseudo-vertex along edgeOut, pseudo-vertices have the property 'nxtIsectAlongEdgeIn' in stead of some propery 'nxtPseudoVtxAlongEdgeOut'. This is because this property (which is easy to find out) is used in the above for nxtIsectAlongRingAndEdge1 and nxtIsectAlongRingAndEdge2!
+    debug("Porting nextIsect to isectList");
+
+    // Before we start walking over the intersections to build the output rings, we prepare a queue that stores information on intersections we still have to deal with, and put at least one intersection in it.
+    // This queue will contain information on intersections where we can start walking from once the current walk is finished, and its parent output ring (the smallest output ring it lies within, -1 if no parent or parent unknown yet) and its winding number (which we can already determine).
+    var queue = [];
+    // For each output ring, add the ring-vertex-intersection with the smalles x-value (i.e. the left-most) as a start intersection. By choosing such an extremal intersections, we are sure to start at an intersection that is a convex vertex of its output ring. By adding them all to the queue, we are sure that no rings will be forgotten. If due to ring-intersections such an intersection will be encountered while walking, it will be removed from the queue.
+    var i = 0;
+    for (var j = 0; j < numRings; j++) {
+      var leftIsect = i;
+      for (var k = 0; k < feature.geometry.coordinates[j].length - 1; k++) {
+        if (isectList[i].coord[0] < isectList[leftIsect].coord[0]) {
+          leftIsect = i;
+        }
+        i++;
+      }
+      // Compute winding at this left-most ring-vertex-intersection. We thus this by using our knowledge that this extremal vertex must be a convex vertex.
+      // We first find the intersection before and after it, and then use them to determine the winding number of the corresponding output ring, since we know that an extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it would not be is because the winding number we use to compute it is wrong
+      var isectAfterLeftIsect = isectList[leftIsect].nxtIsectAlongRingAndEdge2;
+      for (var k = 0; k < isectList.length; k++) {
+        if (isectList[k].nxtIsectAlongRingAndEdge1 == leftIsect || isectList[k].nxtIsectAlongRingAndEdge2 == leftIsect) {
+          var isectBeforeLeftIsect = k;
+          break;
+        }
+      }
+      var windingAtIsect = isConvex([isectList[isectBeforeLeftIsect].coord, isectList[leftIsect].coord, isectList[isectAfterLeftIsect].coord], true) ? 1 : -1;
+
+      queue.push({ isect: leftIsect, parent: -1, winding: windingAtIsect });
+    }
+    // Sort the queue by the same criterion used to find the leftIsect: the left-most leftIsect must be last in the queue, such that it will be popped first, such that we will work from out to in regarding input rings. This assumtion is used when predicting the winding number and parent of a new queue member.
+    queue.sort(function (a, b) {
+      return isectList[a.isect].coord > isectList[b.isect].coord ? -1 : 1;
+    });
+    debugAll("Initial state of the queue: " + JSON.stringify(queue));
+    debug("Setting up queue");
+
+    // Initialise output
+    var outputFeatureArray = [];
+
+    // While the queue is not empty, take the last object (i.e. its intersection) out and start making an output ring by walking in the direction that has not been walked away over yet.
+    while (queue.length > 0) {
+      // Get the last object out of the queue
+      var popped = queue.pop();
+      var startIsect = popped.isect;
+      var currentOutputRingParent = popped.parent;
+      var currentOutputRingWinding = popped.winding;
+      // Make new output ring and add vertex from starting intersection
+      var currentOutputRing = outputFeatureArray.length;
+      var currentOutputRingCoords = [isectList[startIsect].coord];
+      debugAll("# Starting output ring number " + outputFeatureArray.length + " with winding " + currentOutputRingWinding + " from intersection " + startIsect);
+      if (startIsect < numvertices) debugAll("This is a ring-vertex-intersections, which means this output ring does not touch existing output rings");
+      // Set up the variables used while walking over intersections: 'currentIsect', 'nxtIsect' and 'walkingRingAndEdge'
+      var currentIsect = startIsect;
+      if (isectList[startIsect].ringAndEdge1Walkable) {
+        var walkingRingAndEdge = isectList[startIsect].ringAndEdge1;
+        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge1;
+      } else {
+        var walkingRingAndEdge = isectList[startIsect].ringAndEdge2;
+        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge2;
+      }
+      // While we have not arrived back at the same intersection, keep walking
+      while (!equalArrays(isectList[startIsect].coord, isectList[nxtIsect].coord)) {
+        debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1]);
+        currentOutputRingCoords.push(isectList[nxtIsect].coord);
+        debugAll("Adding intersection " + nxtIsect + " to current output ring");
+        // If the next intersection is queued, we can remove it, because we will go there now.
+        var nxtIsectInQueue = undefined;
+        for (var i = 0; i < queue.length; i++) {
+          if (queue[i].isect == nxtIsect) {
+            nxtIsectInQueue = i;break;
+          }
+        }
+        if (nxtIsectInQueue != undefined) {
+          debugAll("Removing intersection " + nxtIsect + " from queue");
+          queue.splice(nxtIsectInQueue, 1);
+        }
+        // Arriving at this new intersection, we know which will be our next walking ring and edge (if we came from 1 we will walk away from 2 and vice versa),
+        // So we can set it as our new walking ring and intersection and remember that we (will) have walked over it
+        // If we have never walked away from this new intersection along the other ring and edge then we will soon do, add the intersection (and the parent wand winding number) to the queue
+        // (We can predict the winding number and parent as follows: if the edge is convex, the other output ring started from there will have the alternate winding and lie outside of the current one, and thus have the same parent ring as the current ring. Otherwise, it will have the same winding number and lie inside of the current ring. We are, however, only sure of this of an output ring started from there does not enclose the current ring. This is why the initial queue's intersections must be sorted such that outer ones come out first.)
+        // We then update the other two walking variables.
+        if (equalArrays(walkingRingAndEdge, isectList[nxtIsect].ringAndEdge1)) {
+          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge2;
+          isectList[nxtIsect].ringAndEdge2Walkable = false;
+          if (isectList[nxtIsect].ringAndEdge1Walkable) {
+            debugAll("Adding intersection " + nxtIsect + " to queue");
+            var pushing = { isect: nxtIsect };
+            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge2].coord], currentOutputRingWinding == 1)) {
+              pushing.parent = currentOutputRingParent;
+              pushing.winding = -currentOutputRingWinding;
+            } else {
+              pushing.parent = currentOutputRing;
+              pushing.winding = currentOutputRingWinding;
+            }
+            queue.push(pushing);
+          }
+          currentIsect = nxtIsect;
+          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge2;
+        } else {
+          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge1;
+          isectList[nxtIsect].ringAndEdge1Walkable = false;
+          if (isectList[nxtIsect].ringAndEdge2Walkable) {
+            debugAll("Adding intersection " + nxtIsect + " to queue");
+            var pushing = { isect: nxtIsect };
+            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge1].coord], currentOutputRingWinding == 1)) {
+              pushing.parent = currentOutputRingParent;
+              pushing.winding = -currentOutputRingWinding;
+            } else {
+              pushing.parent = currentOutputRing;
+              pushing.winding = currentOutputRingWinding;
+            }
+            queue.push(pushing);
+          }
+          currentIsect = nxtIsect;
+          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge1;
+        }
+        debugAll("Current state of the queue: " + JSON.stringify(queue));
+      }
+      debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1] + " and closing ring");
+      // Close output ring
+      currentOutputRingCoords.push(isectList[nxtIsect].coord);
+      // Push output ring to output
+      outputFeatureArray.push(helpers.polygon([currentOutputRingCoords], { index: currentOutputRing, parent: currentOutputRingParent, winding: currentOutputRingWinding, netWinding: undefined }));
+    }
+
+    var output = helpers.featureCollection(outputFeatureArray);
+    debug("Walking");
+
+    determineParents();
+    debug("Determining parents");
+
+    setNetWinding();
+    debug("Setting winding number");
+
+    // These functions are also used if no intersections are found
+    function determineParents() {
+      var featuresWithoutParent = [];
+      for (var i = 0; i < output.features.length; i++) {
+        debugAll("Output ring " + i + " has parent " + output.features[i].properties.parent);
+        if (output.features[i].properties.parent == -1) featuresWithoutParent.push(i);
+      }
+      debugAll("The following output ring(s) have no parent: " + featuresWithoutParent);
+      if (featuresWithoutParent.length > 1) {
+        for (var i = 0; i < featuresWithoutParent.length; i++) {
+          var parent = -1;
+          var parentArea = Infinity;
+          for (var j = 0; j < output.features.length; j++) {
+            if (featuresWithoutParent[i] == j) continue;
+            if (inside(helpers.point(output.features[featuresWithoutParent[i]].geometry.coordinates[0][0]), output.features[j], true)) {
+              if (area(output.features[j]) < parentArea) {
+                parent = j;
+                debugAll("Ring " + featuresWithoutParent[i] + " lies inside output ring " + j);
+              }
+            }
+          }
+          output.features[featuresWithoutParent[i]].properties.parent = parent;
+          debugAll("Ring " + featuresWithoutParent[i] + " is assigned parent " + parent);
+        }
+      }
+    }
+
+    function setNetWinding() {
+      for (var i = 0; i < output.features.length; i++) {
+        if (output.features[i].properties.parent == -1) {
+          var netWinding = output.features[i].properties.winding;
+          output.features[i].properties.netWinding = netWinding;
+          setNetWindingOfChildren(i, netWinding);
+        }
+      }
+    }
+
+    function setNetWindingOfChildren(parent, ParentNetWinding) {
+      for (var i = 0; i < output.features.length; i++) {
+        if (output.features[i].properties.parent == parent) {
+          var netWinding = ParentNetWinding + output.features[i].properties.winding;
+          output.features[i].properties.netWinding = netWinding;
+          setNetWindingOfChildren(i, netWinding);
+        }
+      }
+    }
+
+    debugAll("# Total of " + output.features.length + " rings");
+
+    return output;
+  };
+
+  // Constructor for (ring- or intersection-) pseudo-vertices.
+  var PseudoVtx = function (coord, param, ringAndEdgeIn, ringAndEdgeOut, nxtIsectAlongEdgeIn) {
+    this.coord = coord; // [x,y] of this pseudo-vertex
+    this.param = param; // fractional distance of this intersection on incomming edge
+    this.ringAndEdgeIn = ringAndEdgeIn; // [ring index, edge index] of incomming edge
+    this.ringAndEdgeOut = ringAndEdgeOut; // [ring index, edge index] of outgoing edge
+    this.nxtIsectAlongEdgeIn = nxtIsectAlongEdgeIn; // The next intersection when following the incomming edge (so not when following ringAndEdgeOut!)
+  };
+
+  // Constructor for an intersection. There are two intersection-pseudo-vertices per self-intersection and one ring-pseudo-vertex per ring-vertex-intersection. Their labels 1 and 2 are not assigned a particular meaning but are permanent once given.
+  var Isect = function (coord, ringAndEdge1, ringAndEdge2, nxtIsectAlongRingAndEdge1, nxtIsectAlongRingAndEdge2, ringAndEdge1Walkable, ringAndEdge2Walkable) {
+    this.coord = coord; // [x,y] of this intersection
+    this.ringAndEdge1 = ringAndEdge1; // first edge of this intersection
+    this.ringAndEdge2 = ringAndEdge2; // second edge of this intersection
+    this.nxtIsectAlongRingAndEdge1 = nxtIsectAlongRingAndEdge1; // the next intersection when following ringAndEdge1
+    this.nxtIsectAlongRingAndEdge2 = nxtIsectAlongRingAndEdge2; // the next intersection when following ringAndEdge2
+    this.ringAndEdge1Walkable = ringAndEdge1Walkable; // May we (still) walk away from this intersection over ringAndEdge1?
+    this.ringAndEdge2Walkable = ringAndEdge2Walkable; // May we (still) walk away from this intersection over ringAndEdge2?
+  };
+
+  // Function to determine if three consecutive points of a simple, non-self-intersecting ring make up a convex vertex, assuming the ring is right- or lefthanded
+  function isConvex(pts, righthanded) {
+    // 'pts' is an [x,y] pair
+    // 'righthanded' is a boolean
+    if (typeof righthanded === 'undefined') righthanded = true;
+    if (pts.length != 3) throw new Error("This function requires an array of three points [x,y]");
+    var d = (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]);
+    return d >= 0 == righthanded;
+  }
+
+  // Function to compute winding of simple, non-self-intersecting ring
+  function windingOfRing(ring) {
+    // 'ring' is an array of [x,y] pairs with the last equal to the first
+    // Compute the winding number based on the vertex with the smallest x-value, it precessor and successor. An extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it is not is because the winding number we use to compute it is wrong
+    var leftVtx = 0;
+    for (var i = 0; i < ring.length - 1; i++) {
+      if (ring[i][0] < ring[leftVtx][0]) leftVtx = i;
+    }
+    if (isConvex([ring[(leftVtx - 1).modulo(ring.length - 1)], ring[leftVtx], ring[(leftVtx + 1).modulo(ring.length - 1)]], true)) {
+      var winding = 1;
+    } else {
+      var winding = -1;
+    }
+    return winding;
+  }
+
+  // Function to compare Arrays of numbers. From http://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+  function equalArrays(array1, array2) {
+    // if the other array is a falsy value, return
+    if (!array1 || !array2) return false;
+
+    // compare lengths - can save a lot of time
+    if (array1.length != array2.length) return false;
+
+    for (var i = 0, l = array1.length; i < l; i++) {
+      // Check if we have nested arrays
+      if (array1[i] instanceof Array && array2[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!equalArrays(array1[i], array2[i])) return false;
+      } else if (array1[i] != array2[i]) {
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Fix Javascript modulo for negative number. From http://stackoverflow.com/questions/4467539/javascript-modulo-not-behaving
+  Number.prototype.modulo = function (n) {
+    return (this % n + n) % n;
+  };
+
+  // Function to get array with only unique elements. From http://stackoverflow.com/questions/1960473/unique-values-in-an-array
+  function getUnique(array) {
+    var u = {},
+        a = [];
+    for (var i = 0, l = array.length; i < l; ++i) {
+      if (u.hasOwnProperty(array[i])) {
+        continue;
+      }
+      a.push(array[i]);
+      u[array[i]] = 1;
+    }
+    return a;
+  }
+
+  // Function to check if array is unique (i.e. all unique elements, i.e. no duplicate elements)
+  function isUnique(array) {
+    var u = {},
+        a = [];
+    var isUnique = 1;
+    for (var i = 0, l = array.length; i < l; ++i) {
+      if (u.hasOwnProperty(array[i])) {
+        isUnique = 0;
+        break;
+      }
+      u[array[i]] = 1;
+    }
+    return isUnique;
+  }
+});
+$__System.registerDynamic('2a', ['c', 'd'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var flattenEach = $__require('c').flattenEach;
+    var featureCollection = $__require('d').featureCollection;
+
+    /**
+     * Flattens any {@link GeoJSON} to a {@link FeatureCollection} inspired by [geojson-flatten](https://github.com/tmcw/geojson-flatten).
+     *
+     * @name flatten
+     * @param {FeatureCollection|Geometry|Feature<any>} geojson any valid GeoJSON Object
+     * @returns {FeatureCollection<any>} all Multi-Geometries are flattened into single Features
+     * @example
+     * var multiGeometry = turf.multiPolygon([
+     *   [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
+     *   [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+     *   [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+     * ]);
+     *
+     * var flatten = turf.flatten(multiGeometry);
+     *
+     * //addToMap
+     * var addToMap = [flatten]
+     */
+    module.exports = function (geojson) {
+        if (!geojson) throw new Error('geojson is required');
+
+        var results = [];
+        flattenEach(geojson, function (feature) {
+            results.push(feature);
+        });
+        return featureCollection(results);
+    };
+});
+$__System.registerDynamic('2b', ['28', '2a', 'c', 'd'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var simplepolygon = $__require('28');
+    var flatten = $__require('2a');
+    var featureEach = $__require('c').featureEach;
+    var featureCollection = $__require('d').featureCollection;
+
+    /**
+     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks.
+     * Uses [simplepolygon](https://github.com/mclaeysb/simplepolygon) internally.
+     *
+     * @name unkinkPolygon
+     * @param {FeatureCollection|Feature<Polygon|MultiPolygon>} geojson GeoJSON Polygon or MultiPolygon
+     * @returns {FeatureCollection<Polygon>} Unkinked polygons
+     * @example
+     * var poly = turf.polygon([[[0, 0], [2, 0], [0, 2], [2, 2], [0, 0]]]);
+     *
+     * var result = turf.unkinkPolygon(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, result]
+     */
+    module.exports = function (geojson) {
+        var results = featureCollection([]);
+
+        // Handles FeatureCollection & Feature
+        featureEach(geojson, function (feature) {
+
+            // Handle MultiPolygons as Feature or FeatureCollection
+            if (feature.geometry.type === 'MultiPolygon') {
+                feature = flatten(feature);
+            }
+
+            // Store simple polygons in results
+            featureEach(feature, function (polygon) {
+                var simple = simplepolygon(polygon);
+
+                featureEach(simple, function (poly) {
+                    poly.properties = polygon.properties ? polygon.properties : {};
+                    results.features.push(poly);
+                });
+            });
+        });
+        return results;
+    };
+});
+$__System.registerDynamic('2c', ['d'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var point = $__require('d').point;
@@ -14793,10 +16465,10 @@ $__System.registerDynamic('1d', ['d'], true, function ($__require, exports, modu
         }
     }
 });
-$__System.registerDynamic('14', ['1c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('16', ['20'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var getCoord = $__require('1c').getCoord;
+    var getCoord = $__require('20').getCoord;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
 
@@ -14857,10 +16529,10 @@ $__System.registerDynamic('14', ['1c'], true, function ($__require, exports, mod
 
     module.exports = bearing;
 });
-$__System.registerDynamic('13', ['1c', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12', ['20', 'd'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var getCoord = $__require('1c').getCoord;
+  var getCoord = $__require('20').getCoord;
   var radiansToDistance = $__require('d').radiansToDistance;
   //http://en.wikipedia.org/wiki/Haversine_formula
   //http://www.movable-type.co.uk/scripts/latlong.html
@@ -14901,12 +16573,12 @@ $__System.registerDynamic('13', ['1c', 'd'], true, function ($__require, exports
     return radiansToDistance(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), units);
   };
 });
-$__System.registerDynamic('15', ['1c', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17', ['20', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
-    var getCoord = $__require('1c').getCoord;
+    var getCoord = $__require('20').getCoord;
     var helpers = $__require('d');
     var point = helpers.point;
     var distanceToRadians = helpers.distanceToRadians;
@@ -14949,10 +16621,10 @@ $__System.registerDynamic('15', ['1c', 'd'], true, function ($__require, exports
         return point([radians2degrees * longitude2, radians2degrees * latitude2]);
     };
 });
-$__System.registerDynamic('1e', ['1f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2d', ['24'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var each = $__require('1f').coordEach;
+    var each = $__require('24').coordEach;
 
     /**
      * Takes a set of features, calculates the bbox of all input features, and returns a bounding box.
@@ -14988,7 +16660,7 @@ $__System.registerDynamic('1e', ['1f'], true, function ($__require, exports, mod
         return bbox;
     };
 });
-$__System.registerDynamic('20', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('29', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -15315,7 +16987,7 @@ $__System.registerDynamic('20', [], true, function ($__require, exports, module)
         return distance / factor * 57.2958;
     };
 });
-$__System.registerDynamic('1f', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('24', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -15964,7 +17636,7 @@ $__System.registerDynamic('1f', [], true, function ($__require, exports, module)
     }
     module.exports.geomReduce = geomReduce;
 });
-$__System.registerDynamic('21', ['d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2e', ['d'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var polygon = $__require('d').polygon;
@@ -15992,7 +17664,7 @@ $__System.registerDynamic('21', ['d'], true, function ($__require, exports, modu
         return polygon([[lowLeft, lowRight, topRight, topLeft, lowLeft]]);
     };
 });
-$__System.registerDynamic('22', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('2f', [], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
@@ -16055,14 +17727,14 @@ $__System.registerDynamic('22', [], true, function ($__require, exports, module)
         return a < b ? -1 : a > b ? 1 : 0;
     }
 });
-$__System.registerDynamic('23', ['22'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1e', ['2f'], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
         GLOBAL = global;
     module.exports = rbush;
 
-    var quickselect = $__require('22');
+    var quickselect = $__require('2f');
 
     function rbush(maxEntries, format) {
         if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -16625,14 +18297,14 @@ $__System.registerDynamic('23', ['22'], true, function ($__require, exports, mod
         }
     }
 });
-$__System.registerDynamic('24', ['1e', '20', '1f', '21', '23'], true, function ($__require, exports, module) {
+$__System.registerDynamic('30', ['2d', '29', '24', '2e', '1e'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var turfBBox = $__require('1e');
-    var featureCollection = $__require('20').featureCollection;
-    var featureEach = $__require('1f').featureEach;
-    var bboxPolygon = $__require('21');
-    var rbush = $__require('23');
+    var turfBBox = $__require('2d');
+    var featureCollection = $__require('29').featureCollection;
+    var featureEach = $__require('24').featureEach;
+    var bboxPolygon = $__require('2e');
+    var rbush = $__require('1e');
 
     /**
      * GeoJSON implementation of [RBush](https://github.com/mourner/rbush#rbush) spatial index.
@@ -17410,7 +19082,7 @@ $__System.registerDynamic('d', [], true, function ($__require, exports, module) 
         round: round
     };
 });
-$__System.registerDynamic('1c', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('20', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -18442,11 +20114,11 @@ $__System.registerDynamic('c', [], true, function ($__require, exports, module) 
         segmentReduce: segmentReduce
     };
 });
-$__System.registerDynamic('25', ['d', '1c', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('31', ['d', '20', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var helpers = $__require('d');
-    var getCoords = $__require('1c').getCoords;
+    var getCoords = $__require('20').getCoords;
     var flattenEach = $__require('c').flattenEach;
     var lineString = helpers.lineString;
     var featureCollection = helpers.featureCollection;
@@ -18540,14 +20212,14 @@ $__System.registerDynamic('25', ['d', '1c', 'c'], true, function ($__require, ex
         return [west, south, east, north];
     }
 });
-$__System.registerDynamic('26', ['c', '24', 'd', '1c', '25'], true, function ($__require, exports, module) {
+$__System.registerDynamic('32', ['c', '30', 'd', '20', '31'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var meta = $__require('c');
-    var rbush = $__require('24');
+    var rbush = $__require('30');
     var helpers = $__require('d');
-    var getCoords = $__require('1c').getCoords;
-    var lineSegment = $__require('25');
+    var getCoords = $__require('20').getCoords;
+    var lineSegment = $__require('31');
     var point = helpers.point;
     var featureEach = meta.featureEach;
     var featureCollection = helpers.featureCollection;
@@ -18647,16 +20319,16 @@ $__System.registerDynamic('26', ['c', '24', 'd', '1c', '25'], true, function ($_
         return null;
     }
 });
-$__System.registerDynamic('27', ['c', 'd', '14', '13', '1c', '15', '26'], true, function ($__require, exports, module) {
+$__System.registerDynamic('33', ['c', 'd', '16', '12', '20', '17', '32'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var meta = $__require('c');
     var helpers = $__require('d');
-    var bearing = $__require('14');
-    var distance = $__require('13');
-    var invariant = $__require('1c');
-    var destination = $__require('15');
-    var lineIntersects = $__require('26');
+    var bearing = $__require('16');
+    var distance = $__require('12');
+    var invariant = $__require('20');
+    var destination = $__require('17');
+    var lineIntersects = $__require('32');
     var point = helpers.point;
     var getCoords = invariant.getCoords;
     var lineString = helpers.lineString;
@@ -18746,11 +20418,11 @@ $__System.registerDynamic('27', ['c', 'd', '14', '13', '1c', '15', '26'], true, 
         return closestPt;
     };
 });
-$__System.registerDynamic('28', ['d', '27'], true, function ($__require, exports, module) {
+$__System.registerDynamic('34', ['d', '33'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var linestring = $__require('d').lineString;
-    var pointOnLine = $__require('27');
+    var pointOnLine = $__require('33');
 
     /**
      * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
@@ -18807,10 +20479,10 @@ $__System.registerDynamic('28', ['d', '27'], true, function ($__require, exports
         return linestring(clipCoords, line.properties);
     };
 });
-$__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'], function (_export, _context) {
+$__System.register('a', ['35', 'b', 'f', 'd', '11', '14', '15', '1c', '1f', '2b', '2c', '34'], function (_export, _context) {
     "use strict";
 
-    var gmaps, turf_centroid, turf_union, turf_helpers, turf_simplify, turf_along, turf_buffer, turf_inside, turk_kinks, turf_line_slice, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, turf_linestring$1, turf_linestring$2, turf_point$1, turf_featurecollection, turf_point, turf_linestring$3, ig_turfhelper;
+    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, ig_turfhelper;
 
 
     function Wicket() {
@@ -21221,7 +22893,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             return [LatLng.lng(), LatLng.lat()];
         } else if (LatLng.lat && LatLng.lng) {
             return [LatLng.lng, LatLng.lat];
-        } else if (LatLng.length && LatLng.length === 2) {
+        } else if (LatLng.length && LatLng.length >= 2) {
             return LatLng;
         } else {
             throw new Error('google.maps is not present in the global scope');
@@ -21542,7 +23214,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     /**
      * Transforma un array de gmaps.LatLng en un featurecollection geoJson
      * donde cada Feature es un punto del array de entrada
-     * @param  {Array<google.maps.LatLng>} latLngArray array de posiciones {@link google.maps.LatLng}
+     * @param  {Array<google.maps.LatLng>|google.maps.MVCArray} latLngArray array de posiciones {@link google.maps.LatLng}
      * @return {FeatureCollection}             geojson FeatureCollection
      */
     function arrayToFeaturePoints(latLngArray) {
@@ -21551,17 +23223,17 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             "type": "FeatureCollection",
             "features": []
         };
-        var features = map(latLngArray, function (latLng) {
-            return {
+        latLngArray.forEach(function (latLng) {
+            var Feature = {
                 type: "Feature",
                 geometry: {
                     type: "Point",
-                    coordinates: [latLng.lng(), latLng.lat()]
+                    coordinates: toCoord(latLng)
                 }
             };
+            FeatureCollection.features.push(Feature);
         });
 
-        FeatureCollection.features = features;
         return FeatureCollection;
     }
 
@@ -21633,6 +23305,19 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
         }
 
         return resultado;
+    }
+
+    /**
+     * Takes a set of points and returns a concave hull polygon. Internally, this uses turf-tin to generate geometries.
+     * @param  {Array<google.maps.LatLng>|Array<google.maps.LatLngLiteral>|google.maps.MVCArray} latLngArray array of google positions
+     * @param  {number} maxEdge the size of an edge necessary for part of the hull to become concave (in miles)
+     * @param  {string} units degrees, radians, miles, or kilometers
+     * @return {Feature.<Polygon>}  a concave hull
+     */
+    function concave(latLngArray, maxEdge, units) {
+
+        var FeatureCollection = arrayToFeaturePoints(latLngArray);
+        return turf_concave(FeatureCollection, maxEdge, units);
     }
 
     /**
@@ -21778,6 +23463,37 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             pointsInside: pointsInside,
             pointsOutside: pointsOutside
         };
+    }
+
+    /**
+     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks. 
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, a google.maps.Polygon or Feature<Polygon>
+     * @return {FeatureCollection<Polygon>}  Unkinked polygons
+     */
+    function unkink(object) {
+
+        var polygonFeature = polygonToFeaturePolygon(object);
+
+        return turf_unkink(polygonFeature);
+    }
+
+    /**
+     * Takes an array of points, google.maps.Polygon or Feature<Polygon> and returns {@link Point|points} at all self-intersections.
+     *
+     * @name kinks
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
+     * @returns {FeatureCollection<Point>} self-intersections
+     *
+     * var kinks = turf.kinks(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, kinks]
+     */
+    function kinks(object) {
+
+        var polygonFeature = polygonToFeaturePolygon(object);
+
+        return turk_kinks(polygonFeature);
     }
 
     /**
@@ -21968,6 +23684,12 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
         return baseIsEqual(value, other);
     }
 
+    /**
+     * Takes two coordinates and returns the distance between them, in degrees
+     * @param  {Array<number>} coord1 An array indicating a coordinate [lng, lat]
+     * @param  {Array<number>} coord2 An array indicating a coordinate [lng, lat]
+     * @return {number}        the distance between the points, in degrees 
+     */
     function diffCoords(coord1, coord2) {
         var vector = [Math.abs(coord1[0] - coord2[0]), Math.abs(coord1[1] - coord2[1])];
         return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
@@ -22034,6 +23756,12 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
         }
     }
 
+    /**
+     * Takes two 
+     * @param  {[type]} ring1 [description]
+     * @param  {[type]} ring2 [description]
+     * @return {[type]}       [description]
+     */
     function traverseRings(ring1, ring2) {
         var results = {
             intersections: turf_featurecollection([]),
@@ -22063,7 +23791,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                     // intersection,
                     //diffCoords(intersection, ring2[0]),
                     //diffCoords(intersection, ring1[ring1.length - 1]));
-                    var FeatureIntersection = turf_point$1([intersection[0], intersection[1]]);
+                    var FeatureIntersection = turf_point([intersection[0], intersection[1]]);
                     FeatureIntersection.properties = {
                         position1: i,
                         position2: k
@@ -22076,39 +23804,34 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
-     *
-     * @name kinks
-     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
-     * @returns {FeatureCollection<Point>} self-intersections
-     * @example
-     * var poly = turf.polygon([[
-     *   [-12.034835, 8.901183],
-     *   [-12.060413, 8.899826],
-     *   [-12.03638, 8.873199],
-     *   [-12.059383, 8.871418],
-     *   [-12.034835, 8.901183]
-     * ]]);
-     *
-     * var kinks = turf.kinks(poly);
-     *
-     * //addToMap
-     * var addToMap = [poly, kinks]
+     * [polylineToFeatureLinestring description]
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
+     * @return {Feature.<LineString>}          [description]
      */
-    function kinks(featureIn) {
-        return turk_kinks(featureIn);
+    function polylineToFeatureLinestring(objeto) {
+        var vertices;
+        if (objeto instanceof google.maps.Polyline) {
+            vertices = toCoords(objeto.getPath().getArray());
+        } else {
+            vertices = toCoords(objeto);
+        }
+
+        return turf_linestring$3(vertices);
     }
 
     /**
-     * Finds the {@link Point|points} where two {@link LineString|linestrings} intersect each other
-     * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
-     * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
-     * @return {Array}             [description]
+     * Trims two Polylines against each other, returns array of both segments and the intersection point
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng1 array of positions or a google.maps.Polyline
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng2 array of positions or a google.maps.Polyline
+     * @return {Array}            array of trimmed segments and the intersection point
      */
     function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 
-        var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
-        var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
+        var line1 = polylineToFeatureLinestring(ring1);
+        var line2 = polylineToFeatureLinestring(ring2);
+
+        var ring1 = line1.geometry.coordinates;
+        var ring2 = line2.geometry.coordinates;
 
         var thiskinks = traverseRings(ring1, ring2);
 
@@ -22126,12 +23849,11 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
             var intersectLatLng = toLatLng(firstIntersection.geometry.coordinates);
 
-            var line1 = turf_linestring$3(ring1);
-            var line2 = turf_linestring$3(ring2);
             var line1Start = turf_point(ring1[0]);
             var line2End = turf_point(ring2.slice(-1)[0]);
             var sliced1 = firstIntersection.properties.position1 === 0 ? line1 : turf_line_slice(line1Start, firstIntersection, line1);
             var sliced2 = firstIntersection.properties.position2 >= ring2.length - 1 ? line2 : turf_line_slice(firstIntersection, line2End, line2);
+
             return [toLatLngs(sliced1.geometry.coordinates), toLatLngs(sliced2.geometry.coordinates), intersectLatLng];
         }
         return [];
@@ -22170,22 +23892,26 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             gmaps = _.default;
         }, function (_b) {
             turf_centroid = _b.default;
-        }, function (_e) {
-            turf_union = _e.default;
+        }, function (_f) {
+            turf_union = _f.default;
         }, function (_d) {
             turf_helpers = _d.default;
         }, function (_2) {
-            turf_simplify = _2.default;
+            turf_concave = _2.default;
         }, function (_3) {
-            turf_along = _3.default;
-        }, function (_a) {
-            turf_buffer = _a.default;
-        }, function (_b2) {
-            turf_inside = _b2.default;
-        }, function (_d2) {
-            turk_kinks = _d2.default;
+            turf_simplify = _3.default;
         }, function (_4) {
-            turf_line_slice = _4.default;
+            turf_along = _4.default;
+        }, function (_c) {
+            turf_buffer = _c.default;
+        }, function (_f2) {
+            turf_inside = _f2.default;
+        }, function (_b2) {
+            turf_unkink = _b2.default;
+        }, function (_c2) {
+            turk_kinks = _c2.default;
+        }, function (_5) {
+            turf_line_slice = _5.default;
         }],
         execute: function () {
             Wkt = function Wkt(obj) {
@@ -23977,8 +25703,6 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
             turf_linestring$1 = turf_helpers.lineString;
             turf_linestring$2 = turf_helpers.lineString;
-            turf_point$1 = turf_helpers.point;
-            turf_featurecollection = turf_helpers.featureCollection;
             turf_point = turf_helpers.point;
             turf_linestring$3 = turf_helpers.lineString;
             ig_turfhelper = {
@@ -23995,7 +25719,9 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                 toCoords: toCoords,
                 trimPaths: trimPaths,
                 union: union,
-                kinks: kinks
+                kinks: kinks,
+                unkink: unkink,
+                concave: concave
             };
 
             _export('along', along);
@@ -24024,7 +25750,11 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
             _export('kinks', kinks);
 
+            _export('unkink', unkink);
+
             _export('union', union);
+
+            _export('concave', concave);
 
             _export('default', ig_turfhelper);
         }

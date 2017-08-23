@@ -34,6 +34,10 @@ import {
 } from './components/utils.js';
 
 import {
+    concave
+} from './components/concave.js';
+
+import {
     toLatLngs,
     toCoords
 } from './components/coords_to_latlng.js';
@@ -58,6 +62,11 @@ import {
 
 import {
     kinks,
+    unkink
+} from './components/kinks.js';
+
+import {
+
     trimPaths
 } from './components/trimpaths.js';
 
@@ -80,7 +89,9 @@ export {
     toCoords,
     trimPaths,
     kinks,
-    union
+    unkink,
+    union,
+    concave
 };
 
 export default {
@@ -97,5 +108,7 @@ export default {
     toCoords: toCoords,
     trimPaths: trimPaths,
     union: union,
-    kinks: kinks
+    kinks: kinks,
+    unkink: unkink,
+    concave: concave
 };
