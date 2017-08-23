@@ -37,11 +37,6 @@ var turf_linestring = turf_helpers.lineString;
 var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;"),
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
 
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 /**
  * Transforma un array de geometrías WKT en un FeatureCollection
@@ -88,7 +83,7 @@ function mergeWKTGeoms(WKTArray, debug) {
 
 /**
  * Transforma un array de gmaps.LatLng en un Feature.Polygon
- * @param  {Array.<external:google.maps.LatLng>} LatLngArray [description]
+ * @param  {Array.<google.maps.LatLng>} LatLngArray [description]
  * @return {Feature.<Polygon>}             [description]
  */
 function arrayToFeaturePolygon(LatLngArray) {
@@ -109,7 +104,7 @@ function arrayToFeaturePolygon(LatLngArray) {
 
 /**
  * Receives an object and returns a GeoJson Feature of type Polygon
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
+ * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
  * @return {Feature.Polygon}        [description]
  */
 function polygonToFeaturePolygon(object) {
@@ -144,7 +139,7 @@ function polygonToFeaturePolygon(object) {
 /**
  * Transforma un array de gmaps.LatLng en un featurecollection geoJson
  * donde cada Feature es un punto del array de entrada
- * @param  {Array<external:google.maps.LatLng>} latLngArray array de posiciones {@link external:google.maps.LatLng}
+ * @param  {Array<google.maps.LatLng>} latLngArray array de posiciones {@link google.maps.LatLng}
  * @return {FeatureCollection}             geojson FeatureCollection
  */
 function arrayToFeaturePoints(latLngArray) {
@@ -174,7 +169,7 @@ function centroid(FeatureCollection) {
 
 /**
  * Convierte un gmaps.Polygon en un FeatureCollection de puntos
- * @param  {external:google.maps.Polygon} polygon [description]
+ * @param  {google.maps.Polygon} polygon [description]
  * @return {FeatureCollection.<Point>}         [description]
  */
 function polygonToFeaturePolygonCollection(polygon) {

@@ -1,21 +1,9 @@
 {
-  "npm:jspm-nodelibs-process@0.2.1": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:amd-googlemaps-loader@1.8.6": {
     "deps": {},
     "peerDeps": {}
   },
-  "github:systemjs/plugin-text@0.0.7": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:systemjs-plugin-babel@0.0.21": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "github:systemjs/plugin-json@0.3.0": {
     "deps": {},
     "peerDeps": {}
   },
@@ -127,23 +115,7 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/line-intersect@4.6.0": {
-    "deps": {
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
-      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
-      "@turf/line-segment": "npm:@turf/line-segment@^4.6.0",
-      "@turf/meta": "npm:@turf/meta@^4.6.0",
-      "geojson-rbush": "npm:geojson-rbush@^1.0.1"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/bearing@4.6.0": {
-    "deps": {
-      "@turf/invariant": "npm:@turf/invariant@^4.6.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/invariant@4.6.0": {
+  "npm:@turf/helpers@4.6.0": {
     "deps": {},
     "peerDeps": {}
   },
@@ -154,15 +126,31 @@
     },
     "peerDeps": {}
   },
+  "npm:@turf/line-intersect@4.6.0": {
+    "deps": {
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
+      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
+      "@turf/line-segment": "npm:@turf/line-segment@^4.6.0",
+      "@turf/meta": "npm:@turf/meta@^4.6.0",
+      "geojson-rbush": "npm:geojson-rbush@^1.0.1"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/invariant@4.6.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/bearing@4.6.0": {
+    "deps": {
+      "@turf/invariant": "npm:@turf/invariant@^4.6.0"
+    },
+    "peerDeps": {}
+  },
   "npm:@turf/destination@4.6.0": {
     "deps": {
       "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/invariant": "npm:@turf/invariant@^4.6.0"
     },
-    "peerDeps": {}
-  },
-  "npm:@turf/meta@4.6.0": {
-    "deps": {},
     "peerDeps": {}
   },
   "npm:geojson-rbush@1.1.1": {
@@ -181,12 +169,6 @@
   },
   "npm:@turf/meta@3.14.0": {
     "deps": {},
-    "peerDeps": {}
-  },
-  "npm:@turf/bbox@3.14.0": {
-    "deps": {
-      "@turf/meta": "npm:@turf/meta@^3.14.0"
-    },
     "peerDeps": {}
   },
   "npm:rbush@2.0.1": {
@@ -213,7 +195,19 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/helpers@4.6.0": {
+  "npm:@turf/bbox@3.14.0": {
+    "deps": {
+      "@turf/meta": "npm:@turf/meta@^3.14.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/truncate@4.6.0": {
+    "deps": {
+      "@turf/meta": "npm:@turf/meta@^4.6.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/meta@4.6.0": {
     "deps": {},
     "peerDeps": {}
   }

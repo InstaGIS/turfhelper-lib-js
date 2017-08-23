@@ -14,11 +14,6 @@ import {
 import turf_helpers from '@turf/helpers';
 
 var turf_linestring = turf_helpers.lineString;
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 
 /**
@@ -43,7 +38,7 @@ export function simplifyPointArray(coordArray, tolerance, highQuality) {
 
 /**
  * Simplifica un geoson Feature
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
+ * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
  * @param  {Number} tolerance   [description]
  * @param  {Boolean} highQuality [description]
  * @return {Feature}             [description]
@@ -70,7 +65,7 @@ export function simplifyFeature(object, tolerance, highQuality) {
 
 /**
  * Simplifica una geometría usando Douglas Peucker
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} Feature [description]
+ * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} Feature [description]
  * @param  {number} tolerance   [description]
  * @param  {boolean} highQuality [description]
  * @return {Geometry}             [description]

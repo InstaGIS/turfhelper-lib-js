@@ -35,10 +35,14 @@ build: build_minified test build_unminified build_utils
 
 
 update_version:
+ifeq ($(shell expr "${VERSION}" \> "$(v)"),1)
+	$(error "v" parameter is lower than current version ${VERSION})
+endif
 ifeq ($(v),)
 	$(error v is undefined)
-else ifeq ($(v),${VERSION})
-	$(error that version is already the current version)
+endif
+ifeq (${VERSION},$(v))
+	$(error v is already the current version)
 endif
 	@echo "Current version is " ${VERSION}
 	@echo "Next version is " $(v)

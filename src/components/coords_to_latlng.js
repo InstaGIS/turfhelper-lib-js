@@ -15,16 +15,11 @@ function toLatLng(point) {
 		};
 	}
 }
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 /**
  * Transforma un array de LatLng en un array de coordenadas [lng,lat]
  * @param {Array.<Array.<Number>>} arrayLatLng [description]
- * @return {Array.<external:google.maps.LatLng>} array de posiciones {@link external:google.maps.LatLng}
+ * @return {Array.<google.maps.LatLng>} array de posiciones {@link google.maps.LatLng}
  */
 function toLatLngs(coordinates) {
 	return _map(coordinates, toLatLng);
@@ -44,7 +39,7 @@ function toCoord(LatLng) {
 }
 /**
  * Transforma un array de LatLng en un array de coordenadas [lng,lat]
- * @param {Array.<external:google.maps.LatLng>} arrayLatLng Array de posiciones {@link external:google.maps.LatLng}
+ * @param {Array.<google.maps.LatLng>} arrayLatLng Array de posiciones {@link google.maps.LatLng}
  * @return {Array.<Array.<Number>>} [description]
  */
 function toCoords(arrayLatLng, closeRing) {

@@ -6,11 +6,7 @@ import turf_along from '@turf/along';
 import turf_helpers from '@turf/helpers';
 
 var turf_linestring = turf_helpers.lineString;
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
+
 
 export function along(arrayLatLng, distance) {
 

@@ -19,11 +19,6 @@
  *
  */
 
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 import gmaps from 'gmaps';
 
@@ -878,7 +873,7 @@ Wkt.Wkt.prototype.construct = {
      * Creates the framework's equivalent point geometry object.
      * @param   config      {Object}    An optional properties hash the object should use
      * @param   component   {Object}    An optional component to build from
-     * @return              {external:google.maps.Marker}
+     * @return              {google.maps.Marker}
      */
     point: function (config, component) {
         var c = component || this.components;
@@ -917,7 +912,7 @@ Wkt.Wkt.prototype.construct = {
      * Creates the framework's equivalent linestring geometry object.
      * @param   config      {Object}    An optional properties hash the object should use
      * @param   component   {Object}    An optional component to build from
-     * @return              {external:google.maps.Polyline}
+     * @return              {google.maps.Polyline}
      */
     linestring: function (config, component) {
         var i, c;
@@ -966,7 +961,7 @@ Wkt.Wkt.prototype.construct = {
      * Creates the framework's equivalent Box or Rectangle geometry object.
      * @param   config      {Object}    An optional properties hash the object should use
      * @param   component   {Object}    An optional component to build from
-     * @return              {external:google.maps.Rectangle}
+     * @return              {google.maps.Rectangle}
      */
     box: function (config, component) {
         var c = component || this.components;
@@ -984,7 +979,7 @@ Wkt.Wkt.prototype.construct = {
      * Creates the framework's equivalent polygon geometry object.
      * @param   config      {Object}    An optional properties hash the object should use
      * @param   component   {Object}    An optional component to build from
-     * @return              {external:google.maps.Polygon}
+     * @return              {google.maps.Polygon}
      */
     polygon: function (config, component) {
         var j, k, c, rings, verts;

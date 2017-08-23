@@ -27,15 +27,10 @@ import {
 	toLatLngs
 } from './coords_to_latlng.js';
 
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 /**
  * [polylineToFeatureLinestring description]
- * @param  {Array.<external:google.maps.LatLng>} polyline [description]
+ * @param  {Array.<google.maps.LatLng>} polyline [description]
  * @return {Feature.Polyline}          [description]
  */
 function polylineToFeatureLinestring(polyline) {
@@ -69,8 +64,8 @@ function kinks(featureIn) {
 
 /**
  * Encuentra los puntos en donde dos polilíneas se cruzan
- * @param  {Array.<external:google.maps.LatLng>} arrayLatLng1 array de posiciones {@link external:google.maps.LatLng}
- * @param  {Array.<external:google.maps.LatLng>} arrayLatLng2 array de posiciones {@link external:google.maps.LatLng}
+ * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
+ * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
  * @return {Array}             [description]
  */
 function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {

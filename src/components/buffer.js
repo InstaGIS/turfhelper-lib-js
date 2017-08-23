@@ -12,13 +12,14 @@ import {
 
 
 /**
- * Convierte un path de google LatLng en un Feature.<Polygon>
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
+ * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
+ * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
+ * @param  {String} output  either 'geometry' or 'feature', case insensitive, defaults to 'feature'
  * @param  {Number} distance    [description]
  * @param  {String} units       [description]
- * @return {Geometry}            Any GeoJson Geometry type
+ * @return {Feature|Geometry}            Any GeoJson Geometry type
  */
-export function createbuffer(object, distance, units, comment, steps) {
+export function createbuffer(object, output, distance, units, comment, steps) {
     units = units || 'meters';
 
     var polygonFeature = polygonToFeaturePolygon(object),
@@ -32,7 +33,7 @@ export function createbuffer(object, distance, units, comment, steps) {
 
             //debug('buffer ' + comment, 'buffered', buffered);
             if (buffered.type === 'Feature') {
-                return buffered;
+                return buffered.geometry;
             }
 
             return buffered.features[0].geometry;
