@@ -13,7 +13,8 @@ import turf_line_slice from '@turf/line-slice';
 import turf_helpers from '@turf/helpers';
 
 var turf_point = turf_helpers.point,
-	turf_linestring = turf_helpers.lineString;
+	turf_linestring = turf_helpers.lineString,
+	turf_featurecollection = turf_helpers.featureCollection;
 
 
 import {
