@@ -9,8 +9,8 @@ Calculates a buffer for input features for a given radius. Units supported are m
 -   `object` **([google.maps.Polygon](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Polygon.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | Feature.Polygon)** [description]
 -   `output` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** either 'geometry' or 'feature', case insensitive, defaults to 'feature'
 -   `distance` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** [description]
--   `units` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** [description]
+-   `units` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 'meters' or 'miles' etc
 -   `comment`  
 -   `steps`  
 
-Returns **([Feature](http://geojson.org/geojson-spec.html#feature-objects) \| [Geometry](http://geojson.org/geojson-spec.html#geometry))** Any GeoJson Geometry type
+Returns **([Feature](http://geojson.org/geojson-spec.html#feature-objects) \| [Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Geometry](http://geojson.org/geojson-spec.html#geometry)>)** A GeoJson Feature or its geometry, according to output parameter

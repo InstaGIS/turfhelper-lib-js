@@ -39,7 +39,7 @@ Returns **[FeatureCollection](http://geojson.org/geojson-spec.html#feature-colle
 
 ## trimPaths
 
-Encuentra los puntos en donde dos polilíneas se cruzan
+Finds the [points](http://geojson.org/geojson-spec.html#point) where two [linestrings](http://geojson.org/geojson-spec.html#linestring) intersect each other
 
 **Parameters**
 

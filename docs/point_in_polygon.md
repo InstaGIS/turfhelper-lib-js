@@ -2,11 +2,11 @@
 
 ## pointInPolygon
 
-Filtra un array determinando si los puntos están dentro de un Polígono GeoJSON
+Filters an array of points returning those who falls inside a given [Polygon](http://geojson.org/geojson-spec.html#polygon)
 
 **Parameters**
 
--   `sourceArray` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;SimpleFeature>** array de SimpleFeature
--   `geojsonPolygon` **(geojson.Polygon | geojson.Multipolygon)** [description]
+-   `sourceArray` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Point](http://geojson.org/geojson-spec.html#point)>** array de SimpleFeature
+-   `geojsonPolygon` **([Polygon](http://geojson.org/geojson-spec.html#polygon) | Multipolygon)** the polygon thay may contain the points
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;SimpleFeature>** filteredArray el array de SimpleFeature que cae dentro de geojsonPolygon
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;SimpleFeature>** filteredArray the array of points which fall inside the Polygon

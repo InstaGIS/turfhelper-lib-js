@@ -2,37 +2,25 @@
 
 ## simplifyPointArray
 
-Simplifica un conjunto de coordenadas
+Simplifies an array of coordinates
 
 **Parameters**
 
--   `coordArray` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** [description]
--   `tolerance` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** [description]
--   `highQuality` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [description]
+-   `coordArray` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md)>)** Array of coordinates
+-   `tolerance` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** [description]
+-   `highQuality` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [description]
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array de coordenadas [lng,lat]
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>** Array de coordenadas [lng,lat]
 
 ## simplifyFeature
 
-Simplifica un geoson Feature
+Simplified a Feature or google.maps.Polygon
 
 **Parameters**
 
--   `object` **([google.maps.Polygon](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Polygon.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | Feature.Polygon)** [description]
--   `tolerance` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** [description]
--   `highQuality` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [description]
-
-Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)** [description]
-
-## simplifyGeometry
-
-Simplifica una geometría usando Douglas Peucker
-
-**Parameters**
-
--   `object`  
--   `tolerance` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** [description]
+-   `object` **([google.maps.Polygon](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Polygon.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | Feature.Polygon)** feature to be simplified
+-   `output` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** either 'feature' or 'geometry'
+-   `tolerance` **mumber** simplification tolerance
 -   `highQuality` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [description]
--   `Feature` **([google.maps.Polygon](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Polygon.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | Feature.Polygon | [Geometry](http://geojson.org/geojson-spec.html#geometry))** [description]
 
-Returns **[Geometry](http://geojson.org/geojson-spec.html#geometry)** [description]
+Returns **([Feature](http://geojson.org/geojson-spec.html#feature-objects) \| [Geometry](http://geojson.org/geojson-spec.html#geometry))** whether or not to spend more time to create a higher-quality simplification with a different algorithm

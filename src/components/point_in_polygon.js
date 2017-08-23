@@ -5,10 +5,10 @@ import {
 
 
 /**
- * Filtra un array determinando si los puntos están dentro de un Polígono GeoJSON
- * @param {Array<SimpleFeature>} sourceArray array de SimpleFeature
- * @param {geojson.Polygon|geojson.Multipolygon} geojsonPolygon  [description]
- * @return {Array<SimpleFeature>} filteredArray el array de SimpleFeature que cae dentro de geojsonPolygon
+ * Filters an array of points returning those who falls inside a given {@link Polygon}
+ * @param {Array<Point>} sourceArray array de SimpleFeature
+ * @param {Polygon|Multipolygon} geojsonPolygon  the polygon thay may contain the points
+ * @return {Array<SimpleFeature>} filteredArray the array of points which fall inside the Polygon
  */
 export function pointInPolygon(sourceArray, geojsonPolygon) {
 	var pointsInside = [];

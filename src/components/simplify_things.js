@@ -17,11 +17,11 @@ var turf_linestring = turf_helpers.lineString;
 
 
 /**
- * Simplifica un conjunto de coordenadas
- * @param  {Array} coordArray [description]
- * @param  {Number} tolerance   [description]
- * @param  {Boolean} highQuality [description]
- * @return {Array}  Array de coordenadas [lng,lat]
+ * Simplifies an array of coordinates
+ * @param  {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} coordArray Array of coordinates
+ * @param  {number} tolerance   [description]
+ * @param  {boolean} highQuality [description]
+ * @return {Array.<Number>}  Array de coordenadas [lng,lat]
  */
 export function simplifyPointArray(coordArray, tolerance, highQuality) {
 	tolerance = tolerance || 0.00001;
@@ -37,14 +37,16 @@ export function simplifyPointArray(coordArray, tolerance, highQuality) {
 };
 
 /**
- * Simplifica un geoson Feature
- * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
- * @param  {Number} tolerance   [description]
- * @param  {Boolean} highQuality [description]
- * @return {Feature}             [description]
+ * Simplified a Feature or google.maps.Polygon
+ * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object feature to be simplified
+ * @param  {string} output either 'feature' or 'geometry'
+ * @param  {mumber} tolerance   simplification tolerance
+ * @param  {boolean} highQuality [description]
+ * @return {Feature|Geometry} whether or not to spend more time to create a higher-quality simplification with a different algorithm
  */
-export function simplifyFeature(object, tolerance, highQuality) {
+export function simplifyFeature(object, output, tolerance, highQuality) {
 
+	output = output || 'feature';
 	var Feature = polygonToFeaturePolygon(object);
 
 	if (Feature.geometry.type === 'MultiPolygon') {
@@ -55,35 +57,10 @@ export function simplifyFeature(object, tolerance, highQuality) {
 
 	if (simplifiedgeom && simplifiedgeom.geometry) {
 		//debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-		return simplifiedgeom;
+		return (output === 'feature') ? simplifiedgeom : simplifiedgeom.feature;
 	} else {
 		warn('Cannot simplify  Feature', Feature);
-		return Feature;
-	}
-
-};
-
-/**
- * Simplifica una geometría usando Douglas Peucker
- * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} Feature [description]
- * @param  {number} tolerance   [description]
- * @param  {boolean} highQuality [description]
- * @return {Geometry}             [description]
- */
-export function simplifyGeometry(object, tolerance, highQuality) {
-	tolerance = tolerance || 0.00001;
-	highQuality = highQuality || false;
-
-	var Feature = polygonToFeaturePolygon(object);
-
-	var simplifiedFeature = turf_simplify(Feature, tolerance, highQuality);
-
-	if (simplifiedFeature && simplifiedFeature.geometry) {
-		//debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-		return simplifiedFeature.geometry;
-	} else {
-		warn('Cannot simplify  Feature', Feature);
-		return Feature.geometry;
+		return (output === 'feature') ? Feature : Feature.geometry;
 	}
 
 };

@@ -3,7 +3,7 @@ VERSION = $(shell cat package.json | sed -n 's/.*"version": "\([^"]*\)",/\1/p')
 SHELL = /usr/bin/env bash
 
 default: build
-.PHONY: test build build_unminified build_minified build_utils
+.PHONY: test build build_unminified build_minified build_utils docs
 
 
 version:
@@ -17,7 +17,7 @@ test:
 	grunt karma
 
 docs:
-	grunt jsdoc2md	
+	./generate_docs.js
 
 build_unminified:
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.js      --global-name turfHelper --global-deps '{"gmaps": "gmaps"}' --skip-source-maps

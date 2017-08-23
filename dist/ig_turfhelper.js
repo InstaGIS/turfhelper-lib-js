@@ -21201,21 +21201,21 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             };
         }
     }
-    /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
 
     /**
      * Transforma un array de LatLng en un array de coordenadas [lng,lat]
      * @param {Array.<Array.<Number>>} arrayLatLng [description]
-     * @return {Array.<external:google.maps.LatLng>} array de posiciones {@link external:google.maps.LatLng}
+     * @return {Array.<google.maps.LatLng>} array de posiciones {@link google.maps.LatLng}
      */
     function toLatLngs(coordinates) {
         return map(coordinates, toLatLng);
     }
 
+    /**
+     * Transforms a {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral}
+     * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Array.<Number>} LatLng a coordinate to transform
+     * @return {Array.<Number>}      an array of numbers representing [Lng, Lat]
+     */
     function toCoord(LatLng) {
         if (google.maps && google.maps.LatLng && LatLng instanceof google.maps.LatLng) {
             return [LatLng.lng(), LatLng.lat()];
@@ -21228,8 +21228,8 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
         }
     }
     /**
-     * Transforma un array de LatLng en un array de coordenadas [lng,lat]
-     * @param {Array.<external:google.maps.LatLng>} arrayLatLng Array de posiciones {@link external:google.maps.LatLng}
+     * Transforms an array of coordinates to an array of [Lng, Lat]
+     * @param {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng Array of coordinates
      * @return {Array.<Array.<Number>>} [description]
      */
     function toCoords(arrayLatLng, closeRing) {
@@ -21448,12 +21448,6 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
-    /**
      * Transforma un array de geometrías WKT en un FeatureCollection
      * @param  {Array<String>} wktArray Array de string WKT
      * @return {Object}          FeatureCollection
@@ -21496,7 +21490,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
     /**
      * Transforma un array de gmaps.LatLng en un Feature.Polygon
-     * @param  {Array.<external:google.maps.LatLng>} LatLngArray [description]
+     * @param  {Array.<google.maps.LatLng>} LatLngArray [description]
      * @return {Feature.<Polygon>}             [description]
      */
     function arrayToFeaturePolygon(LatLngArray) {
@@ -21516,7 +21510,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
     /**
      * Receives an object and returns a GeoJson Feature of type Polygon
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
      * @return {Feature.Polygon}        [description]
      */
     function polygonToFeaturePolygon(object) {
@@ -21548,7 +21542,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     /**
      * Transforma un array de gmaps.LatLng en un featurecollection geoJson
      * donde cada Feature es un punto del array de entrada
-     * @param  {Array<external:google.maps.LatLng>} latLngArray array de posiciones {@link external:google.maps.LatLng}
+     * @param  {Array<google.maps.LatLng>} latLngArray array de posiciones {@link google.maps.LatLng}
      * @return {FeatureCollection}             geojson FeatureCollection
      */
     function arrayToFeaturePoints(latLngArray) {
@@ -21642,17 +21636,11 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
-    /**
-     * Simplifica un conjunto de coordenadas
-     * @param  {Array} coordArray [description]
-     * @param  {Number} tolerance   [description]
-     * @param  {Boolean} highQuality [description]
-     * @return {Array}  Array de coordenadas [lng,lat]
+     * Simplifies an array of coordinates
+     * @param  {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} coordArray Array of coordinates
+     * @param  {number} tolerance   [description]
+     * @param  {boolean} highQuality [description]
+     * @return {Array.<Number>}  Array de coordenadas [lng,lat]
      */
     function simplifyPointArray(coordArray, tolerance, highQuality) {
         tolerance = tolerance || 0.00001;
@@ -21667,14 +21655,16 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * Simplifica un geoson Feature
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
-     * @param  {Number} tolerance   [description]
-     * @param  {Boolean} highQuality [description]
-     * @return {Feature}             [description]
+     * Simplified a Feature or google.maps.Polygon
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object feature to be simplified
+     * @param  {string} output either 'feature' or 'geometry'
+     * @param  {mumber} tolerance   simplification tolerance
+     * @param  {boolean} highQuality [description]
+     * @return {Feature|Geometry} whether or not to spend more time to create a higher-quality simplification with a different algorithm
      */
-    function simplifyFeature(object, tolerance, highQuality) {
+    function simplifyFeature(object, output, tolerance, highQuality) {
 
+        output = output || 'feature';
         var Feature = polygonToFeaturePolygon(object);
 
         if (Feature.geometry.type === 'MultiPolygon') {
@@ -21685,27 +21675,19 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
         if (simplifiedgeom && simplifiedgeom.geometry) {
             //debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-            return simplifiedgeom;
+            return output === 'feature' ? simplifiedgeom : simplifiedgeom.feature;
         } else {
             warn('Cannot simplify  Feature', Feature);
-            return Feature;
+            return output === 'feature' ? Feature : Feature.geometry;
         }
     }
 
     /**
-     * Simplifica una geometría usando Douglas Peucker
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} Feature [description]
-     * @param  {number} tolerance   [description]
-     * @param  {boolean} highQuality [description]
-     * @return {Geometry}             [description]
+     * Takes a linestring and returns a {@link Point|point} at a specified distance along the line.
+     * @param  {google.maps.Polyline|Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng either a Polyline or an array of points
+     * @param  {Number} distance    [description]
+     * @return {Point}             [description]
      */
-
-    /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
     function along(arrayLatLng, distance) {
 
         if (arrayLatLng instanceof gmaps.Polyline) {
@@ -21718,15 +21700,9 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
-    /**
      * Superpone dos Feature.<Polygon>
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} poly1 object to transform into a Feature.Polygon
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} poly1 object to transform into a Feature.Polygon
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} poly1 object to transform into a Feature.Polygon
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} poly1 object to transform into a Feature.Polygon
      * @return {Feature.<Polygon>|Feature.<MultiPolygon>}  result of the union. If inputs are disjoint, returns a Feature.Multipolygon
      */
     function union(poly1, poly2) {
@@ -21737,15 +21713,17 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * Convierte un path de google LatLng en un Feature.<Polygon>
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
+     * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
+     * @param  {String} output  either 'geometry' or 'feature', case insensitive, defaults to 'feature'
      * @param  {Number} distance    [description]
-     * @param  {String} units       [description]
-     * @return {Geometry}            Any GeoJson Geometry type
+     * @param  {String} units       'meters' or 'miles' etc
+     * @return {Feature|Feature.<Geometry>}  A GeoJson Feature or its geometry, according to output parameter
      */
-    function createbuffer(object, distance, units, comment, steps) {
+    function createbuffer(object, output, distance, units, comment, steps) {
         units = units || 'meters';
 
+        output = output || 'feature';
         var polygonFeature = polygonToFeaturePolygon(object),
             ring = polygonFeature.geometry.coordinates[0];
 
@@ -21755,32 +21733,23 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             try {
                 var buffered = turf_buffer(polygonFeature, distance, units, steps);
 
-                //debug('buffer ' + comment, 'buffered', buffered);
                 if (buffered.type === 'Feature') {
-                    return buffered;
+                    return output === 'feature' ? buffered : buffered.geometry;
                 }
 
-                return buffered.features[0].geometry;
+                return output === 'feature' ? buffered.features[0] : buffered.features[0].geometry;
             } catch (e) {
                 warn('Exception buffer', e);
-                return polygonFeature.geometry;
+                return output === 'feature' ? polygonFeature : polygonFeature.geometry;
             }
         }
-
-        //debug('after buffer ' + comment, buffered, 'will return', buffered.features[0]);
     }
 
     /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
-    /**
-     * Filtra un array determinando si los puntos están dentro de un Polígono GeoJSON
-     * @param {Array<SimpleFeature>} sourceArray array de SimpleFeature
-     * @param {geojson.Polygon|geojson.Multipolygon} geojsonPolygon  [description]
-     * @return {Array<SimpleFeature>} filteredArray el array de SimpleFeature que cae dentro de geojsonPolygon
+     * Filters an array of points returning those who falls inside a given {@link Polygon}
+     * @param {Array<Point>} sourceArray array de SimpleFeature
+     * @param {Polygon|Multipolygon} geojsonPolygon  the polygon thay may contain the points
+     * @return {Array<SimpleFeature>} filteredArray the array of points which fall inside the Polygon
      */
     function pointInPolygon(sourceArray, geojsonPolygon) {
         var pointsInside = [];
@@ -21999,12 +21968,6 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
         return baseIsEqual(value, other);
     }
 
-    /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-
     function diffCoords(coord1, coord2) {
         var vector = [Math.abs(coord1[0] - coord2[0]), Math.abs(coord1[1] - coord2[1])];
         return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2));
@@ -22137,9 +22100,9 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
     }
 
     /**
-     * Encuentra los puntos en donde dos polilíneas se cruzan
-     * @param  {Array.<external:google.maps.LatLng>} arrayLatLng1 array de posiciones {@link external:google.maps.LatLng}
-     * @param  {Array.<external:google.maps.LatLng>} arrayLatLng2 array de posiciones {@link external:google.maps.LatLng}
+     * Finds the {@link Point|points} where two {@link LineString|linestrings} intersect each other
+     * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
+     * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
      * @return {Array}             [description]
      */
     function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
@@ -23050,7 +23013,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                  * Creates the framework's equivalent point geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {external:google.maps.Marker}
+                 * @return              {google.maps.Marker}
                  */
                 point: function point(config, component) {
                     var c = component || this.components;
@@ -23089,7 +23052,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                  * Creates the framework's equivalent linestring geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {external:google.maps.Polyline}
+                 * @return              {google.maps.Polyline}
                  */
                 linestring: function linestring(config, component) {
                     var i, c;
@@ -23138,7 +23101,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                  * Creates the framework's equivalent Box or Rectangle geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {external:google.maps.Rectangle}
+                 * @return              {google.maps.Rectangle}
                  */
                 box: function box(config, component) {
                     var c = component || this.components;
@@ -23154,7 +23117,7 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
                  * Creates the framework's equivalent polygon geometry object.
                  * @param   config      {Object}    An optional properties hash the object should use
                  * @param   component   {Object}    An optional component to build from
-                 * @return              {external:google.maps.Polygon}
+                 * @return              {google.maps.Polygon}
                  */
                 polygon: function polygon(config, component) {
                     var j, k, c, rings, verts;

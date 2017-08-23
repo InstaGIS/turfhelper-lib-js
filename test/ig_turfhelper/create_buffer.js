@@ -87,7 +87,7 @@
             };
 
 
-            var result = turfHelper.createbuffer(gmPolygon, 10, 'meters', 32);
+            var result = turfHelper.createbuffer(gmPolygon, 'feature', 10, 'meters', 32);
             assert.deepEqual(result, featurePolygon, 'turfHelpers.createbuffer should create a correct buffer from a  google.maps.Polygon');
             done();
         };

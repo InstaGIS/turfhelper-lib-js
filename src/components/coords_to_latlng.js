@@ -25,7 +25,11 @@ function toLatLngs(coordinates) {
 	return _map(coordinates, toLatLng);
 }
 
-
+/**
+ * Transforms a {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral}
+ * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Array.<Number>} LatLng a coordinate to transform
+ * @return {Array.<Number>}      an array of numbers representing [Lng, Lat]
+ */
 function toCoord(LatLng) {
 	if (google.maps && google.maps.LatLng && LatLng instanceof google.maps.LatLng) {
 		return [LatLng.lng(), LatLng.lat()];
@@ -38,8 +42,8 @@ function toCoord(LatLng) {
 	}
 }
 /**
- * Transforma un array de LatLng en un array de coordenadas [lng,lat]
- * @param {Array.<google.maps.LatLng>} arrayLatLng Array de posiciones {@link google.maps.LatLng}
+ * Transforms an array of coordinates to an array of [Lng, Lat]
+ * @param {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng Array of coordinates
  * @return {Array.<Array.<Number>>} [description]
  */
 function toCoords(arrayLatLng, closeRing) {
@@ -59,8 +63,13 @@ function toCoords(arrayLatLng, closeRing) {
 	return ring;
 }
 
-function latlngToPoint(latLng) {
-	var coords = toCoord(latLng),
+/**
+ * Transforms a {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral} into a {@link Feature.<Point>}
+ * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Array.<Number>} LatLng a coordinate to transform
+ * @return {Feature.<Point>} a Point type Feature
+ */
+function latlngToPoint(LatLng) {
+	var coords = toCoord(LatLng),
 		feature = {
 			type: "Feature",
 			geometry: {

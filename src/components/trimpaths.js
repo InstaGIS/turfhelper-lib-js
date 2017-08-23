@@ -63,7 +63,7 @@ function kinks(featureIn) {
 }
 
 /**
- * Encuentra los puntos en donde dos polilíneas se cruzan
+ * Finds the {@link Point|points} where two {@link LineString|linestrings} intersect each other
  * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
  * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
  * @return {Array}             [description]

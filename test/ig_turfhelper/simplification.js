@@ -425,8 +425,6 @@
                 paths: points
             });
 
-            console.log('if gmPolygon Valid', gmPolygon instanceof gmaps.Polygon);
-
 
             var featurePolygon = {
                 "type": "Feature",
@@ -439,7 +437,7 @@
             };
 
 
-            var result = turfHelper.simplifyFeature(gmPolygon, 0.5);
+            var result = turfHelper.simplifyFeature(gmPolygon, 'feature', 0.5);
 
             var simplified_result_geom = result.geometry.coordinates[0].map(function (point) {
                 return [Math.round(point[0] * 1000000000) / 1000000000, Math.round(point[1] * 1000000000) / 1000000000];

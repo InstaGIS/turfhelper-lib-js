@@ -16,12 +16,13 @@ import {
  * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
  * @param  {String} output  either 'geometry' or 'feature', case insensitive, defaults to 'feature'
  * @param  {Number} distance    [description]
- * @param  {String} units       [description]
- * @return {Feature|Geometry}            Any GeoJson Geometry type
+ * @param  {String} units       'meters' or 'miles' etc
+ * @return {Feature|Feature.<Geometry>}  A GeoJson Feature or its geometry, according to output parameter
  */
 export function createbuffer(object, output, distance, units, comment, steps) {
     units = units || 'meters';
 
+    output = output || 'feature';
     var polygonFeature = polygonToFeaturePolygon(object),
         ring = polygonFeature.geometry.coordinates[0];
 
@@ -31,18 +32,15 @@ export function createbuffer(object, output, distance, units, comment, steps) {
         try {
             var buffered = turf_buffer(polygonFeature, distance, units, steps);
 
-            //debug('buffer ' + comment, 'buffered', buffered);
             if (buffered.type === 'Feature') {
-                return buffered.geometry;
+                return (output === 'feature') ? buffered : buffered.geometry;
             }
 
-            return buffered.features[0].geometry;
+            return (output === 'feature') ? buffered.features[0] : buffered.features[0].geometry;
         } catch (e) {
             warn('Exception buffer', e);
-            return polygonFeature.geometry;
+            return (output === 'feature') ? polygonFeature : polygonFeature.geometry;
         }
     }
-
-    //debug('after buffer ' + comment, buffered, 'will return', buffered.features[0]);
 
 };

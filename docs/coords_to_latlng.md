@@ -11,13 +11,33 @@ Transforma un array de LatLng en un array de coordenadas [lng,lat]
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)>** array de posiciones [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)
 
-## toCoords
+## toCoord
 
-Transforma un array de LatLng en un array de coordenadas [lng,lat]
+Transforms a [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) or [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md)
 
 **Parameters**
 
--   `arrayLatLng` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)>** Array de posiciones [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)
+-   `LatLng` **([google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) \| [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>)** a coordinate to transform
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>** an array of numbers representing [Lng, Lat]
+
+## toCoords
+
+Transforms an array of coordinates to an array of [Lng, Lat]
+
+**Parameters**
+
+-   `arrayLatLng` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md)>)** Array of coordinates
 -   `closeRing`  
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>>** [description]
+
+## latlngToPoint
+
+Transforms a [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) or [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md) into a [Feature.&lt;Point>](Feature.<Point>)
+
+**Parameters**
+
+-   `LatLng` **([google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) \| [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>)** a coordinate to transform
+
+Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Point](http://geojson.org/geojson-spec.html#point)>** a Point type Feature
