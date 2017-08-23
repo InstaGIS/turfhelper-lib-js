@@ -173,8 +173,8 @@ function polylineToFeatureLinestring(objeto) {
 function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 
 
-	var line1 = polylineToFeatureLinestring(ring1);
-	var line2 = polylineToFeatureLinestring(ring2);
+	var line1 = polylineToFeatureLinestring(arrayLatLng1);
+	var line2 = polylineToFeatureLinestring(arrayLatLng2);
 
 	var ring1 = line1.geometry.coordinates;
 	var ring2 = line2.geometry.coordinates;
