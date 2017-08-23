@@ -4,6 +4,7 @@ import {
 	default as _map
 } from 'lodash-es/map.js';
 
+
 function toLatLng(point) {
 	if (point.lat) {
 		return point;
@@ -29,13 +30,16 @@ function toLatLngs(coordinates) {
 	return _map(coordinates, toLatLng);
 }
 
+
 function toCoord(LatLng) {
-	if (gmaps && gmaps.LatLng && LatLng instanceof gmaps.LatLng) {
+	if (google.maps && google.maps.LatLng && LatLng instanceof google.maps.LatLng) {
 		return [LatLng.lng(), LatLng.lat()];
 	} else if (LatLng.lat && LatLng.lng) {
 		return [LatLng.lng, LatLng.lat];
-	} else {
+	} else if (LatLng.length && LatLng.length === 2) {
 		return LatLng;
+	} else {
+		throw new Error('google.maps is not present in the global scope')
 	}
 }
 /**
@@ -45,8 +49,17 @@ function toCoord(LatLng) {
  */
 function toCoords(arrayLatLng, closeRing) {
 	var ring = _map(arrayLatLng, toCoord);
+
+
 	if (closeRing === true) {
-		ring.push(ring[0]);
+		var last_coord = ring.pop();
+		if (last_coord[0] === ring[0][0] && last_coord[1] === ring[0][1]) {
+			ring.push(ring[0]);
+		} else {
+			ring.push(last_coord);
+			ring.push(ring[0]);
+		}
+
 	}
 	return ring;
 }

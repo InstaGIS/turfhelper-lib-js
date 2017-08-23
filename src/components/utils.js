@@ -26,10 +26,9 @@ import {
 from 'lodash-es/reduce.js';
 
 import turf_linestring from 'turf-linestring';
-import turf_polygon from 'turf-polygon';
-import turf_centroid from 'turf-centroid';
+import turf_centroid from '@turf/centroid';
 
-import turf_union from 'turf-union';
+import turf_union from '@turf/union';
 
 var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;"),
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
@@ -151,19 +150,20 @@ function representGeometry(parentObj, callback) {
  * @return {Feature.<Polygon>}             [description]
  */
 function arrayToFeaturePolygon(LatLngArray) {
-    var vertices = _map(LatLngArray, function (LatLng) {
-        return [LatLng.lng(), LatLng.lat()];
-    });
-    vertices.push(vertices[0]);
+
+    var vertices = toCoords(LatLngArray, true);
 
     return {
         type: "Feature",
+        properties: {},
         geometry: {
             type: "Polygon",
+
             coordinates: [vertices]
         }
     };
 }
+
 
 /**
  * Convierte un polígono en un geojson Feature.<Polygon>
@@ -172,10 +172,7 @@ function arrayToFeaturePolygon(LatLngArray) {
  */
 var polygonToFeaturePolygon = function (polygon) {
 
-        var vertices = toCoords(polygon.getPath().getArray());
-
-        vertices.push(vertices[0]);
-        return turf_polygon([vertices]);
+        return arrayToFeaturePolygon(polygon.getPath().getArray());
     },
 
     /**
@@ -240,6 +237,7 @@ var polygonToFeaturePolygon = function (polygon) {
 export {
     debug,
     warn,
+    arrayToFeaturePolygon,
     polygonToFeaturePolygonCollection,
     representGeometry,
     polygonToFeaturePolygon,

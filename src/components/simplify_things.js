@@ -1,7 +1,7 @@
 import gmaps from 'gmaps';
 
 import turf_linestring from 'turf-linestring';
-import turf_simplify from 'turf-simplify';
+import turf_simplify from '@turf/simplify';
 import {
 	toCoords
 } from './coords_to_latlng.js'

@@ -3,9 +3,10 @@ import gmaps from 'gmaps';
 import {
     toCoords
 } from './coords_to_latlng.js';
-import turf_buffer from 'turf-buffer';
-import turf_polygon from 'turf-polygon';
+import turf_buffer from '@turf/buffer';
+
 import {
+    arrayToFeaturePolygon,
     debug,
     warn
 } from './utils.js';
@@ -18,12 +19,12 @@ import {
 
 /**
  * Convierte un path de google LatLng en un Feature.<Polygon>
- * @param  {gmaps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} arrayLatLng [description]
+ * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} arrayLatLng [description]
  * @param  {Number} distance    [description]
  * @param  {String} units       [description]
  * @return {Feature.<Polygon>}             [description]
  */
-export function createbuffer(arrayLatLng, distance, units, comment) {
+export function createbuffer(arrayLatLng, distance, units, comment, steps) {
     units = units || 'meters';
     var polygonFeature, ring;
 
@@ -32,11 +33,11 @@ export function createbuffer(arrayLatLng, distance, units, comment) {
         ring = polygonFeature.geometry.coordinates[0];
     } else {
 
-        if (arrayLatLng instanceof gmaps.Polygon) {
+        if (arrayLatLng instanceof google.maps.Polygon) {
             arrayLatLng = arrayLatLng.getPath().getArray();
         }
         ring = toCoords(arrayLatLng, true);
-        polygonFeature = turf_polygon([ring]);
+        polygonFeature = arrayToFeaturePolygon(ring);
 
     }
 
@@ -44,7 +45,7 @@ export function createbuffer(arrayLatLng, distance, units, comment) {
         return polygonFeature;
     } else {
         try {
-            var buffered = turf_buffer(polygonFeature, distance, units);
+            var buffered = turf_buffer(polygonFeature, distance, units, steps);
 
             //debug('buffer ' + comment, 'buffered', buffered);
             if (buffered.type === 'Feature') {

@@ -1,4 +1,4 @@
-import turf_inside from 'turf-inside';
+import turf_inside from '@turf/inside';
 import {
 	default as _each
 } from 'lodash-es/forEach.js';

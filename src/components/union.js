@@ -1,4 +1,4 @@
-import turf_union from 'turf-union';
+import turf_union from '@turf/union';
 
 /**
  * The Google Maps Namespace

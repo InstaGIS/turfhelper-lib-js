@@ -10,7 +10,7 @@ import {
 
 import turk_kinks from '@turf/kinks';
 
-import turf_line_slice from 'turf-line-slice';
+import turf_line_slice from '@turf/line-slice';
 import turf_point from 'turf-point';
 import turf_linestring from 'turf-linestring';
 
@@ -74,15 +74,15 @@ function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 	var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
 	var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
 
-	var kinks = traverseRings(ring1, ring2);
+	var thiskinks = traverseRings(ring1, ring2);
 
-	if (kinks.intersections.features.length > 0) {
+	if (thiskinks.intersections.features.length > 0) {
 
-		var minRing1 = _min(kinks.intersections.features, function (kink) {
+		var minRing1 = _min(thiskinks.intersections.features, function (kink) {
 			return kink.properties.position1;
 		});
 
-		var firstIntersection = _max(_filter(kinks.intersections.features, function (kink) {
+		var firstIntersection = _max(_filter(thiskinks.intersections.features, function (kink) {
 			return kink.properties.position1 === minRing1.properties.position1;
 		}), function (kink) {
 			return kink.properties.position2;

@@ -405,11 +405,11 @@
         lat: 48.077
     }];
 
-    QUnit.test('turfHelpers.simplifyFeature should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.simplifyFeature, 'function', 'turfHelpers.simplifyFeature should be if type function');
+    QUnit.test('turfHelpers.simplifyFeature should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.simplifyFeature, 'function', 'turfHelpers.simplifyFeature should be of type function');
     });
-    QUnit.test('turfHelpers.simplifyPointArray should be if type function', function (assert) {
-        assert.equal(typeof turfHelper.simplifyPointArray, 'function', 'turfHelpers.simplifyPointArray should be if type function');
+    QUnit.test('turfHelpers.simplifyPointArray should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.simplifyPointArray, 'function', 'turfHelpers.simplifyPointArray should be of type function');
     });
     QUnit.test('turfHelpers.simplifyPointArray simplifies points correctly with the given tolerance', function (assert) {
         var result = turfHelper.simplifyPointArray(turfHelper.toCoords(points), 0.5);

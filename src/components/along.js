@@ -2,7 +2,7 @@ import gmaps from 'gmaps';
 import {
 	toCoords
 } from './coords_to_latlng.js';
-import turf_along from 'turf-along';
+import turf_along from '@turf/along';
 import turf_linestring from 'turf-linestring';
 
 /**

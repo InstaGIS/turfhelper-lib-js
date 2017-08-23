@@ -10,10 +10,10 @@
             window.__google_maps_callback__ = function () {
 
                 if (window.google.maps) {
-                    var gmaps = window.google.maps;
-                    console.log('RESOLVED');
-                    resolve(gmaps);
-                    return gmaps;
+                    window.gmaps = window.google.maps;
+                    console.log('window.google.maps RESOLVED');
+                    resolve(window.gmaps);
+                    return window.gmaps;
 
                 }
                 return reject(new Error('no gmaps object!'));

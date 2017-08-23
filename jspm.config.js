@@ -21,104 +21,155 @@ SystemJS.config({
     },
     devConfig: {
         "map": {
-            "turf-buffer": "npm:turf-buffer@3.0.12",
-            "turf-centroid": "npm:turf-centroid@3.0.12",
-            "turf-along": "npm:turf-along@3.0.12",
-            "turf-inside": "npm:turf-inside@3.0.12",
-            "turf-line-slice": "npm:turf-line-slice@3.0.12",
-            "turf-polygon": "npm:turf-polygon@1.0.3",
-            "turf-simplify": "npm:turf-simplify@3.0.12",
-            "turf-union": "npm:turf-union@3.0.12",
             "lodash-es": "npm:lodash-es@4.17.4",
-            "turf-linestring": "npm:turf-linestring@1.0.2",
             "turf-point": "npm:turf-point@2.0.1",
             "process": "npm:jspm-nodelibs-process@0.2.1",
             "turf-featurecollection": "npm:turf-featurecollection@1.0.1",
-            "@turf/kinks": "npm:@turf/kinks@4.6.0"
+            "@turf/kinks": "npm:@turf/kinks@4.6.0",
+            "@turf/buffer": "npm:@turf/buffer@4.6.1",
+            "@turf/simplify": "npm:@turf/simplify@4.6.0",
+            "@turf/along": "npm:@turf/along@4.6.0",
+            "turf-linestring": "npm:turf-linestring@1.0.2",
+            "@turf/inside": "npm:@turf/inside@4.6.0",
+            "@turf/union": "npm:@turf/union@4.6.0",
+            "@turf/centroid": "npm:@turf/centroid@4.6.1",
+            "@turf/line-slice": "npm:@turf/line-slice@4.6.0"
         },
         "packages": {
-            "npm:turf-line-slice@3.0.12": {
-                "map": {
-                    "turf-bearing": "npm:turf-bearing@3.0.12",
-                    "turf-destination": "npm:turf-destination@3.0.12",
-                    "turf-distance": "npm:turf-distance@3.0.12",
-                    "turf-helpers": "npm:turf-helpers@3.0.12",
-                    "turf-point-on-line": "npm:turf-point-on-line@3.0.12"
-                }
-            },
-            "npm:turf-along@3.0.12": {
-                "map": {
-                    "turf-bearing": "npm:turf-bearing@3.0.12",
-                    "turf-destination": "npm:turf-destination@3.0.12",
-                    "turf-distance": "npm:turf-distance@3.0.12",
-                    "turf-helpers": "npm:turf-helpers@3.0.12"
-                }
-            },
-            "npm:turf-buffer@3.0.12": {
-                "map": {
-                    "turf-helpers": "npm:turf-helpers@3.0.12",
-                    "jsts": "npm:jsts@1.1.2",
-                    "turf-combine": "npm:turf-combine@3.0.12",
-                    "geojson-normalize": "npm:geojson-normalize@0.0.0"
-                }
-            },
-            "npm:turf-centroid@3.0.12": {
-                "map": {
-                    "turf-helpers": "npm:turf-helpers@3.0.12",
-                    "turf-meta": "npm:turf-meta@3.0.12"
-                }
-            },
-            "npm:turf-destination@3.0.12": {
-                "map": {
-                    "turf-helpers": "npm:turf-helpers@3.0.12",
-                    "turf-invariant": "npm:turf-invariant@3.0.12"
-                }
-            },
-            "npm:turf-inside@3.0.12": {
-                "map": {
-                    "turf-invariant": "npm:turf-invariant@3.0.12"
-                }
-            },
-            "npm:turf-distance@3.0.12": {
-                "map": {
-                    "turf-invariant": "npm:turf-invariant@3.0.12",
-                    "turf-helpers": "npm:turf-helpers@3.0.12"
-                }
-            },
-            "npm:turf-bearing@3.0.12": {
-                "map": {
-                    "turf-invariant": "npm:turf-invariant@3.0.12"
-                }
-            },
-            "npm:turf-point-on-line@3.0.12": {
-                "map": {
-                    "turf-bearing": "npm:turf-bearing@3.0.12",
-                    "turf-destination": "npm:turf-destination@3.0.12",
-                    "turf-distance": "npm:turf-distance@3.0.12",
-                    "turf-helpers": "npm:turf-helpers@3.0.12"
-                }
-            },
-            "npm:turf-simplify@3.0.12": {
-                "map": {
-                    "simplify-js": "npm:simplify-js@1.2.1"
-                }
-            },
-            "npm:turf-union@3.0.12": {
-                "map": {
-                    "jsts": "npm:jsts@1.1.2"
-                }
-            },
-            "npm:turf-combine@3.0.12": {
-                "map": {
-                    "turf-meta": "npm:turf-meta@3.0.12"
-                }
-            },
             "npm:turf-point@2.0.1": {
                 "map": {
                     "minimist": "npm:minimist@1.2.0"
                 }
             },
             "npm:@turf/kinks@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0"
+                }
+            },
+            "npm:@turf/buffer@4.6.1": {
+                "map": {
+                    "jsts": "npm:jsts@1.3.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0",
+                    "@turf/center": "npm:@turf/center@4.6.1",
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "d3-geo": "npm:d3-geo@1.6.4"
+                }
+            },
+            "npm:@turf/center@4.6.1": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/bbox": "npm:@turf/bbox@4.6.0"
+                }
+            },
+            "npm:d3-geo@1.6.4": {
+                "map": {
+                    "d3-array": "npm:d3-array@1.2.0"
+                }
+            },
+            "npm:@turf/bbox@4.6.0": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:@turf/simplify@4.6.0": {
+                "map": {
+                    "simplify-js": "npm:simplify-js@1.2.1"
+                }
+            },
+            "npm:@turf/along@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/bearing": "npm:@turf/bearing@4.6.0",
+                    "@turf/destination": "npm:@turf/destination@4.6.0",
+                    "@turf/distance": "npm:@turf/distance@4.6.0"
+                }
+            },
+            "npm:@turf/destination@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0"
+                }
+            },
+            "npm:@turf/distance@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0"
+                }
+            },
+            "npm:@turf/bearing@4.6.0": {
+                "map": {
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0"
+                }
+            },
+            "npm:@turf/inside@4.6.0": {
+                "map": {
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0"
+                }
+            },
+            "npm:@turf/union@4.6.0": {
+                "map": {
+                    "jsts": "npm:jsts@1.3.0"
+                }
+            },
+            "npm:@turf/centroid@4.6.1": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@4.6.0",
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0"
+                }
+            },
+            "npm:@turf/line-slice@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/point-on-line": "npm:@turf/point-on-line@4.6.0"
+                }
+            },
+            "npm:@turf/point-on-line@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                    "@turf/distance": "npm:@turf/distance@4.6.0",
+                    "@turf/bearing": "npm:@turf/bearing@4.6.0",
+                    "@turf/destination": "npm:@turf/destination@4.6.0",
+                    "@turf/line-intersect": "npm:@turf/line-intersect@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:@turf/line-intersect@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0",
+                    "geojson-rbush": "npm:geojson-rbush@1.1.1",
+                    "@turf/line-segment": "npm:@turf/line-segment@4.6.0"
+                }
+            },
+            "npm:geojson-rbush@1.1.1": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@3.13.0",
+                    "@turf/meta": "npm:@turf/meta@3.14.0",
+                    "rbush": "npm:rbush@2.0.1",
+                    "@turf/bbox": "npm:@turf/bbox@3.14.0",
+                    "@turf/bbox-polygon": "npm:@turf/bbox-polygon@4.6.0"
+                }
+            },
+            "npm:@turf/line-segment@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:rbush@2.0.1": {
+                "map": {
+                    "quickselect": "npm:quickselect@1.0.0"
+                }
+            },
+            "npm:@turf/bbox@3.14.0": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@3.14.0"
+                }
+            },
+            "npm:@turf/bbox-polygon@4.6.0": {
                 "map": {
                     "@turf/helpers": "npm:@turf/helpers@4.6.0"
                 }
