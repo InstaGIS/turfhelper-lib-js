@@ -21516,11 +21516,11 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
     /**
      * Receives an object and returns a GeoJson Feature of type Polygon
-     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object object to transform into a Feature.Polygon
+     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
      * @return {Feature.Polygon}        [description]
      */
     function polygonToFeaturePolygon(object) {
-        var ring;
+        var ring, polygonFeature;
         if (object.type === 'Feature') {
             polygonFeature = object;
         } else if (object instanceof google.maps.Polygon) {
@@ -21531,9 +21531,16 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
             ring = toCoords(object, true);
             polygonFeature = arrayToFeaturePolygon(ring);
+        } else if (object.geometry) {
+            polygonFeature = {
+                type: "Feature",
+                geometry: object.geometry
+            };
         } else {
             throw new Error('object is not a Feature, google.maps.Polygon nor an array of google.maps.LatLng');
         }
+
+        polygonFeature.properties = {};
 
         return polygonFeature;
     }
@@ -21641,14 +21648,6 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
      */
 
     /**
-     * Simplifica una geometría usando Douglas Peucker
-     * @param  {Feature.<Polygon|MultiPolygon>} geometry    polígono o multipolígono geoJson
-     * @param  {number} tolerance   [description]
-     * @param  {boolean} highQuality [description]
-     * @return {object}             [description]
-     */
-
-    /**
      * Simplifica un conjunto de coordenadas
      * @param  {Array} coordArray [description]
      * @param  {Number} tolerance   [description]
@@ -21669,17 +21668,16 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
 
     /**
      * Simplifica un geoson Feature
-     * @param  {Feature.<Polygon|MultiPolygon>} Feature     [description]
+     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
      * @param  {Number} tolerance   [description]
      * @param  {Boolean} highQuality [description]
      * @return {Feature}             [description]
      */
-    function simplifyFeature(Feature, tolerance, highQuality) {
-        highQuality = highQuality || false;
+    function simplifyFeature(object, tolerance, highQuality) {
 
-        if (Feature instanceof gmaps.Polygon) {
-            Feature = polygonToFeaturePolygon(Feature);
-        } else if (Feature.geometry.type === 'MultiPolygon') {
+        var Feature = polygonToFeaturePolygon(object);
+
+        if (Feature.geometry.type === 'MultiPolygon') {
             Feature.geometry.type = 'Polygon';
             Feature.geometry.coordinates = Feature.geometry.coordinates[0];
         }
@@ -21693,6 +21691,14 @@ $__System.register('a', ['29', 'b', 'e', 'd', '11', '12', '1a', '1b', '1d', '28'
             return Feature;
         }
     }
+
+    /**
+     * Simplifica una geometría usando Douglas Peucker
+     * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} Feature [description]
+     * @param  {number} tolerance   [description]
+     * @param  {boolean} highQuality [description]
+     * @return {Geometry}             [description]
+     */
 
     /**
      * The Google Maps Namespace

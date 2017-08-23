@@ -28,7 +28,7 @@ build_minified:
 build_utils:
 	jspm build src/components/utils.js dist/utils.min.js  --global-name turfUtils --global-deps '{"gmaps": "gmaps"}' -m
 
-build: build_unminified build_minified build_utils
+build: build_minified test build_unminified build_utils
 	
 	
 	

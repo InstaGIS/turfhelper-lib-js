@@ -109,11 +109,11 @@ function arrayToFeaturePolygon(LatLngArray) {
 
 /**
  * Receives an object and returns a GeoJson Feature of type Polygon
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object object to transform into a Feature.Polygon
+ * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
  * @return {Feature.Polygon}        [description]
  */
 function polygonToFeaturePolygon(object) {
-    var ring;
+    var ring, polygonFeature;
     if (object.type === 'Feature') {
         polygonFeature = object;
     } else if (object instanceof google.maps.Polygon) {
@@ -125,9 +125,16 @@ function polygonToFeaturePolygon(object) {
         ring = toCoords(object, true);
         polygonFeature = arrayToFeaturePolygon(ring);
 
+    } else if (object.geometry) {
+        polygonFeature = {
+            type: "Feature",
+            geometry: object.geometry
+        };
     } else {
         throw new Error('object is not a Feature, google.maps.Polygon nor an array of google.maps.LatLng');
     }
+
+    polygonFeature.properties = {};
 
 
     return polygonFeature;
