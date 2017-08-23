@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.1.6",
+  "version": "17.1.7",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -59,10 +59,7 @@
       "lib": "dist"
     },
     "format": "amd",
-    "dependencies": {
-      "@turf/truncate": "npm:@turf/truncate@^4.6.0",
-      "@turf/unkink-polygon": "npm:@turf/unkink-polygon@^4.6.0"
-    },
+    "dependencies": {},
     "devDependencies": {
       "@turf/along": "npm:@turf/along@^4.6.0",
       "@turf/buffer": "npm:@turf/buffer@^4.6.1",
@@ -73,7 +70,9 @@
       "@turf/kinks": "npm:@turf/kinks@^4.6.0",
       "@turf/line-slice": "npm:@turf/line-slice@^4.6.0",
       "@turf/simplify": "npm:@turf/simplify@^4.6.0",
+      "@turf/truncate": "npm:@turf/truncate@^4.6.0",
       "@turf/union": "npm:@turf/union@^4.6.0",
+      "@turf/unkink-polygon": "npm:@turf/unkink-polygon@^4.6.0",
       "lodash-es": "npm:lodash-es@^4.14.2"
     },
     "peerDependencies": {

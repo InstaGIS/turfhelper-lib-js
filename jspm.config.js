@@ -31,7 +31,9 @@ SystemJS.config({
             "@turf/centroid": "npm:@turf/centroid@4.6.1",
             "@turf/helpers": "npm:@turf/helpers@4.6.0",
             "@turf/line-slice": "npm:@turf/line-slice@4.6.0",
-            "@turf/concave": "npm:@turf/concave@4.6.0"
+            "@turf/concave": "npm:@turf/concave@4.6.0",
+            "@turf/truncate": "npm:@turf/truncate@4.6.0",
+            "@turf/unkink-polygon": "npm:@turf/unkink-polygon@4.6.0"
         },
         "packages": {
             "npm:@turf/kinks@4.6.0": {
@@ -168,6 +170,78 @@ SystemJS.config({
                 "map": {
                     "@turf/helpers": "npm:@turf/helpers@4.6.0"
                 }
+            },
+            "npm:@turf/inside@4.6.0": {
+                "map": {
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0"
+                }
+            },
+            "npm:rbush@2.0.1": {
+                "map": {
+                    "quickselect": "npm:quickselect@1.0.0"
+                }
+            },
+            "npm:@turf/truncate@4.6.0": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:@turf/unkink-polygon@4.6.0": {
+                "map": {
+                    "simplepolygon": "npm:simplepolygon@1.2.0",
+                    "@turf/flatten": "npm:@turf/flatten@4.6.0",
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:simplepolygon@1.2.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@3.13.0",
+                    "geojson-polygon-self-intersections": "npm:geojson-polygon-self-intersections@1.1.2",
+                    "rbush": "npm:rbush@2.0.1",
+                    "@turf/area": "npm:@turf/area@3.14.0",
+                    "@turf/within": "npm:@turf/within@3.14.0",
+                    "debug": "npm:debug@2.6.8",
+                    "@turf/inside": "npm:@turf/inside@4.6.0"
+                }
+            },
+            "npm:@turf/flatten@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:geojson-polygon-self-intersections@1.1.2": {
+                "map": {
+                    "rbush": "npm:rbush@2.0.1"
+                }
+            },
+            "npm:@turf/area@3.14.0": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@3.14.0",
+                    "@mapbox/geojson-area": "npm:@mapbox/geojson-area@0.2.2"
+                }
+            },
+            "npm:@turf/within@3.14.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@3.13.0",
+                    "@turf/inside": "npm:@turf/inside@3.14.0"
+                }
+            },
+            "npm:debug@2.6.8": {
+                "map": {
+                    "ms": "npm:ms@2.0.0"
+                }
+            },
+            "npm:@turf/inside@3.14.0": {
+                "map": {
+                    "@turf/invariant": "npm:@turf/invariant@3.13.0"
+                }
+            },
+            "npm:@mapbox/geojson-area@0.2.2": {
+                "map": {
+                    "wgs84": "npm:wgs84@0.0.0"
+                }
             }
         }
     },
@@ -192,84 +266,9 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
-        "@turf/truncate": "npm:@turf/truncate@4.6.0",
-        "@turf/unkink-polygon": "npm:@turf/unkink-polygon@4.6.0",
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
         "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
         "gmap": "npm:amd-googlemaps-loader@1.8.6"
     },
-    packages: {
-        "npm:@turf/truncate@4.6.0": {
-            "map": {
-                "@turf/meta": "npm:@turf/meta@4.6.0"
-            }
-        },
-        "npm:@turf/inside@4.6.0": {
-            "map": {
-                "@turf/invariant": "npm:@turf/invariant@4.6.0"
-            }
-        },
-        "npm:rbush@2.0.1": {
-            "map": {
-                "quickselect": "npm:quickselect@1.0.0"
-            }
-        },
-        "npm:@turf/unkink-polygon@4.6.0": {
-            "map": {
-                "@turf/flatten": "npm:@turf/flatten@4.6.0",
-                "simplepolygon": "npm:simplepolygon@1.2.0",
-                "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                "@turf/meta": "npm:@turf/meta@4.6.0"
-            }
-        },
-        "npm:@turf/flatten@4.6.0": {
-            "map": {
-                "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                "@turf/meta": "npm:@turf/meta@4.6.0"
-            }
-        },
-        "npm:simplepolygon@1.2.0": {
-            "map": {
-                "@turf/helpers": "npm:@turf/helpers@3.13.0",
-                "geojson-polygon-self-intersections": "npm:geojson-polygon-self-intersections@1.1.2",
-                "rbush": "npm:rbush@2.0.1",
-                "@turf/inside": "npm:@turf/inside@4.6.0",
-                "debug": "npm:debug@2.6.8",
-                "@turf/within": "npm:@turf/within@3.14.0",
-                "@turf/area": "npm:@turf/area@3.14.0"
-            }
-        },
-        "npm:geojson-polygon-self-intersections@1.1.2": {
-            "map": {
-                "rbush": "npm:rbush@2.0.1"
-            }
-        },
-        "npm:@turf/within@3.14.0": {
-            "map": {
-                "@turf/inside": "npm:@turf/inside@3.14.0",
-                "@turf/helpers": "npm:@turf/helpers@3.13.0"
-            }
-        },
-        "npm:@turf/area@3.14.0": {
-            "map": {
-                "@turf/meta": "npm:@turf/meta@3.14.0",
-                "@mapbox/geojson-area": "npm:@mapbox/geojson-area@0.2.2"
-            }
-        },
-        "npm:@turf/inside@3.14.0": {
-            "map": {
-                "@turf/invariant": "npm:@turf/invariant@3.13.0"
-            }
-        },
-        "npm:debug@2.6.8": {
-            "map": {
-                "ms": "npm:ms@2.0.0"
-            }
-        },
-        "npm:@mapbox/geojson-area@0.2.2": {
-            "map": {
-                "wgs84": "npm:wgs84@0.0.0"
-            }
-        }
-    }
+    packages: {}
 });

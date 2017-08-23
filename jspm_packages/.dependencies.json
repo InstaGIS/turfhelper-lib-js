@@ -152,12 +152,6 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/truncate@4.6.0": {
-    "deps": {
-      "@turf/meta": "npm:@turf/meta@^4.6.0"
-    },
-    "peerDeps": {}
-  },
   "npm:@turf/concave@4.6.0": {
     "deps": {
       "@turf/distance": "npm:@turf/distance@^4.6.0",
@@ -189,19 +183,18 @@
     "deps": {},
     "peerDeps": {}
   },
+  "npm:@turf/truncate@4.6.0": {
+    "deps": {
+      "@turf/meta": "npm:@turf/meta@^4.6.0"
+    },
+    "peerDeps": {}
+  },
   "npm:@turf/unkink-polygon@4.6.0": {
     "deps": {
       "@turf/flatten": "npm:@turf/flatten@^4.6.0",
       "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/meta": "npm:@turf/meta@^4.6.0",
       "simplepolygon": "npm:simplepolygon@1.2.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/flatten@4.6.0": {
-    "deps": {
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
-      "@turf/meta": "npm:@turf/meta@^4.6.0"
     },
     "peerDeps": {}
   },
@@ -217,11 +210,18 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/helpers@4.6.0": {
-    "deps": {},
+  "npm:@turf/flatten@4.6.0": {
+    "deps": {
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
+      "@turf/meta": "npm:@turf/meta@^4.6.0"
+    },
     "peerDeps": {}
   },
   "npm:@turf/helpers@3.13.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/helpers@4.6.0": {
     "deps": {},
     "peerDeps": {}
   },
@@ -241,31 +241,6 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/inside@4.6.0": {
-    "deps": {
-      "@turf/invariant": "npm:@turf/invariant@^4.6.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:debug@2.6.8": {
-    "deps": {
-      "ms": "npm:ms@2.0.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/within@3.14.0": {
-    "deps": {
-      "@turf/inside": "npm:@turf/inside@^3.14.0",
-      "@turf/helpers": "npm:@turf/helpers@^3.13.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/inside@3.14.0": {
-    "deps": {
-      "@turf/invariant": "npm:@turf/invariant@^3.13.0"
-    },
-    "peerDeps": {}
-  },
   "npm:@turf/area@3.14.0": {
     "deps": {
       "@mapbox/geojson-area": "npm:@mapbox/geojson-area@^0.2.2",
@@ -277,15 +252,36 @@
     "deps": {},
     "peerDeps": {}
   },
-  "npm:@turf/invariant@3.13.0": {
-    "deps": {},
+  "npm:@turf/within@3.14.0": {
+    "deps": {
+      "@turf/inside": "npm:@turf/inside@^3.14.0",
+      "@turf/helpers": "npm:@turf/helpers@^3.13.0"
+    },
     "peerDeps": {}
   },
-  "npm:@turf/invariant@4.6.0": {
-    "deps": {},
+  "npm:debug@2.6.8": {
+    "deps": {
+      "ms": "npm:ms@2.0.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/inside@3.14.0": {
+    "deps": {
+      "@turf/invariant": "npm:@turf/invariant@^3.13.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/inside@4.6.0": {
+    "deps": {
+      "@turf/invariant": "npm:@turf/invariant@^4.6.0"
+    },
     "peerDeps": {}
   },
   "npm:quickselect@1.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:ms@2.0.0": {
     "deps": {},
     "peerDeps": {}
   },
@@ -295,7 +291,11 @@
     },
     "peerDeps": {}
   },
-  "npm:ms@2.0.0": {
+  "npm:@turf/invariant@3.13.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/invariant@4.6.0": {
     "deps": {},
     "peerDeps": {}
   },
