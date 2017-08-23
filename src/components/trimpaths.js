@@ -11,8 +11,12 @@ import {
 import turk_kinks from '@turf/kinks';
 
 import turf_line_slice from '@turf/line-slice';
-import turf_point from 'turf-point';
-import turf_linestring from 'turf-linestring';
+
+import turf_helpers from '@turf/helpers';
+
+var turf_point = turf_helpers.point,
+	turf_linestring = turf_helpers.lineString;
+
 
 import {
 	traverseRings

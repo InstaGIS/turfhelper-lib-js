@@ -1,45 +1,28 @@
-import gmaps from 'gmaps';
-
 import {
     toCoords
 } from './coords_to_latlng.js';
+
 import turf_buffer from '@turf/buffer';
 
 import {
-    arrayToFeaturePolygon,
+    polygonToFeaturePolygon,
     debug,
     warn
 } from './utils.js';
 
-/**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
 
 /**
  * Convierte un path de google LatLng en un Feature.<Polygon>
- * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} arrayLatLng [description]
+ * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object [description]
  * @param  {Number} distance    [description]
  * @param  {String} units       [description]
- * @return {Feature.<Polygon>}             [description]
+ * @return {Geometry}            Any GeoJson Geometry type
  */
-export function createbuffer(arrayLatLng, distance, units, comment, steps) {
+export function createbuffer(object, distance, units, comment, steps) {
     units = units || 'meters';
-    var polygonFeature, ring;
 
-    if (arrayLatLng.type === 'Feature') {
-        polygonFeature = arrayLatLng;
+    var polygonFeature = polygonToFeaturePolygon(object),
         ring = polygonFeature.geometry.coordinates[0];
-    } else {
-
-        if (arrayLatLng instanceof google.maps.Polygon) {
-            arrayLatLng = arrayLatLng.getPath().getArray();
-        }
-        ring = toCoords(arrayLatLng, true);
-        polygonFeature = arrayToFeaturePolygon(ring);
-
-    }
 
     if (ring.length <= 3) {
         return polygonFeature;
@@ -52,10 +35,10 @@ export function createbuffer(arrayLatLng, distance, units, comment, steps) {
                 return buffered;
             }
 
-            return buffered.features[0];
+            return buffered.features[0].geometry;
         } catch (e) {
             warn('Exception buffer', e);
-            return polygonFeature;
+            return polygonFeature.geometry;
         }
     }
 

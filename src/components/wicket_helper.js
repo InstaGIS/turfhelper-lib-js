@@ -1559,7 +1559,7 @@ Wkt.Wkt.prototype.deconstruct = function (obj, multiFlag) {
 
     }
 
-    console.zlog('The passed object does not have any recognizable properties.');
+    console.warn('The passed object does not have any recognizable properties.');
 
 };
 
@@ -1575,7 +1575,7 @@ export function WKT2Object(WKT) {
     try {
         wkt.read(WKT);
     } catch (e) {
-        console.zlog('Imposible leer geometría', WKT);
+        console.warn('Imposible leer geometría', WKT);
         return false;
     }
     try {

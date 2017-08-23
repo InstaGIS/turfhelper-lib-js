@@ -22,25 +22,18 @@ SystemJS.config({
     devConfig: {
         "map": {
             "lodash-es": "npm:lodash-es@4.17.4",
-            "turf-point": "npm:turf-point@2.0.1",
             "process": "npm:jspm-nodelibs-process@0.2.1",
-            "turf-featurecollection": "npm:turf-featurecollection@1.0.1",
             "@turf/kinks": "npm:@turf/kinks@4.6.0",
             "@turf/buffer": "npm:@turf/buffer@4.6.1",
             "@turf/simplify": "npm:@turf/simplify@4.6.0",
             "@turf/along": "npm:@turf/along@4.6.0",
-            "turf-linestring": "npm:turf-linestring@1.0.2",
             "@turf/inside": "npm:@turf/inside@4.6.0",
             "@turf/union": "npm:@turf/union@4.6.0",
             "@turf/centroid": "npm:@turf/centroid@4.6.1",
-            "@turf/line-slice": "npm:@turf/line-slice@4.6.0"
+            "@turf/line-slice": "npm:@turf/line-slice@4.6.0",
+            "@turf/helpers": "npm:@turf/helpers@4.6.0"
         },
         "packages": {
-            "npm:turf-point@2.0.1": {
-                "map": {
-                    "minimist": "npm:minimist@1.2.0"
-                }
-            },
             "npm:@turf/kinks@4.6.0": {
                 "map": {
                     "@turf/helpers": "npm:@turf/helpers@4.6.0"

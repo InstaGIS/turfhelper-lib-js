@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.1.1",
+  "version": "17.1.2",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -37,9 +37,9 @@
     "qunitjs": "^1"
   },
   "devDependencies": {
-    "babel-eslint": "^6",
+    "babel-eslint": "^7.2.3",
     "es6-module-loader": "^0.17.11",
-    "eslint": "^3",
+    "eslint": "^4.5.0",
     "grunt-jsdoc-to-markdown": "^3.0.0",
     "karma-qunit": "^1.2.1",
     "karma-systemjs": "^0.16.0",
@@ -60,16 +60,14 @@
       "@turf/along": "npm:@turf/along@^4.6.0",
       "@turf/buffer": "npm:@turf/buffer@^4.6.1",
       "@turf/centroid": "npm:@turf/centroid@^4.6.1",
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/inside": "npm:@turf/inside@^4.6.0",
       "@turf/kinks": "npm:@turf/kinks@^4.6.0",
       "@turf/line-slice": "npm:@turf/line-slice@^4.6.0",
       "@turf/simplify": "npm:@turf/simplify@^4.6.0",
       "@turf/union": "npm:@turf/union@^4.6.0",
       "lodash-es": "npm:lodash-es@^4.14.2",
-      "process": "npm:jspm-nodelibs-process@^0.2.0",
-      "turf-featurecollection": "npm:turf-featurecollection@^1.0.1",
-      "turf-linestring": "npm:turf-linestring@^1.0.2",
-      "turf-point": "npm:turf-point@^2.0.1"
+      "process": "npm:jspm-nodelibs-process@^0.2.0"
     },
     "peerDependencies": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0",

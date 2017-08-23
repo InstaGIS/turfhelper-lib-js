@@ -3,8 +3,9 @@ import {
 	toCoords
 } from './coords_to_latlng.js';
 import turf_along from '@turf/along';
-import turf_linestring from 'turf-linestring';
+import turf_helpers from '@turf/helpers';
 
+var turf_linestring = turf_helpers.lineString;
 /**
  * The Google Maps Namespace
  * @external "google.maps"

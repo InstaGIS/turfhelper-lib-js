@@ -1,6 +1,6 @@
 import gmaps from 'gmaps';
 
-import turf_linestring from 'turf-linestring';
+
 import turf_simplify from '@turf/simplify';
 import {
 	toCoords
@@ -11,6 +11,9 @@ import {
 	warn
 } from './utils.js';
 
+import turf_helpers from '@turf/helpers';
+
+var turf_linestring = turf_helpers.lineString;
 /**
  * The Google Maps Namespace
  * @external "google.maps"

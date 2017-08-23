@@ -1,10 +1,12 @@
-import turf_featurecollection from 'turf-featurecollection';
-import turf_point from 'turf-point';
 import {
 	default as _isEqual
 }
 from 'lodash-es/isEqual.js';
 
+import turf_helpers from '@turf/helpers';
+
+var turf_point = turf_helpers.point,
+	turf_featurecollection = turf_helpers.featureCollection;
 /**
  * The Google Maps Namespace
  * @external "google.maps"

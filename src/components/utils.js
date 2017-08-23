@@ -25,10 +25,14 @@ import {
 }
 from 'lodash-es/reduce.js';
 
-import turf_linestring from 'turf-linestring';
+
 import turf_centroid from '@turf/centroid';
 
 import turf_union from '@turf/union';
+
+import turf_helpers from '@turf/helpers';
+
+var turf_linestring = turf_helpers.lineString;
 
 var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;"),
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
@@ -57,8 +61,15 @@ function wktArrayToFeatureCollection(wktArray) {
         };
     });
     return FeatureCollection;
-};
+}
 
+
+/**
+ * Merges transform an array of WKT string to a Polygon or Multipolygon
+ * @param  {String[]} WKTArray Array of WKT strings
+ * @param  {[type]} debug    [description]
+ * @return {[type]}          [description]
+ */
 function mergeWKTGeoms(WKTArray, debug) {
     if (debug) {
         console.log('merging', WKTArray);
@@ -73,6 +84,114 @@ function mergeWKTGeoms(WKTArray, debug) {
 
     return theUnion;
 };
+
+
+/**
+ * Transforma un array de gmaps.LatLng en un Feature.Polygon
+ * @param  {Array.<external:google.maps.LatLng>} LatLngArray [description]
+ * @return {Feature.<Polygon>}             [description]
+ */
+function arrayToFeaturePolygon(LatLngArray) {
+
+    var vertices = toCoords(LatLngArray, true);
+
+    return {
+        type: "Feature",
+        properties: {},
+        geometry: {
+            type: "Polygon",
+
+            coordinates: [vertices]
+        }
+    };
+}
+
+
+/**
+ * Receives an object and returns a GeoJson Feature of type Polygon
+ * @param  {external:google.maps.Polygon|Array.<external:google.maps.LatLng>|Feature.Polygon} object object to transform into a Feature.Polygon
+ * @return {Feature.Polygon}        [description]
+ */
+function polygonToFeaturePolygon(object) {
+    var ring;
+    if (object.type === 'Feature') {
+        polygonFeature = object;
+    } else if (object instanceof google.maps.Polygon) {
+        object = object.getPath().getArray();
+        ring = toCoords(object, true);
+        polygonFeature = arrayToFeaturePolygon(ring);
+    } else if (!!(object && object.constructor === Array)) {
+
+        ring = toCoords(object, true);
+        polygonFeature = arrayToFeaturePolygon(ring);
+
+    } else {
+        throw new Error('object is not a Feature, google.maps.Polygon nor an array of google.maps.LatLng');
+    }
+
+
+    return polygonFeature;
+}
+
+
+/**
+ * Transforma un array de gmaps.LatLng en un featurecollection geoJson
+ * donde cada Feature es un punto del array de entrada
+ * @param  {Array<external:google.maps.LatLng>} latLngArray array de posiciones {@link external:google.maps.LatLng}
+ * @return {FeatureCollection}             geojson FeatureCollection
+ */
+function arrayToFeaturePoints(latLngArray) {
+
+    var FeatureCollection = {
+        "type": "FeatureCollection",
+        "features": []
+    };
+    var features = _map(latLngArray, function (latLng) {
+        return {
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: [latLng.lng(), latLng.lat()]
+            }
+        };
+    });
+
+    FeatureCollection.features = features;
+    return FeatureCollection;
+
+}
+
+function centroid(FeatureCollection) {
+    return turf_centroid(FeatureCollection);
+}
+
+/**
+ * Convierte un gmaps.Polygon en un FeatureCollection de puntos
+ * @param  {external:google.maps.Polygon} polygon [description]
+ * @return {FeatureCollection.<Point>}         [description]
+ */
+function polygonToFeaturePolygonCollection(polygon) {
+    var geojsonPolygon = polygonToFeaturePolygon(polygon);
+
+    var vertexToFeature = function (vertex) {
+        return {
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: vertex
+            }
+        };
+    };
+
+    var FeatureCollection = {
+        type: "FeatureCollection",
+        features: _map(geojsonPolygon.coordinates[0], vertexToFeature)
+    };
+
+    FeatureCollection.features.push(vertexToFeature(geojsonPolygon.coordinates[0][0]));
+
+    return FeatureCollection;
+}
 
 /**
  * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
@@ -144,96 +263,6 @@ function representGeometry(parentObj, callback) {
     return resultado;
 }
 
-/**
- * Transforma un array de gmaps.LatLng en un Feature.Polygon
- * @param  {Array.<external:google.maps.LatLng>} LatLngArray [description]
- * @return {Feature.<Polygon>}             [description]
- */
-function arrayToFeaturePolygon(LatLngArray) {
-
-    var vertices = toCoords(LatLngArray, true);
-
-    return {
-        type: "Feature",
-        properties: {},
-        geometry: {
-            type: "Polygon",
-
-            coordinates: [vertices]
-        }
-    };
-}
-
-
-/**
- * Convierte un polígono en un geojson Feature.<Polygon>
- * @param  {external:google.maps.Polygon} polygon un {@link external:google.maps.Polygon} a convertir
- * @return {Feature.<Polygon>} Feature resultante
- */
-var polygonToFeaturePolygon = function (polygon) {
-
-        return arrayToFeaturePolygon(polygon.getPath().getArray());
-    },
-
-    /**
-     * Transforma un array de gmaps.LatLng en un featurecollection geoJson
-     * donde cada Feature es un punto del array de entrada
-     * @param  {Array<external:google.maps.LatLng>} latLngArray array de posiciones {@link external:google.maps.LatLng}
-     * @return {FeatureCollection}             geojson FeatureCollection
-     */
-    arrayToFeaturePoints = function (latLngArray) {
-
-        var FeatureCollection = {
-            "type": "FeatureCollection",
-            "features": []
-        };
-        var features = _map(latLngArray, function (latLng) {
-            return {
-                type: "Feature",
-                geometry: {
-                    type: "Point",
-                    coordinates: [latLng.lng(), latLng.lat()]
-                }
-            };
-        });
-
-        FeatureCollection.features = features;
-        return FeatureCollection;
-
-    },
-
-    centroid = function (FeatureCollection) {
-        return turf_centroid(FeatureCollection);
-    },
-
-    /**
-     * Convierte un gmaps.Polygon en un FeatureCollection de puntos
-     * @param  {external:google.maps.Polygon} polygon [description]
-     * @return {FeatureCollection.<Point>}         [description]
-     */
-    polygonToFeaturePolygonCollection = function (polygon) {
-        var geojsonPolygon = polygonToFeaturePolygon(polygon);
-
-        var vertexToFeature = function (vertex) {
-            return {
-                type: "Feature",
-                geometry: {
-                    type: "Point",
-                    coordinates: vertex
-                }
-            };
-        };
-
-        var FeatureCollection = {
-            type: "FeatureCollection",
-            features: _map(geojsonPolygon.coordinates[0], vertexToFeature)
-        };
-
-        FeatureCollection.features.push(vertexToFeature(geojsonPolygon.coordinates[0][0]));
-
-        return FeatureCollection;
-    };
-
 export {
     debug,
     warn,
@@ -244,5 +273,6 @@ export {
     arrayToFeaturePoints,
     centroid,
     mergeWKTGeoms,
-    verticesInPolygon
+    verticesInPolygon,
+    objectToFeaturePolygon
 };
