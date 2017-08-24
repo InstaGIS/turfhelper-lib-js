@@ -28,6 +28,7 @@
 
 import {
     representGeometry,
+    polylineToFeatureLinestring,
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
     centroid
@@ -82,6 +83,7 @@ export {
     createbuffer,
     pointInPolygon,
     polygonToFeaturePolygon,
+    polylineToFeatureLinestring,
     representGeometry,
     simplifyFeature,
     simplifyPointArray,
@@ -101,6 +103,7 @@ export default {
     createbuffer: createbuffer,
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,
+    polylineToFeatureLinestring: polylineToFeatureLinestring,
     representGeometry: representGeometry,
     simplifyFeature: simplifyFeature,
     simplifyPointArray: simplifyPointArray,

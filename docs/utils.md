@@ -31,6 +31,16 @@ Transforma un array de gmaps.LatLng en un Feature.Polygon
 
 Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Polygon](http://geojson.org/geojson-spec.html#polygon)>** [description]
 
+## polylineToFeatureLinestring
+
+[polylineToFeatureLinestring description]
+
+**Parameters**
+
+-   `objeto` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | [google.maps.Polyline](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Polyline.md))** array of positions or a google.maps.Polyline
+
+Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[LineString](http://geojson.org/geojson-spec.html#linestring)>** [description]
+
 ## polygonToFeaturePolygon
 
 Receives an object and returns a GeoJson Feature of type Polygon

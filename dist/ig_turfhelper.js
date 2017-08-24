@@ -20479,7 +20479,7 @@ $__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($_
 $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b', '2c', '2f', '2e'], function (_export, _context) {
     "use strict";
 
-    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
+    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
 
 
     function Wicket() {
@@ -23178,6 +23178,22 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
     }
 
     /**
+     * [polylineToFeatureLinestring description]
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
+     * @return {Feature.<LineString>}          [description]
+     */
+    function polylineToFeatureLinestring(objeto) {
+        var vertices;
+        if (objeto instanceof google.maps.Polyline) {
+            vertices = toCoords(objeto.getPath().getArray());
+        } else {
+            vertices = toCoords(objeto);
+        }
+
+        return turf_linestring(vertices);
+    }
+
+    /**
      * Receives an object and returns a GeoJson Feature of type Polygon
      * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
      * @return {Feature.Polygon}        [description]
@@ -23478,7 +23494,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
      * Takes an array of points, google.maps.Polygon or Feature<Polygon> and returns {@link Point|points} at all self-intersections.
      *
      * @name kinks
-     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
+     * @param  {google.maps.Polyline|google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
      * @returns {FeatureCollection<Point>} self-intersections
      *
      * var kinks = turf.kinks(poly);
@@ -23487,10 +23503,14 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
      * var addToMap = [poly, kinks]
      */
     function kinks(object) {
+        var theFeature;
+        if (object instanceof google.maps.Polyline) {
+            theFeature = polylineToFeatureLinestring(object);
+        }
 
-        var polygonFeature = polygonToFeaturePolygon(object);
+        theFeature = polygonToFeaturePolygon(object);
 
-        return turk_kinks(polygonFeature);
+        return turk_kinks(theFeature);
     }
 
     /**
@@ -25729,6 +25749,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
             reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
             mapTag$3 = '[object Map]';
             setTag$3 = '[object Set]';
+            turf_linestring = turf_helpers.lineString;
             debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;");
             warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
             turf_linestring$1 = turf_helpers.lineString;
@@ -25743,6 +25764,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                 createbuffer: createbuffer,
                 pointInPolygon: pointInPolygon,
                 polygonToFeaturePolygon: polygonToFeaturePolygon,
+                polylineToFeatureLinestring: polylineToFeatureLinestring,
                 representGeometry: representGeometry,
                 simplifyFeature: simplifyFeature,
                 simplifyPointArray: simplifyPointArray,
@@ -25766,6 +25788,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
             _export('pointInPolygon', pointInPolygon);
 
             _export('polygonToFeaturePolygon', polygonToFeaturePolygon);
+
+            _export('polylineToFeatureLinestring', polylineToFeatureLinestring);
 
             _export('representGeometry', representGeometry);
 

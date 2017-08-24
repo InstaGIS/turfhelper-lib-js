@@ -105,6 +105,23 @@ function arrayToFeaturePolygon(LatLngArray) {
 
 
 /**
+ * [polylineToFeatureLinestring description]
+ * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
+ * @return {Feature.<LineString>}          [description]
+ */
+function polylineToFeatureLinestring(objeto) {
+    var vertices
+    if (objeto instanceof google.maps.Polyline) {
+        vertices = toCoords(objeto.getPath().getArray());
+    } else {
+        vertices = toCoords(objeto);
+    }
+
+    return turf_linestring(vertices);
+}
+
+
+/**
  * Receives an object and returns a GeoJson Feature of type Polygon
  * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon|Geometry} object object to transform into a Feature.Polygon
  * @return {Feature.Polygon}        [description]
@@ -279,5 +296,6 @@ export {
     centroid,
     mergeWKTGeoms,
     verticesInPolygon,
+    polylineToFeatureLinestring,
     objectToFeaturePolygon
 };

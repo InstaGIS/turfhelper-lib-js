@@ -2,6 +2,7 @@ import turf_unkink from '@turf/unkink-polygon';
 import turk_kinks from '@turf/kinks';
 
 import {
+	polylineToFeatureLinestring,
 	polygonToFeaturePolygon
 } from './utils.js';
 
@@ -22,7 +23,7 @@ export function unkink(object) {
  * Takes an array of points, google.maps.Polygon or Feature<Polygon> and returns {@link Point|points} at all self-intersections.
  *
  * @name kinks
- * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
+ * @param  {google.maps.Polyline|google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
  * @returns {FeatureCollection<Point>} self-intersections
  *
  * var kinks = turf.kinks(poly);
@@ -31,8 +32,12 @@ export function unkink(object) {
  * var addToMap = [poly, kinks]
  */
 export function kinks(object) {
+	var theFeature;
+	if (object instanceof google.maps.Polyline) {
+		theFeature = polylineToFeatureLinestring(object);
+	}
 
-	var polygonFeature = polygonToFeaturePolygon(object);
+	theFeature = polygonToFeaturePolygon(object);
 
-	return turk_kinks(polygonFeature);
+	return turk_kinks(theFeature);
 }
