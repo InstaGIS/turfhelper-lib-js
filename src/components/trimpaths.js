@@ -8,7 +8,11 @@ import {
 	default as _min
 } from 'lodash-es/min.js';
 
+import turk_kinks from '@turf/kinks';
+
 import turf_line_slice from '@turf/line-slice';
+
+import turf_line_intersect from '@turf/line-intersect';
 
 import turf_helpers from '@turf/helpers';
 
@@ -16,6 +20,9 @@ var turf_point = turf_helpers.point,
 	turf_linestring = turf_helpers.lineString,
 	turf_featurecollection = turf_helpers.featureCollection;
 
+import {
+	debug
+} from './utils.js';
 
 import {
 	toCoords,
@@ -42,17 +49,38 @@ function diffCoords(coord1, coord2) {
 
 /**
  * Determina si dos lineas se intersectan
- * @param  {Number} line1StartX [description]
- * @param  {Number} line1StartY [description]
- * @param  {Number} line1EndX   [description]
- * @param  {Number} line1EndY   [description]
- * @param  {Number} line2StartX [description]
- * @param  {Number} line2StartY [description]
- * @param  {Number} line2EndX   [description]
- * @param  {Number} line2EndY   [description]
+ * @param  {Array.<number>} line1Start [description]
+ * @param  {Array.<number>} line1End   [description]
+ * @param  {Array.<number>} line2Start [description]
+ * @param  {Array.<number>} line2End   [description]
+ * @param {boolean} useOldMethod if true, use old method instead of turf_line_intersect 
  * @return {Array}             [description]
  */
-function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+function lineIntersects(line1Start, line1End, line2Start, line2End, useOldMethod) {
+
+	if (!useOldMethod) {
+		var line1 = turf_linestring([line1Start, line1End]),
+			line2 = turf_linestring([line2Start, line2End]),
+			intersectionFC = turf_line_intersect(line1, line2);
+
+		if (intersectionFC.features.length) {
+			var instersection = intersectionFC.features[0].geometry.coordinates;
+			instersection[0] = Math.round(instersection[0] * 100000000) / 100000000;
+			instersection[1] = Math.round(instersection[1] * 100000000) / 100000000;
+			return instersection;
+		} else {
+			return false;
+		}
+	}
+
+	var line1StartX = line1Start[0],
+		line1StartY = line1Start[1],
+		line1EndX = line1End[0],
+		line1EndY = line1End[1],
+		line2StartX = line2Start[0],
+		line2StartY = line2Start[1],
+		line2EndX = line2End[0],
+		line2EndY = line2End[1];
 	// if the lines intersect, the result contains the x and y of the intersection
 	// (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
 	var denominator, a, b, numerator1, numerator2,
@@ -91,24 +119,25 @@ function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2Sta
 	}
 	// if line1 and line2 are segments, they intersect if both of the above are true
 	if (result.onLine1 && result.onLine2) {
+		result.x = Math.round(result.x * 100000000) / 100000000;
+		result.y = Math.round(result.y * 100000000) / 100000000;
+
 		return [result.x, result.y];
 	} else {
 		return false;
 	}
 }
 
-
 /**
- * Takes two 
- * @param  {[type]} ring1 [description]
- * @param  {[type]} ring2 [description]
- * @return {[type]}       [description]
+ * Takes two rings and finds their instersection points. If the rings are the same, the second ring is iterated skipping points already checked in the first one
+ * @param  {Array.Array<number>} ring1 Array of coordinates [lng, lat]
+ * @param  {Array.Array<number>} ring1 Array of coordinates [lng, lat]
+ * @param {boolean} useOldMethod if true, use old method instead of turf_line_intersect 
+ * @return {Object}       an object containing
  */
-function traverseRings(ring1, ring2) {
-	var results = {
-		intersections: turf_featurecollection([]),
-		fixed: null
-	};
+function traverseRings(ring1, ring2, useOldMethod) {
+	var intersections = turf_featurecollection([]);
+
 	var samering = false,
 		consecutive = false;
 	if (_isEqual(ring1, ring2)) {
@@ -122,85 +151,108 @@ function traverseRings(ring1, ring2) {
 				continue;
 			}
 
-			var intersection = lineIntersects(ring1[i][0], ring1[i][1], ring1[i + 1][0], ring1[i + 1][1],
-				ring2[k][0], ring2[k][1], ring2[k + 1][0], ring2[k + 1][1]);
+
+			var intersection = lineIntersects(
+				ring1[i],
+				ring1[i + 1],
+				ring2[k],
+				ring2[k + 1],
+				useOldMethod
+			);
+			if (!intersection) {
+				continue;
+			}
 
 			// si son lineas consecutivas no quiero detectar el límite entre ambas
 			if ((diffCoords(intersection, ring1[0]) < 0.000005 || diffCoords(intersection, ring1[ring1.length - 1]) < 0.000005) &&
 				(diffCoords(intersection, ring2[0]) < 0.000005 || diffCoords(intersection, ring2[ring2.length - 1]) < 0.000005)) {
 				continue;
 			}
-			if (intersection) {
-				//debug('intersection at',
-				// intersection,
-				//diffCoords(intersection, ring2[0]),
-				//diffCoords(intersection, ring1[ring1.length - 1]));
-				var FeatureIntersection = turf_point([intersection[0], intersection[1]]);
-				FeatureIntersection.properties = {
-					position1: i,
-					position2: k
-				};
-				results.intersections.features.push(FeatureIntersection);
-			}
+
+			//debug('intersection at',
+			// intersection,
+			//diffCoords(intersection, ring2[0]),
+			//diffCoords(intersection, ring1[ring1.length - 1]));
+			var FeatureIntersection = turf_point([intersection[0], intersection[1]]);
+			FeatureIntersection.properties = {
+				position1: i,
+				position2: k
+			};
+			intersections.features.push(FeatureIntersection);
+
 		}
 	}
-	return results;
+	return intersections;
 };
 
 
 /**
  * [polylineToFeatureLinestring description]
- * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
- * @return {Feature.<LineString>}          [description]
+ * @param  {Array.<google.maps.LatLng>} polyline [description]
+ * @return {Feature.Polyline}          [description]
  */
-function polylineToFeatureLinestring(objeto) {
-	var vertices
-	if (objeto instanceof google.maps.Polyline) {
-		vertices = toCoords(objeto.getPath().getArray());
-	} else {
-		vertices = toCoords(objeto);
-	}
-
+function polylineToFeatureLinestring(polyline) {
+	var vertices = toCoords(polyline.getPath().getArray());
 	return turf_linestring(vertices);
 }
 
 
 /**
- * Trims two Polylines against each other, returns array of both segments and the intersection point
- * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng1 array of positions or a google.maps.Polyline
- * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng2 array of positions or a google.maps.Polyline
- * @return {Array}            array of trimmed segments and the intersection point
+ * Finds the {@link Point|points} where two {@link LineString|linestrings} intersect each other
+ * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
+ * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
+ * @param {boolean} useOldMethod if true,use old method instead of turf_line_intersect 
+ * @return {Array}        an array with [line1 trimmed at intersection,line2 trimmed at intersection,intersection ] 
  */
-function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
+function trimPaths(arrayLatLng1, arrayLatLng2, useOldMethod) {
 
+	var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
+	var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
 
-	var line1 = polylineToFeatureLinestring(arrayLatLng1);
-	var line2 = polylineToFeatureLinestring(arrayLatLng2);
+	var line1 = turf_linestring(ring1);
+	var line2 = turf_linestring(ring2);
+	var line1Start = turf_point(ring1[0]);
+	var line2End = turf_point(ring2.slice(-1)[0]);
+	var sliced1, sliced2;
 
-	var ring1 = line1.geometry.coordinates;
-	var ring2 = line2.geometry.coordinates;
+	var intersections = traverseRings(ring1, ring2, useOldMethod);
 
-	var thiskinks = traverseRings(ring1, ring2);
+	if (intersections.features.length > 0) {
 
-	if (thiskinks.intersections.features.length > 0) {
-
-		var minRing1 = _min(thiskinks.intersections.features, function (kink) {
+		// The first segment of the first ring with a kink
+		var first_segment_with_kinks = _min(intersections.features, function (kink) {
 			return kink.properties.position1;
 		});
+		//console.log('first_segment_with_kinks', JSON.stringify(first_segment_with_kinks));
 
-		var firstIntersection = _max(_filter(thiskinks.intersections.features, function (kink) {
-			return kink.properties.position1 === minRing1.properties.position1;
-		}), function (kink) {
+		// All the intersections which belong to the first segment with a kink of the first ring
+		var kinks_in_first_segment = _filter(intersections.features, function (kink) {
+			return kink.properties.position1 === first_segment_with_kinks.properties.position1;
+		});
+
+		// Among the kinks in the first segment, which one happens further along the ring2
+		var chosenIntersection = _max(kinks_in_first_segment, function (kink) {
 			return kink.properties.position2;
 		});
 
-		var intersectLatLng = toLatLng(firstIntersection.geometry.coordinates);
+		var intersectLatLng = toLatLng(chosenIntersection.geometry.coordinates);
 
+		// if the first intersection happens in the first segment of line1
+		// then we don't slice it
+		if (chosenIntersection.properties.position1 === 0) {
+			sliced1 = line1;
+		} else {
+			sliced1 = turf_line_slice(line1Start, chosenIntersection, line1);
+		}
 
-		var line1Start = turf_point(ring1[0]);
-		var line2End = turf_point(ring2.slice(-1)[0]);
-		var sliced1 = firstIntersection.properties.position1 === 0 ? line1 : turf_line_slice(line1Start, firstIntersection, line1);
-		var sliced2 = firstIntersection.properties.position2 >= (ring2.length - 1) ? line2 : turf_line_slice(firstIntersection, line2End, line2);
+		// if the first intersection happens after the last segment of line2
+		// then we don't slice it
+		if (chosenIntersection.properties.position2 >= (ring2.length - 1)) {
+			sliced2 = line2;
+		} else {
+			sliced2 = turf_line_slice(chosenIntersection, line2End, line2);
+		}
+
 
 		return [toLatLngs(sliced1.geometry.coordinates), toLatLngs(sliced2.geometry.coordinates), intersectLatLng];
 	}

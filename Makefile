@@ -22,6 +22,10 @@ docs:
 build_unminified:
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.js      --global-name turfHelper --global-deps '{"gmaps": "gmaps"}' --skip-source-maps
 
+build_esm:
+	jspm build src/ig_turfhelper.js dist/ig_turfhelper.esm.js --format esm --global-deps '{"gmaps": "gmaps"}' --skip-source-maps
+
+
 build_minified:
 	jspm build src/ig_turfhelper.js dist/ig_turfhelper.min.js  --global-name turfHelper --global-deps '{"gmaps": "gmaps"}' -m
 

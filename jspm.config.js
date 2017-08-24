@@ -124,41 +124,6 @@ SystemJS.config({
                     "@turf/destination": "npm:@turf/destination@4.6.0"
                 }
             },
-            "npm:@turf/line-intersect@4.6.0": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
-                    "@turf/meta": "npm:@turf/meta@4.6.0",
-                    "geojson-rbush": "npm:geojson-rbush@1.1.1",
-                    "@turf/line-segment": "npm:@turf/line-segment@4.6.0"
-                }
-            },
-            "npm:geojson-rbush@1.1.1": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@3.13.0",
-                    "@turf/meta": "npm:@turf/meta@3.14.0",
-                    "rbush": "npm:rbush@2.0.1",
-                    "@turf/bbox-polygon": "npm:@turf/bbox-polygon@4.6.0",
-                    "@turf/bbox": "npm:@turf/bbox@3.14.0"
-                }
-            },
-            "npm:@turf/line-segment@4.6.0": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
-                    "@turf/meta": "npm:@turf/meta@4.6.0"
-                }
-            },
-            "npm:@turf/bbox-polygon@4.6.0": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@4.6.0"
-                }
-            },
-            "npm:@turf/bbox@3.14.0": {
-                "map": {
-                    "@turf/meta": "npm:@turf/meta@3.14.0"
-                }
-            },
             "npm:@turf/concave@4.6.0": {
                 "map": {
                     "@turf/tin": "npm:@turf/tin@4.6.0",
@@ -174,11 +139,6 @@ SystemJS.config({
             "npm:@turf/inside@4.6.0": {
                 "map": {
                     "@turf/invariant": "npm:@turf/invariant@4.6.0"
-                }
-            },
-            "npm:rbush@2.0.1": {
-                "map": {
-                    "quickselect": "npm:quickselect@1.0.0"
                 }
             },
             "npm:@turf/truncate@4.6.0": {
@@ -266,9 +226,38 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "@turf/line-intersect": "npm:@turf/line-intersect@4.6.0",
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
         "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
         "gmap": "npm:amd-googlemaps-loader@1.8.6"
     },
-    packages: {}
+    packages: {
+        "npm:@turf/line-intersect@4.6.0": {
+            "map": {
+                "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                "@turf/meta": "npm:@turf/meta@4.6.0",
+                "geojson-rbush": "npm:geojson-rbush@1.2.0",
+                "@turf/line-segment": "npm:@turf/line-segment@4.6.0"
+            }
+        },
+        "npm:@turf/line-segment@4.6.0": {
+            "map": {
+                "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                "@turf/meta": "npm:@turf/meta@4.6.0"
+            }
+        },
+        "npm:rbush@2.0.1": {
+            "map": {
+                "quickselect": "npm:quickselect@1.0.0"
+            }
+        },
+        "npm:geojson-rbush@1.2.0": {
+            "map": {
+                "@turf/meta": "npm:@turf/meta@4.6.0",
+                "rbush": "npm:rbush@2.0.1"
+            }
+        }
+    }
 });

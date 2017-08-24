@@ -24,9 +24,7 @@
     QUnit.test('turfHelpers.toLatLngs should be of type function', function (assert) {
         assert.equal(typeof turfHelper.toLatLngs, 'function', 'turfHelpers.toLatLngs should be of type function');
     });
-    QUnit.test('turfHelpers.trimPaths should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.trimPaths, 'function', 'turfHelpers.trimPaths should be of type function');
-    });
+
     QUnit.test('turfHelpers.union should be of type function', function (assert) {
         assert.equal(typeof turfHelper.union, 'function', 'turfHelpers.union should be of type function');
     });

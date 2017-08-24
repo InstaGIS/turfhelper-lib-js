@@ -1,6 +1,6 @@
 !function(e){function t(e){Object.defineProperty(this,e,{enumerable:!0,get:function(){return this[m][e]}})}function r(e){var t;if(e&&e.__esModule){t={};for(var r in e)Object.hasOwnProperty.call(e,r)&&(t[r]=e[r]);t.__useDefault&&delete t.__useDefault,t.__esModule=!0}else{if("[object Module]"===Object.prototype.toString.call(e)||"undefined"!=typeof System&&System.isModule&&System.isModule(e))return e;t={default:e,__useDefault:!0}}return new o(t)}function o(e){Object.defineProperty(this,m,{value:e}),Object.keys(e).forEach(t,this)}function n(e){return"@node/"===e.substr(0,6)?c(e,r(v(e.substr(6))),{}):p[e]}function u(e){var t=n(e);if(!t)throw new Error('Module "'+e+'" expected, but not contained in build.');if(t.module)return t.module;var r=t.linkRecord;return d(t,r),a(t,r,[]),t.module}function d(e,t){if(!t.depLoads){t.declare&&i(e,t),t.depLoads=[];for(var r=0;r<t.deps.length;r++){var o=n(t.deps[r]);t.depLoads.push(o),o.linkRecord&&d(o,o.linkRecord);var u=t.setters&&t.setters[r];u&&(u(o.module||o.linkRecord.moduleObj),o.importerSetters.push(u))}return e}}function i(t,r){var o=r.moduleObj,n=t.importerSetters,u=!1,d=r.declare.call(e,function(e,t){if(!u){if("object"==typeof e)for(var r in e)"__useDefault"!==r&&(o[r]=e[r]);else o[e]=t;u=!0;for(var d=0;d<n.length;d++)n[d](o);return u=!1,t}},{id:t.key});"function"!=typeof d?(r.setters=d.setters,r.execute=d.execute):(r.setters=[],r.execute=d)}function l(e,t,r){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:r,setters:void 0,execute:void 0,moduleObj:{}}}}function f(e,t,r,o){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:void 0,execute:o,executingRequire:r,moduleObj:{default:{},__useDefault:!0},setters:void 0}}}function s(e,t,r){return function(o){for(var n=0;n<e.length;n++)if(e[n]===o){var u,d=t[n],i=d.linkRecord;return u=i?-1===r.indexOf(d)?a(d,i,r):i.moduleObj:d.module,u.__useDefault?u.default:u}}}function a(t,r,n){if(n.push(t),t.module)return t.module;var u;if(r.setters){for(var d=0;d<r.deps.length;d++){var i=r.depLoads[d],l=i.linkRecord;l&&-1===n.indexOf(i)&&(u=a(i,l,l.setters?n:[]))}r.execute.call(y)}else{var f={id:t.key},c=r.moduleObj;Object.defineProperty(f,"exports",{configurable:!0,set:function(e){c.default=e},get:function(){return c.default}});var p=s(r.deps,r.depLoads,n);if(!r.executingRequire)for(var d=0;d<r.deps.length;d++)p(r.deps[d]);var m=r.execute.call(e,p,c.default,f);if(void 0!==m?c.default=m:f.exports!==c.default&&(c.default=f.exports),c.default&&c.default.__esModule)for(var v in c.default)Object.hasOwnProperty.call(c.default,v)&&"default"!==v&&(c[v]=c.default[v])}var f=t.module=new o(r.moduleObj);if(!r.setters)for(var d=0;d<t.importerSetters.length;d++)t.importerSetters[d](f);return f}function c(e,t){return p[e]={key:e,module:t,importerSetters:[],linkRecord:void 0}}var p={},m="undefined"!=typeof Symbol?Symbol():"@@baseObject";o.prototype=Object.create(null),"undefined"!=typeof Symbol&&Symbol.toStringTag&&(o.prototype[Symbol.toStringTag]="Module");var v="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,y={};return Object.freeze&&Object.freeze(y),function(e,t,n,d){return function(i){i(function(i){var s={_nodeRequire:v,register:l,registerDynamic:f,registry:{get:function(e){return p[e].module},set:c},newModule:function(e){return new o(e)}};c("@empty",new o({}));for(var a=0;a<t.length;a++)c(t[a],r(arguments[a],{}));d(s);var m=u(e[0]);if(e.length>1)for(var a=1;a<e.length;a++)u(e[a]);return n?m.default:(m instanceof o&&Object.defineProperty(m,"__esModule",{value:!0}),m)})}}}("undefined"!=typeof self?self:global)
 
-(["a"], ["33"], false, function($__System) {
+(["a"], ["35"], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
 $__System.registerDynamic('b', ['c', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
@@ -15040,7 +15040,1627 @@ $__System.registerDynamic("1d", ["1e"], true, function ($__require, exports, mod
     return true;
   }
 });
-$__System.registerDynamic('1f', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('1f', ['20'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var invariant = $__require('20');
+    var getCoord = invariant.getCoord;
+    var getCoords = invariant.getCoords;
+
+    // http://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
+    // modified from: https://github.com/substack/point-in-polygon/blob/master/index.js
+    // which was modified from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    /**
+     * Takes a {@link Point} and a {@link Polygon} or {@link MultiPolygon} and determines if the point resides inside the polygon. The polygon can
+     * be convex or concave. The function accounts for holes.
+     *
+     * @name inside
+     * @param {Feature<Point>} point input point
+     * @param {Feature<Polygon|MultiPolygon>} polygon input polygon or multipolygon
+     * @param {boolean} [ignoreBoundary=false] True if polygon boundary should be ignored when determining if the point is inside the polygon otherwise false.
+     * @returns {boolean} `true` if the Point is inside the Polygon; `false` if the Point is not inside the Polygon
+     * @example
+     * var pt = turf.point([-77, 44]);
+     * var poly = turf.polygon([[
+     *   [-81, 41],
+     *   [-81, 47],
+     *   [-72, 47],
+     *   [-72, 41],
+     *   [-81, 41]
+     * ]]);
+     *
+     * turf.inside(pt, poly);
+     * //= true
+     */
+    module.exports = function (point, polygon, ignoreBoundary) {
+        // validation
+        if (!point) throw new Error('point is required');
+        if (!polygon) throw new Error('polygon is required');
+
+        var pt = getCoord(point);
+        var polys = getCoords(polygon);
+        var type = polygon.geometry ? polygon.geometry.type : polygon.type;
+        var bbox = polygon.bbox;
+
+        // Quick elimination if point is not inside bbox
+        if (bbox && inBBox(pt, bbox) === false) return false;
+
+        // normalize to multipolygon
+        if (type === 'Polygon') polys = [polys];
+
+        for (var i = 0, insidePoly = false; i < polys.length && !insidePoly; i++) {
+            // check if it is in the outer ring first
+            if (inRing(pt, polys[i][0], ignoreBoundary)) {
+                var inHole = false;
+                var k = 1;
+                // check for the point in any of the holes
+                while (k < polys[i].length && !inHole) {
+                    if (inRing(pt, polys[i][k], !ignoreBoundary)) {
+                        inHole = true;
+                    }
+                    k++;
+                }
+                if (!inHole) insidePoly = true;
+            }
+        }
+        return insidePoly;
+    };
+
+    /**
+     * inRing
+     *
+     * @private
+     * @param {[number, number]} pt [x,y]
+     * @param {Array<[number, number]>} ring [[x,y], [x,y],..]
+     * @param {boolean} ignoreBoundary ignoreBoundary
+     * @returns {boolean} inRing
+     */
+    function inRing(pt, ring, ignoreBoundary) {
+        var isInside = false;
+        if (ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]) ring = ring.slice(0, ring.length - 1);
+
+        for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+            var xi = ring[i][0],
+                yi = ring[i][1];
+            var xj = ring[j][0],
+                yj = ring[j][1];
+            var onBoundary = pt[1] * (xi - xj) + yi * (xj - pt[0]) + yj * (pt[0] - xi) === 0 && (xi - pt[0]) * (xj - pt[0]) <= 0 && (yi - pt[1]) * (yj - pt[1]) <= 0;
+            if (onBoundary) return !ignoreBoundary;
+            var intersect = yi > pt[1] !== yj > pt[1] && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi;
+            if (intersect) isInside = !isInside;
+        }
+        return isInside;
+    }
+
+    /**
+     * inBBox
+     *
+     * @private
+     * @param {[number, number]} pt point [x,y]
+     * @param {[number, number, number, number]} bbox BBox [west, south, east, north]
+     * @returns {boolean} true/false if point is inside BBox
+     */
+    function inBBox(pt, bbox) {
+        return bbox[0] <= pt[0] && bbox[1] <= pt[1] && bbox[2] >= pt[0] && bbox[3] >= pt[1];
+    }
+});
+$__System.registerDynamic("21", [], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  module.exports.RADIUS = 6378137;
+  module.exports.FLATTENING = 1 / 298.257223563;
+  module.exports.POLAR_RADIUS = 6356752.3142;
+});
+$__System.registerDynamic('22', ['21'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var wgs84 = $__require('21');
+
+    module.exports.geometry = geometry;
+    module.exports.ring = ringArea;
+
+    function geometry(_) {
+        var area = 0,
+            i;
+        switch (_.type) {
+            case 'Polygon':
+                return polygonArea(_.coordinates);
+            case 'MultiPolygon':
+                for (i = 0; i < _.coordinates.length; i++) {
+                    area += polygonArea(_.coordinates[i]);
+                }
+                return area;
+            case 'Point':
+            case 'MultiPoint':
+            case 'LineString':
+            case 'MultiLineString':
+                return 0;
+            case 'GeometryCollection':
+                for (i = 0; i < _.geometries.length; i++) {
+                    area += geometry(_.geometries[i]);
+                }
+                return area;
+        }
+    }
+
+    function polygonArea(coords) {
+        var area = 0;
+        if (coords && coords.length > 0) {
+            area += Math.abs(ringArea(coords[0]));
+            for (var i = 1; i < coords.length; i++) {
+                area -= Math.abs(ringArea(coords[i]));
+            }
+        }
+        return area;
+    }
+
+    /**
+     * Calculate the approximate area of the polygon were it projected onto
+     *     the earth.  Note that this area will be positive if ring is oriented
+     *     clockwise, otherwise it will be negative.
+     *
+     * Reference:
+     * Robert. G. Chamberlain and William H. Duquette, "Some Algorithms for
+     *     Polygons on a Sphere", JPL Publication 07-03, Jet Propulsion
+     *     Laboratory, Pasadena, CA, June 2007 http://trs-new.jpl.nasa.gov/dspace/handle/2014/40409
+     *
+     * Returns:
+     * {float} The approximate signed geodesic area of the polygon in square
+     *     meters.
+     */
+
+    function ringArea(coords) {
+        var p1,
+            p2,
+            p3,
+            lowerIndex,
+            middleIndex,
+            upperIndex,
+            i,
+            area = 0,
+            coordsLength = coords.length;
+
+        if (coordsLength > 2) {
+            for (i = 0; i < coordsLength; i++) {
+                if (i === coordsLength - 2) {
+                    // i = N-2
+                    lowerIndex = coordsLength - 2;
+                    middleIndex = coordsLength - 1;
+                    upperIndex = 0;
+                } else if (i === coordsLength - 1) {
+                    // i = N-1
+                    lowerIndex = coordsLength - 1;
+                    middleIndex = 0;
+                    upperIndex = 1;
+                } else {
+                    // i = 0 to N-3
+                    lowerIndex = i;
+                    middleIndex = i + 1;
+                    upperIndex = i + 2;
+                }
+                p1 = coords[lowerIndex];
+                p2 = coords[middleIndex];
+                p3 = coords[upperIndex];
+                area += (rad(p3[0]) - rad(p1[0])) * Math.sin(rad(p2[1]));
+            }
+
+            area = area * wgs84.RADIUS * wgs84.RADIUS / 2;
+        }
+
+        return area;
+    }
+
+    function rad(_) {
+        return _ * Math.PI / 180;
+    }
+});
+$__System.registerDynamic('23', ['22', '24'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var area = $__require('22').geometry;
+    var geomReduce = $__require('24').geomReduce;
+
+    /**
+     * Takes one or more features and returns their area in square meters.
+     *
+     * @name area
+     * @param {FeatureCollection|Feature<any>} geojson input GeoJSON feature(s)
+     * @returns {number} area in square meters
+     * @addToMap polygon
+     * @example
+     * var polygon = {
+     *   "type": "Feature",
+     *   "properties": {},
+     *   "geometry": {
+     *     "type": "Polygon",
+     *     "coordinates": [
+     *       [
+     *         [125, -15],
+     *         [113, -22],
+     *         [117, -37],
+     *         [130, -33],
+     *         [148, -39],
+     *         [154, -27],
+     *         [144, -15],
+     *         [125, -15]
+     *       ]
+     *     ]
+     *   }
+     * }
+     * var area = turf.area(polygon);
+     * //=area => square meters
+     * //=polygon
+     */
+    module.exports = function (geojson) {
+        return geomReduce(geojson, function (value, geometry) {
+            return value + area(geometry);
+        }, 0);
+    };
+});
+$__System.registerDynamic('25', [], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  /**
+   * Helpers.
+   */
+
+  var s = 1000;
+  var m = s * 60;
+  var h = m * 60;
+  var d = h * 24;
+  var y = d * 365.25;
+
+  /**
+   * Parse or format the given `val`.
+   *
+   * Options:
+   *
+   *  - `long` verbose formatting [false]
+   *
+   * @param {String|Number} val
+   * @param {Object} [options]
+   * @throws {Error} throw an error if val is not a non-empty string or a number
+   * @return {String|Number}
+   * @api public
+   */
+
+  module.exports = function (val, options) {
+    options = options || {};
+    var type = typeof val;
+    if (type === 'string' && val.length > 0) {
+      return parse(val);
+    } else if (type === 'number' && isNaN(val) === false) {
+      return options.long ? fmtLong(val) : fmtShort(val);
+    }
+    throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
+  };
+
+  /**
+   * Parse the given `str` and return milliseconds.
+   *
+   * @param {String} str
+   * @return {Number}
+   * @api private
+   */
+
+  function parse(str) {
+    str = String(str);
+    if (str.length > 100) {
+      return;
+    }
+    var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+    if (!match) {
+      return;
+    }
+    var n = parseFloat(match[1]);
+    var type = (match[2] || 'ms').toLowerCase();
+    switch (type) {
+      case 'years':
+      case 'year':
+      case 'yrs':
+      case 'yr':
+      case 'y':
+        return n * y;
+      case 'days':
+      case 'day':
+      case 'd':
+        return n * d;
+      case 'hours':
+      case 'hour':
+      case 'hrs':
+      case 'hr':
+      case 'h':
+        return n * h;
+      case 'minutes':
+      case 'minute':
+      case 'mins':
+      case 'min':
+      case 'm':
+        return n * m;
+      case 'seconds':
+      case 'second':
+      case 'secs':
+      case 'sec':
+      case 's':
+        return n * s;
+      case 'milliseconds':
+      case 'millisecond':
+      case 'msecs':
+      case 'msec':
+      case 'ms':
+        return n;
+      default:
+        return undefined;
+    }
+  }
+
+  /**
+   * Short format for `ms`.
+   *
+   * @param {Number} ms
+   * @return {String}
+   * @api private
+   */
+
+  function fmtShort(ms) {
+    if (ms >= d) {
+      return Math.round(ms / d) + 'd';
+    }
+    if (ms >= h) {
+      return Math.round(ms / h) + 'h';
+    }
+    if (ms >= m) {
+      return Math.round(ms / m) + 'm';
+    }
+    if (ms >= s) {
+      return Math.round(ms / s) + 's';
+    }
+    return ms + 'ms';
+  }
+
+  /**
+   * Long format for `ms`.
+   *
+   * @param {Number} ms
+   * @return {String}
+   * @api private
+   */
+
+  function fmtLong(ms) {
+    return plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms';
+  }
+
+  /**
+   * Pluralization helper.
+   */
+
+  function plural(ms, n, name) {
+    if (ms < n) {
+      return;
+    }
+    if (ms < n * 1.5) {
+      return Math.floor(ms / n) + ' ' + name;
+    }
+    return Math.ceil(ms / n) + ' ' + name + 's';
+  }
+});
+$__System.registerDynamic('26', ['25'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+
+  /**
+   * This is the common logic for both the Node.js and web browser
+   * implementations of `debug()`.
+   *
+   * Expose `debug()` as the module.
+   */
+
+  exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
+  exports.coerce = coerce;
+  exports.disable = disable;
+  exports.enable = enable;
+  exports.enabled = enabled;
+  exports.humanize = $__require('25');
+
+  /**
+   * The currently active debug mode names, and names to skip.
+   */
+
+  exports.names = [];
+  exports.skips = [];
+
+  /**
+   * Map of special "%n" handling functions, for the debug "format" argument.
+   *
+   * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+   */
+
+  exports.formatters = {};
+
+  /**
+   * Previous log timestamp.
+   */
+
+  var prevTime;
+
+  /**
+   * Select a color.
+   * @param {String} namespace
+   * @return {Number}
+   * @api private
+   */
+
+  function selectColor(namespace) {
+    var hash = 0,
+        i;
+
+    for (i in namespace) {
+      hash = (hash << 5) - hash + namespace.charCodeAt(i);
+      hash |= 0; // Convert to 32bit integer
+    }
+
+    return exports.colors[Math.abs(hash) % exports.colors.length];
+  }
+
+  /**
+   * Create a debugger with the given `namespace`.
+   *
+   * @param {String} namespace
+   * @return {Function}
+   * @api public
+   */
+
+  function createDebug(namespace) {
+
+    function debug() {
+      // disabled?
+      if (!debug.enabled) return;
+
+      var self = debug;
+
+      // set `diff` timestamp
+      var curr = +new Date();
+      var ms = curr - (prevTime || curr);
+      self.diff = ms;
+      self.prev = prevTime;
+      self.curr = curr;
+      prevTime = curr;
+
+      // turn the `arguments` into a proper Array
+      var args = new Array(arguments.length);
+      for (var i = 0; i < args.length; i++) {
+        args[i] = arguments[i];
+      }
+
+      args[0] = exports.coerce(args[0]);
+
+      if ('string' !== typeof args[0]) {
+        // anything else let's inspect with %O
+        args.unshift('%O');
+      }
+
+      // apply any `formatters` transformations
+      var index = 0;
+      args[0] = args[0].replace(/%([a-zA-Z%])/g, function (match, format) {
+        // if we encounter an escaped % then don't increase the array index
+        if (match === '%%') return match;
+        index++;
+        var formatter = exports.formatters[format];
+        if ('function' === typeof formatter) {
+          var val = args[index];
+          match = formatter.call(self, val);
+
+          // now we need to remove `args[index]` since it's inlined in the `format`
+          args.splice(index, 1);
+          index--;
+        }
+        return match;
+      });
+
+      // apply env-specific formatting (colors, etc.)
+      exports.formatArgs.call(self, args);
+
+      var logFn = debug.log || exports.log || console.log.bind(console);
+      logFn.apply(self, args);
+    }
+
+    debug.namespace = namespace;
+    debug.enabled = exports.enabled(namespace);
+    debug.useColors = exports.useColors();
+    debug.color = selectColor(namespace);
+
+    // env-specific initialization logic for debug instances
+    if ('function' === typeof exports.init) {
+      exports.init(debug);
+    }
+
+    return debug;
+  }
+
+  /**
+   * Enables a debug mode by namespaces. This can include modes
+   * separated by a colon and wildcards.
+   *
+   * @param {String} namespaces
+   * @api public
+   */
+
+  function enable(namespaces) {
+    exports.save(namespaces);
+
+    exports.names = [];
+    exports.skips = [];
+
+    var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+    var len = split.length;
+
+    for (var i = 0; i < len; i++) {
+      if (!split[i]) continue; // ignore empty strings
+      namespaces = split[i].replace(/\*/g, '.*?');
+      if (namespaces[0] === '-') {
+        exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+      } else {
+        exports.names.push(new RegExp('^' + namespaces + '$'));
+      }
+    }
+  }
+
+  /**
+   * Disable debug output.
+   *
+   * @api public
+   */
+
+  function disable() {
+    exports.enable('');
+  }
+
+  /**
+   * Returns true if the given mode name is enabled, false otherwise.
+   *
+   * @param {String} name
+   * @return {Boolean}
+   * @api public
+   */
+
+  function enabled(name) {
+    var i, len;
+    for (i = 0, len = exports.skips.length; i < len; i++) {
+      if (exports.skips[i].test(name)) {
+        return false;
+      }
+    }
+    for (i = 0, len = exports.names.length; i < len; i++) {
+      if (exports.names[i].test(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Coerce `val`.
+   *
+   * @param {Mixed} val
+   * @return {Mixed}
+   * @api private
+   */
+
+  function coerce(val) {
+    if (val instanceof Error) return val.stack || val.message;
+    return val;
+  }
+});
+$__System.registerDynamic('27', ['26'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  /**
+   * This is the web browser implementation of `debug()`.
+   *
+   * Expose `debug()` as the module.
+   */
+
+  exports = module.exports = $__require('26');
+  exports.log = log;
+  exports.formatArgs = formatArgs;
+  exports.save = save;
+  exports.load = load;
+  exports.useColors = useColors;
+  exports.storage = 'undefined' != typeof chrome && 'undefined' != typeof chrome.storage ? chrome.storage.local : localstorage();
+
+  /**
+   * Colors.
+   */
+
+  exports.colors = ['lightseagreen', 'forestgreen', 'goldenrod', 'dodgerblue', 'darkorchid', 'crimson'];
+
+  /**
+   * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+   * and the Firebug extension (any Firefox version) are known
+   * to support "%c" CSS customizations.
+   *
+   * TODO: add a `localStorage` variable to explicitly enable/disable colors
+   */
+
+  function useColors() {
+    // NB: In an Electron preload script, document will be defined but not fully
+    // initialized. Since we know we're in Chrome, we'll just detect this case
+    // explicitly
+    if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
+      return true;
+    }
+
+    // is webkit? http://stackoverflow.com/a/16459606/376773
+    // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+    return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
+    // double check webkit in userAgent just in case we are in a worker
+    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
+  }
+
+  /**
+   * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+   */
+
+  exports.formatters.j = function (v) {
+    try {
+      return JSON.stringify(v);
+    } catch (err) {
+      return '[UnexpectedJSONParseError]: ' + err.message;
+    }
+  };
+
+  /**
+   * Colorize log arguments if enabled.
+   *
+   * @api public
+   */
+
+  function formatArgs(args) {
+    var useColors = this.useColors;
+
+    args[0] = (useColors ? '%c' : '') + this.namespace + (useColors ? ' %c' : ' ') + args[0] + (useColors ? '%c ' : ' ') + '+' + exports.humanize(this.diff);
+
+    if (!useColors) return;
+
+    var c = 'color: ' + this.color;
+    args.splice(1, 0, c, 'color: inherit');
+
+    // the final "%c" is somewhat tricky, because there could be other
+    // arguments passed either before or after the %c, so we need to
+    // figure out the correct index to insert the CSS into
+    var index = 0;
+    var lastC = 0;
+    args[0].replace(/%[a-zA-Z%]/g, function (match) {
+      if ('%%' === match) return;
+      index++;
+      if ('%c' === match) {
+        // we only are interested in the *last* %c
+        // (the user may have provided their own)
+        lastC = index;
+      }
+    });
+
+    args.splice(lastC, 0, c);
+  }
+
+  /**
+   * Invokes `console.log()` when available.
+   * No-op when `console.log` is not a "function".
+   *
+   * @api public
+   */
+
+  function log() {
+    // this hackery is required for IE8/9, where
+    // the `console.log` function doesn't have 'apply'
+    return 'object' === typeof console && console.log && Function.prototype.apply.call(console.log, console, arguments);
+  }
+
+  /**
+   * Save `namespaces`.
+   *
+   * @param {String} namespaces
+   * @api private
+   */
+
+  function save(namespaces) {
+    try {
+      if (null == namespaces) {
+        exports.storage.removeItem('debug');
+      } else {
+        exports.storage.debug = namespaces;
+      }
+    } catch (e) {}
+  }
+
+  /**
+   * Load `namespaces`.
+   *
+   * @return {String} returns the previously persisted debug modes
+   * @api private
+   */
+
+  function load() {
+    var r;
+    try {
+      r = exports.storage.debug;
+    } catch (e) {}
+
+    // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+    if (!r && typeof process !== 'undefined' && 'env' in process) {
+      r = process.env.DEBUG;
+    }
+
+    return r;
+  }
+
+  /**
+   * Enable namespaces listed in `localStorage.debug` initially.
+   */
+
+  exports.enable(load());
+
+  /**
+   * Localstorage attempts to return the localstorage.
+   *
+   * This is necessary because safari throws
+   * when a user disables cookies/localstorage
+   * and you attempt to access it.
+   *
+   * @return {LocalStorage}
+   * @api private
+   */
+
+  function localstorage() {
+    try {
+      return window.localStorage;
+    } catch (e) {}
+  }
+});
+$__System.registerDynamic('28', ['1d', '29', '1f', '23', '1e', '27'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  var isects = $__require('1d');
+  var helpers = $__require('29');
+  var inside = $__require('1f');
+  var area = $__require('23');
+  var rbush = $__require('1e');
+  var debug = $__require('27')('simplepolygon');
+  var debugAll = $__require('27')('simplepolygon:all');
+
+  /**
+  * Takes a complex (i.e. self-intersecting) geojson polygon, and breaks it down into its composite simple, non-self-intersecting one-ring polygons.
+  *
+  * @module simplepolygon
+  * @param {Feature} feature Input polygon. This polygon may be unconform the {@link https://en.wikipedia.org/wiki/Simple_Features|Simple Features standard} in the sense that it's inner and outer rings may cross-intersect or self-intersect, that the outer ring must not contain the optional inner rings and that the winding number must not be positive for the outer and negative for the inner rings.
+  * @return {FeatureCollection} Feature collection containing the simple, non-self-intersecting one-ring polygon features that the complex polygon is composed of. These simple polygons have properties such as their parent polygon, winding number and net winding number.
+  *
+  * @example
+  * var poly = {
+  *   "type": "Feature",
+  *   "geometry": {
+  *     "type": "Polygon",
+  *     "coordinates": [[[0,0],[2,0],[0,2],[2,2],[0,0]]]
+  *   }
+  * };
+  *
+  * var result = simplepolygon(poly);
+  *
+  * // =result
+  * // which will be a featureCollection of two polygons, one with coordinates [[[0,0],[2,0],[1,1],[0,0]]], parent -1, winding 1 and net winding 1, and one with coordinates [[[1,1],[0,2],[2,2],[1,1]]], parent -1, winding -1 and net winding -1
+  */
+
+  module.exports = function (feature) {
+    // Check input
+    if (feature.type != "Feature") throw new Error("The input must a geojson object of type Feature");
+    if (feature.geometry === undefined || feature.geometry == null) throw new Error("The input must a geojson object with a non-empty geometry");
+    if (feature.geometry.type != "Polygon") throw new Error("The input must be a geojson Polygon");
+
+    // Process input
+    var numRings = feature.geometry.coordinates.length;
+    var vertices = [];
+    for (var i = 0; i < numRings; i++) {
+      var ring = feature.geometry.coordinates[i];
+      if (!equalArrays(ring[0], ring[ring.length - 1])) {
+        ring.push(ring[0]); // Close input ring if it is not
+      }
+      vertices.push.apply(vertices, ring.slice(0, ring.length - 1));
+    }
+    if (!isUnique(vertices)) throw new Error("The input polygon may not have duplicate vertices (except for the first and last vertex of each ring)");
+    var numvertices = vertices.length; // number of input ring vertices, with the last closing vertices not counted
+    debug("Processing input");
+
+    // Compute self-intersections
+    var selfIsectsData = isects(feature, function filterFn(isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique) {
+      return [isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique];
+    });
+    var numSelfIsect = selfIsectsData.length;
+    debug("Computing self-intersections");
+
+    // If no self-intersections are found, the input rings are the output rings. Hence, we must only compute their winding numbers, net winding numbers and (since ohers rings could lie outside the first ring) parents.
+    if (numSelfIsect == 0) {
+      var outputFeatureArray = [];
+      for (var i = 0; i < numRings; i++) {
+        outputFeatureArray.push(helpers.polygon([feature.geometry.coordinates[i]], { parent: -1, winding: windingOfRing(feature.geometry.coordinates[i]) }));
+      }
+      var output = helpers.featureCollection(outputFeatureArray);
+      determineParents();
+      setNetWinding();
+      debugAll("No self-intersections found. Input rings are output rings. Computed winding numbers, net winding numbers and parents");
+      debug("Finishing without self-intersections");
+      return output;
+    }
+
+    // If self-intersections are found, we will compute the output rings with the help of two intermediate variables
+    // First, we build the pseudo vertex list and intersection list
+    // The Pseudo vertex list is an array with for each ring an array with for each edge an array containing the pseudo-vertices (as made by their constructor) that have this ring and edge as ringAndEdgeIn, sorted for each edge by their fractional distance on this edge. It's length hence equals numRings.
+    var pseudoVtxListByRingAndEdge = [];
+    // The intersection list is an array containing intersections (as made by their constructor). First all numvertices ring-vertex-intersections, then all self-intersections (intra- and inter-ring). The order of the latter is not important but is permanent once given.
+    var isectList = [];
+    // Adding ring-pseudo-vertices to pseudoVtxListByRingAndEdge and ring-vertex-intersections to isectList
+    for (var i = 0; i < numRings; i++) {
+      pseudoVtxListByRingAndEdge.push([]);
+      for (var j = 0; j < feature.geometry.coordinates[i].length - 1; j++) {
+        // Each edge will feature one ring-pseudo-vertex in its array, on the last position. i.e. edge j features the ring-pseudo-vertex of the ring vertex j+1, which has ringAndEdgeIn = [i,j], on the last position.
+        pseudoVtxListByRingAndEdge[i].push([new PseudoVtx(feature.geometry.coordinates[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)], 1, [i, j], [i, (j + 1).modulo(feature.geometry.coordinates[i].length - 1)], undefined)]);
+        // The first numvertices elements in isectList correspond to the ring-vertex-intersections
+        isectList.push(new Isect(feature.geometry.coordinates[i][j], [i, (j - 1).modulo(feature.geometry.coordinates[i].length - 1)], [i, j], undefined, undefined, false, true));
+      }
+    }
+    // Adding intersection-pseudo-vertices to pseudoVtxListByRingAndEdge and self-intersections to isectList
+    for (var i = 0; i < numSelfIsect; i++) {
+      // Adding intersection-pseudo-vertices made using selfIsectsData to pseudoVtxListByRingAndEdge's array corresponding to the incomming ring and edge
+      pseudoVtxListByRingAndEdge[selfIsectsData[i][1]][selfIsectsData[i][2]].push(new PseudoVtx(selfIsectsData[i][0], selfIsectsData[i][5], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined));
+      // selfIsectsData contains double mentions of each intersection, but we only want to add them once to isectList
+      if (selfIsectsData[i][11]) isectList.push(new Isect(selfIsectsData[i][0], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined, undefined, true, true));
+    }
+    var numIsect = isectList.length;
+    // Sort edge arrays of pseudoVtxListByRingAndEdge by the fractional distance 'param'
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        pseudoVtxListByRingAndEdge[i][j].sort(function (a, b) {
+          return a.param < b.param ? -1 : 1;
+        });
+      }
+    }
+    debug("Setting up pseudoVtxListByRingAndEdge and isectList");
+
+    // Make a spatial index of intersections, in preperation for the following two steps
+    allIsectsAsIsectRbushTreeItem = [];
+    for (var i = 0; i < numIsect; i++) {
+      allIsectsAsIsectRbushTreeItem.push({ minX: isectList[i].coord[0], minY: isectList[i].coord[1], maxX: isectList[i].coord[0], maxY: isectList[i].coord[1], index: i }); // could pass isect: isectList[i], but not necessary
+    }
+    var isectRbushTree = rbush();
+    isectRbushTree.load(allIsectsAsIsectRbushTreeItem);
+
+    // Now we will teach each intersection in isectList which is the next intersection along both it's [ring, edge]'s, in two steps.
+    // First, we find the next intersection for each pseudo-vertex in pseudoVtxListByRingAndEdge:
+    // For each pseudovertex in pseudoVtxListByRingAndEdge (3 loops) look at the next pseudovertex on that edge and find the corresponding intersection by comparing coordinates
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
+          var coordToFind;
+          if (k == pseudoVtxListByRingAndEdge[i][j].length - 1) {
+            // If it's the last pseudoVertex on that edge, then the next pseudoVertex is the first one on the next edge of that ring.
+            coordToFind = pseudoVtxListByRingAndEdge[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)][0].coord;
+          } else {
+            coordToFind = pseudoVtxListByRingAndEdge[i][j][k + 1].coord;
+          }
+          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
+          pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn = IsectRbushTreeItemFound.index;
+        }
+      }
+    }
+    debug("Computing nextIsect for pseudoVtxListByRingAndEdge");
+
+    // Second, we port this knowledge of the next intersection over to the intersections in isectList, by finding the intersection corresponding to each pseudo-vertex and copying the pseudo-vertex' knownledge of the next-intersection over to the intersection
+    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
+      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
+        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
+          var coordToFind = pseudoVtxListByRingAndEdge[i][j][k].coord;
+          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
+          var l = IsectRbushTreeItemFound.index;
+          if (l < numvertices) {
+            // Special treatment at ring-vertices: we correct the misnaming that happened in the previous block, since ringAndEdgeOut = ringAndEdge2 for ring vertices.
+            isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+          } else {
+            // Port the knowledge of the next intersection from the pseudo-vertices to the intersections, depending on how the edges are labeled in the pseudo-vertex and intersection.
+            if (equalArrays(isectList[l].ringAndEdge1, pseudoVtxListByRingAndEdge[i][j][k].ringAndEdgeIn)) {
+              isectList[l].nxtIsectAlongRingAndEdge1 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+            } else {
+              isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
+            }
+          }
+        }
+      }
+    }
+    // This explains why, eventhough when we will walk away from an intersection, we will walk way from the corresponding pseudo-vertex along edgeOut, pseudo-vertices have the property 'nxtIsectAlongEdgeIn' in stead of some propery 'nxtPseudoVtxAlongEdgeOut'. This is because this property (which is easy to find out) is used in the above for nxtIsectAlongRingAndEdge1 and nxtIsectAlongRingAndEdge2!
+    debug("Porting nextIsect to isectList");
+
+    // Before we start walking over the intersections to build the output rings, we prepare a queue that stores information on intersections we still have to deal with, and put at least one intersection in it.
+    // This queue will contain information on intersections where we can start walking from once the current walk is finished, and its parent output ring (the smallest output ring it lies within, -1 if no parent or parent unknown yet) and its winding number (which we can already determine).
+    var queue = [];
+    // For each output ring, add the ring-vertex-intersection with the smalles x-value (i.e. the left-most) as a start intersection. By choosing such an extremal intersections, we are sure to start at an intersection that is a convex vertex of its output ring. By adding them all to the queue, we are sure that no rings will be forgotten. If due to ring-intersections such an intersection will be encountered while walking, it will be removed from the queue.
+    var i = 0;
+    for (var j = 0; j < numRings; j++) {
+      var leftIsect = i;
+      for (var k = 0; k < feature.geometry.coordinates[j].length - 1; k++) {
+        if (isectList[i].coord[0] < isectList[leftIsect].coord[0]) {
+          leftIsect = i;
+        }
+        i++;
+      }
+      // Compute winding at this left-most ring-vertex-intersection. We thus this by using our knowledge that this extremal vertex must be a convex vertex.
+      // We first find the intersection before and after it, and then use them to determine the winding number of the corresponding output ring, since we know that an extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it would not be is because the winding number we use to compute it is wrong
+      var isectAfterLeftIsect = isectList[leftIsect].nxtIsectAlongRingAndEdge2;
+      for (var k = 0; k < isectList.length; k++) {
+        if (isectList[k].nxtIsectAlongRingAndEdge1 == leftIsect || isectList[k].nxtIsectAlongRingAndEdge2 == leftIsect) {
+          var isectBeforeLeftIsect = k;
+          break;
+        }
+      }
+      var windingAtIsect = isConvex([isectList[isectBeforeLeftIsect].coord, isectList[leftIsect].coord, isectList[isectAfterLeftIsect].coord], true) ? 1 : -1;
+
+      queue.push({ isect: leftIsect, parent: -1, winding: windingAtIsect });
+    }
+    // Sort the queue by the same criterion used to find the leftIsect: the left-most leftIsect must be last in the queue, such that it will be popped first, such that we will work from out to in regarding input rings. This assumtion is used when predicting the winding number and parent of a new queue member.
+    queue.sort(function (a, b) {
+      return isectList[a.isect].coord > isectList[b.isect].coord ? -1 : 1;
+    });
+    debugAll("Initial state of the queue: " + JSON.stringify(queue));
+    debug("Setting up queue");
+
+    // Initialise output
+    var outputFeatureArray = [];
+
+    // While the queue is not empty, take the last object (i.e. its intersection) out and start making an output ring by walking in the direction that has not been walked away over yet.
+    while (queue.length > 0) {
+      // Get the last object out of the queue
+      var popped = queue.pop();
+      var startIsect = popped.isect;
+      var currentOutputRingParent = popped.parent;
+      var currentOutputRingWinding = popped.winding;
+      // Make new output ring and add vertex from starting intersection
+      var currentOutputRing = outputFeatureArray.length;
+      var currentOutputRingCoords = [isectList[startIsect].coord];
+      debugAll("# Starting output ring number " + outputFeatureArray.length + " with winding " + currentOutputRingWinding + " from intersection " + startIsect);
+      if (startIsect < numvertices) debugAll("This is a ring-vertex-intersections, which means this output ring does not touch existing output rings");
+      // Set up the variables used while walking over intersections: 'currentIsect', 'nxtIsect' and 'walkingRingAndEdge'
+      var currentIsect = startIsect;
+      if (isectList[startIsect].ringAndEdge1Walkable) {
+        var walkingRingAndEdge = isectList[startIsect].ringAndEdge1;
+        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge1;
+      } else {
+        var walkingRingAndEdge = isectList[startIsect].ringAndEdge2;
+        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge2;
+      }
+      // While we have not arrived back at the same intersection, keep walking
+      while (!equalArrays(isectList[startIsect].coord, isectList[nxtIsect].coord)) {
+        debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1]);
+        currentOutputRingCoords.push(isectList[nxtIsect].coord);
+        debugAll("Adding intersection " + nxtIsect + " to current output ring");
+        // If the next intersection is queued, we can remove it, because we will go there now.
+        var nxtIsectInQueue = undefined;
+        for (var i = 0; i < queue.length; i++) {
+          if (queue[i].isect == nxtIsect) {
+            nxtIsectInQueue = i;break;
+          }
+        }
+        if (nxtIsectInQueue != undefined) {
+          debugAll("Removing intersection " + nxtIsect + " from queue");
+          queue.splice(nxtIsectInQueue, 1);
+        }
+        // Arriving at this new intersection, we know which will be our next walking ring and edge (if we came from 1 we will walk away from 2 and vice versa),
+        // So we can set it as our new walking ring and intersection and remember that we (will) have walked over it
+        // If we have never walked away from this new intersection along the other ring and edge then we will soon do, add the intersection (and the parent wand winding number) to the queue
+        // (We can predict the winding number and parent as follows: if the edge is convex, the other output ring started from there will have the alternate winding and lie outside of the current one, and thus have the same parent ring as the current ring. Otherwise, it will have the same winding number and lie inside of the current ring. We are, however, only sure of this of an output ring started from there does not enclose the current ring. This is why the initial queue's intersections must be sorted such that outer ones come out first.)
+        // We then update the other two walking variables.
+        if (equalArrays(walkingRingAndEdge, isectList[nxtIsect].ringAndEdge1)) {
+          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge2;
+          isectList[nxtIsect].ringAndEdge2Walkable = false;
+          if (isectList[nxtIsect].ringAndEdge1Walkable) {
+            debugAll("Adding intersection " + nxtIsect + " to queue");
+            var pushing = { isect: nxtIsect };
+            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge2].coord], currentOutputRingWinding == 1)) {
+              pushing.parent = currentOutputRingParent;
+              pushing.winding = -currentOutputRingWinding;
+            } else {
+              pushing.parent = currentOutputRing;
+              pushing.winding = currentOutputRingWinding;
+            }
+            queue.push(pushing);
+          }
+          currentIsect = nxtIsect;
+          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge2;
+        } else {
+          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge1;
+          isectList[nxtIsect].ringAndEdge1Walkable = false;
+          if (isectList[nxtIsect].ringAndEdge2Walkable) {
+            debugAll("Adding intersection " + nxtIsect + " to queue");
+            var pushing = { isect: nxtIsect };
+            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge1].coord], currentOutputRingWinding == 1)) {
+              pushing.parent = currentOutputRingParent;
+              pushing.winding = -currentOutputRingWinding;
+            } else {
+              pushing.parent = currentOutputRing;
+              pushing.winding = currentOutputRingWinding;
+            }
+            queue.push(pushing);
+          }
+          currentIsect = nxtIsect;
+          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge1;
+        }
+        debugAll("Current state of the queue: " + JSON.stringify(queue));
+      }
+      debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1] + " and closing ring");
+      // Close output ring
+      currentOutputRingCoords.push(isectList[nxtIsect].coord);
+      // Push output ring to output
+      outputFeatureArray.push(helpers.polygon([currentOutputRingCoords], { index: currentOutputRing, parent: currentOutputRingParent, winding: currentOutputRingWinding, netWinding: undefined }));
+    }
+
+    var output = helpers.featureCollection(outputFeatureArray);
+    debug("Walking");
+
+    determineParents();
+    debug("Determining parents");
+
+    setNetWinding();
+    debug("Setting winding number");
+
+    // These functions are also used if no intersections are found
+    function determineParents() {
+      var featuresWithoutParent = [];
+      for (var i = 0; i < output.features.length; i++) {
+        debugAll("Output ring " + i + " has parent " + output.features[i].properties.parent);
+        if (output.features[i].properties.parent == -1) featuresWithoutParent.push(i);
+      }
+      debugAll("The following output ring(s) have no parent: " + featuresWithoutParent);
+      if (featuresWithoutParent.length > 1) {
+        for (var i = 0; i < featuresWithoutParent.length; i++) {
+          var parent = -1;
+          var parentArea = Infinity;
+          for (var j = 0; j < output.features.length; j++) {
+            if (featuresWithoutParent[i] == j) continue;
+            if (inside(helpers.point(output.features[featuresWithoutParent[i]].geometry.coordinates[0][0]), output.features[j], true)) {
+              if (area(output.features[j]) < parentArea) {
+                parent = j;
+                debugAll("Ring " + featuresWithoutParent[i] + " lies inside output ring " + j);
+              }
+            }
+          }
+          output.features[featuresWithoutParent[i]].properties.parent = parent;
+          debugAll("Ring " + featuresWithoutParent[i] + " is assigned parent " + parent);
+        }
+      }
+    }
+
+    function setNetWinding() {
+      for (var i = 0; i < output.features.length; i++) {
+        if (output.features[i].properties.parent == -1) {
+          var netWinding = output.features[i].properties.winding;
+          output.features[i].properties.netWinding = netWinding;
+          setNetWindingOfChildren(i, netWinding);
+        }
+      }
+    }
+
+    function setNetWindingOfChildren(parent, ParentNetWinding) {
+      for (var i = 0; i < output.features.length; i++) {
+        if (output.features[i].properties.parent == parent) {
+          var netWinding = ParentNetWinding + output.features[i].properties.winding;
+          output.features[i].properties.netWinding = netWinding;
+          setNetWindingOfChildren(i, netWinding);
+        }
+      }
+    }
+
+    debugAll("# Total of " + output.features.length + " rings");
+
+    return output;
+  };
+
+  // Constructor for (ring- or intersection-) pseudo-vertices.
+  var PseudoVtx = function (coord, param, ringAndEdgeIn, ringAndEdgeOut, nxtIsectAlongEdgeIn) {
+    this.coord = coord; // [x,y] of this pseudo-vertex
+    this.param = param; // fractional distance of this intersection on incomming edge
+    this.ringAndEdgeIn = ringAndEdgeIn; // [ring index, edge index] of incomming edge
+    this.ringAndEdgeOut = ringAndEdgeOut; // [ring index, edge index] of outgoing edge
+    this.nxtIsectAlongEdgeIn = nxtIsectAlongEdgeIn; // The next intersection when following the incomming edge (so not when following ringAndEdgeOut!)
+  };
+
+  // Constructor for an intersection. There are two intersection-pseudo-vertices per self-intersection and one ring-pseudo-vertex per ring-vertex-intersection. Their labels 1 and 2 are not assigned a particular meaning but are permanent once given.
+  var Isect = function (coord, ringAndEdge1, ringAndEdge2, nxtIsectAlongRingAndEdge1, nxtIsectAlongRingAndEdge2, ringAndEdge1Walkable, ringAndEdge2Walkable) {
+    this.coord = coord; // [x,y] of this intersection
+    this.ringAndEdge1 = ringAndEdge1; // first edge of this intersection
+    this.ringAndEdge2 = ringAndEdge2; // second edge of this intersection
+    this.nxtIsectAlongRingAndEdge1 = nxtIsectAlongRingAndEdge1; // the next intersection when following ringAndEdge1
+    this.nxtIsectAlongRingAndEdge2 = nxtIsectAlongRingAndEdge2; // the next intersection when following ringAndEdge2
+    this.ringAndEdge1Walkable = ringAndEdge1Walkable; // May we (still) walk away from this intersection over ringAndEdge1?
+    this.ringAndEdge2Walkable = ringAndEdge2Walkable; // May we (still) walk away from this intersection over ringAndEdge2?
+  };
+
+  // Function to determine if three consecutive points of a simple, non-self-intersecting ring make up a convex vertex, assuming the ring is right- or lefthanded
+  function isConvex(pts, righthanded) {
+    // 'pts' is an [x,y] pair
+    // 'righthanded' is a boolean
+    if (typeof righthanded === 'undefined') righthanded = true;
+    if (pts.length != 3) throw new Error("This function requires an array of three points [x,y]");
+    var d = (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]);
+    return d >= 0 == righthanded;
+  }
+
+  // Function to compute winding of simple, non-self-intersecting ring
+  function windingOfRing(ring) {
+    // 'ring' is an array of [x,y] pairs with the last equal to the first
+    // Compute the winding number based on the vertex with the smallest x-value, it precessor and successor. An extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it is not is because the winding number we use to compute it is wrong
+    var leftVtx = 0;
+    for (var i = 0; i < ring.length - 1; i++) {
+      if (ring[i][0] < ring[leftVtx][0]) leftVtx = i;
+    }
+    if (isConvex([ring[(leftVtx - 1).modulo(ring.length - 1)], ring[leftVtx], ring[(leftVtx + 1).modulo(ring.length - 1)]], true)) {
+      var winding = 1;
+    } else {
+      var winding = -1;
+    }
+    return winding;
+  }
+
+  // Function to compare Arrays of numbers. From http://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+  function equalArrays(array1, array2) {
+    // if the other array is a falsy value, return
+    if (!array1 || !array2) return false;
+
+    // compare lengths - can save a lot of time
+    if (array1.length != array2.length) return false;
+
+    for (var i = 0, l = array1.length; i < l; i++) {
+      // Check if we have nested arrays
+      if (array1[i] instanceof Array && array2[i] instanceof Array) {
+        // recurse into the nested arrays
+        if (!equalArrays(array1[i], array2[i])) return false;
+      } else if (array1[i] != array2[i]) {
+        // Warning - two different object instances will never be equal: {x:20} != {x:20}
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Fix Javascript modulo for negative number. From http://stackoverflow.com/questions/4467539/javascript-modulo-not-behaving
+  Number.prototype.modulo = function (n) {
+    return (this % n + n) % n;
+  };
+
+  // Function to get array with only unique elements. From http://stackoverflow.com/questions/1960473/unique-values-in-an-array
+  function getUnique(array) {
+    var u = {},
+        a = [];
+    for (var i = 0, l = array.length; i < l; ++i) {
+      if (u.hasOwnProperty(array[i])) {
+        continue;
+      }
+      a.push(array[i]);
+      u[array[i]] = 1;
+    }
+    return a;
+  }
+
+  // Function to check if array is unique (i.e. all unique elements, i.e. no duplicate elements)
+  function isUnique(array) {
+    var u = {},
+        a = [];
+    var isUnique = 1;
+    for (var i = 0, l = array.length; i < l; ++i) {
+      if (u.hasOwnProperty(array[i])) {
+        isUnique = 0;
+        break;
+      }
+      u[array[i]] = 1;
+    }
+    return isUnique;
+  }
+});
+$__System.registerDynamic('2a', ['c', 'd'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var flattenEach = $__require('c').flattenEach;
+    var featureCollection = $__require('d').featureCollection;
+
+    /**
+     * Flattens any {@link GeoJSON} to a {@link FeatureCollection} inspired by [geojson-flatten](https://github.com/tmcw/geojson-flatten).
+     *
+     * @name flatten
+     * @param {FeatureCollection|Geometry|Feature<any>} geojson any valid GeoJSON Object
+     * @returns {FeatureCollection<any>} all Multi-Geometries are flattened into single Features
+     * @example
+     * var multiGeometry = turf.multiPolygon([
+     *   [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
+     *   [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
+     *   [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
+     * ]);
+     *
+     * var flatten = turf.flatten(multiGeometry);
+     *
+     * //addToMap
+     * var addToMap = [flatten]
+     */
+    module.exports = function (geojson) {
+        if (!geojson) throw new Error('geojson is required');
+
+        var results = [];
+        flattenEach(geojson, function (feature) {
+            results.push(feature);
+        });
+        return featureCollection(results);
+    };
+});
+$__System.registerDynamic('2b', ['28', '2a', 'c', 'd'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var simplepolygon = $__require('28');
+    var flatten = $__require('2a');
+    var featureEach = $__require('c').featureEach;
+    var featureCollection = $__require('d').featureCollection;
+
+    /**
+     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks.
+     * Uses [simplepolygon](https://github.com/mclaeysb/simplepolygon) internally.
+     *
+     * @name unkinkPolygon
+     * @param {FeatureCollection|Feature<Polygon|MultiPolygon>} geojson GeoJSON Polygon or MultiPolygon
+     * @returns {FeatureCollection<Polygon>} Unkinked polygons
+     * @example
+     * var poly = turf.polygon([[[0, 0], [2, 0], [0, 2], [2, 2], [0, 0]]]);
+     *
+     * var result = turf.unkinkPolygon(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, result]
+     */
+    module.exports = function (geojson) {
+        var results = featureCollection([]);
+
+        // Handles FeatureCollection & Feature
+        featureEach(geojson, function (feature) {
+
+            // Handle MultiPolygons as Feature or FeatureCollection
+            if (feature.geometry.type === 'MultiPolygon') {
+                feature = flatten(feature);
+            }
+
+            // Store simple polygons in results
+            featureEach(feature, function (polygon) {
+                var simple = simplepolygon(polygon);
+
+                featureEach(simple, function (poly) {
+                    poly.properties = polygon.properties ? polygon.properties : {};
+                    results.features.push(poly);
+                });
+            });
+        });
+        return results;
+    };
+});
+$__System.registerDynamic('2c', ['d'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var point = $__require('d').point;
+
+    /**
+     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
+     *
+     * @name kinks
+     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
+     * @returns {FeatureCollection<Point>} self-intersections
+     * @example
+     * var poly = turf.polygon([[
+     *   [-12.034835, 8.901183],
+     *   [-12.060413, 8.899826],
+     *   [-12.03638, 8.873199],
+     *   [-12.059383, 8.871418],
+     *   [-12.034835, 8.901183]
+     * ]]);
+     *
+     * var kinks = turf.kinks(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, kinks]
+     */
+    module.exports = function (featureIn) {
+        var coordinates;
+        var feature;
+        var results = {
+            type: 'FeatureCollection',
+            features: []
+        };
+        if (featureIn.type === 'Feature') {
+            feature = featureIn.geometry;
+        } else {
+            feature = featureIn;
+        }
+        if (feature.type === 'LineString') {
+            coordinates = [feature.coordinates];
+        } else if (feature.type === 'MultiLineString') {
+            coordinates = feature.coordinates;
+        } else if (feature.type === 'MultiPolygon') {
+            coordinates = [].concat.apply([], feature.coordinates);
+        } else if (feature.type === 'Polygon') {
+            coordinates = feature.coordinates;
+        } else {
+            throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
+        }
+        coordinates.forEach(function (segment1) {
+            coordinates.forEach(function (segment2) {
+                for (var i = 0; i < segment1.length - 1; i++) {
+                    for (var k = 0; k < segment2.length - 1; k++) {
+                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
+                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
+                            continue;
+                        }
+
+                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
+                        if (intersection) {
+                            results.features.push(point([intersection[0], intersection[1]]));
+                        }
+                    }
+                }
+            });
+        });
+        return results;
+    };
+
+    // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
+    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+        var denominator,
+            a,
+            b,
+            numerator1,
+            numerator2,
+            result = {
+            x: null,
+            y: null,
+            onLine1: false,
+            onLine2: false
+        };
+        denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY);
+        if (denominator === 0) {
+            if (result.x !== null && result.y !== null) {
+                return result;
+            } else {
+                return false;
+            }
+        }
+        a = line1StartY - line2StartY;
+        b = line1StartX - line2StartX;
+        numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b;
+        numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b;
+        a = numerator1 / denominator;
+        b = numerator2 / denominator;
+
+        // if we cast these lines infinitely in both directions, they intersect here:
+        result.x = line1StartX + a * (line1EndX - line1StartX);
+        result.y = line1StartY + a * (line1EndY - line1StartY);
+
+        // if line1 is a segment and line2 is infinite, they intersect if:
+        if (a >= 0 && a <= 1) {
+            result.onLine1 = true;
+        }
+        // if line2 is a segment and line1 is infinite, they intersect if:
+        if (b >= 0 && b <= 1) {
+            result.onLine2 = true;
+        }
+        // if line1 and line2 are segments, they intersect if both of the above are true
+        if (result.onLine1 && result.onLine2) {
+            return [result.x, result.y];
+        } else {
+            return false;
+        }
+    }
+});
+$__System.registerDynamic('16', ['20'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var getCoord = $__require('20').getCoord;
+    //http://en.wikipedia.org/wiki/Haversine_formula
+    //http://www.movable-type.co.uk/scripts/latlong.html
+
+    /**
+     * Takes two {@link Point|points} and finds the geographic bearing between them,
+     * i.e. the angle measured in degrees from the north line (0 degrees)
+     *
+     * @name bearing
+     * @param {Geometry|Feature<Point>|Array<number>} start starting Point
+     * @param {Geometry|Feature<Point>|Array<number>} end ending Point
+     * @param {boolean} [final=false] calculates the final bearing if true
+     * @returns {number} bearing in decimal degrees, between -180 and 180 degrees (positive clockwise)
+     * @example
+     * var point1 = turf.point([-75.343, 39.984]);
+     * var point2 = turf.point([-75.534, 39.123]);
+     *
+     * var bearing = turf.bearing(point1, point2);
+     *
+     * //addToMap
+     * var addToMap = [point1, point2]
+     * point1.properties['marker-color'] = '#f00'
+     * point2.properties['marker-color'] = '#0f0'
+     * point1.properties.bearing = bearing
+     */
+    function bearing(start, end, final) {
+        if (final === true) return calculateFinalBearing(start, end);
+
+        var degrees2radians = Math.PI / 180;
+        var radians2degrees = 180 / Math.PI;
+        var coordinates1 = getCoord(start);
+        var coordinates2 = getCoord(end);
+
+        var lon1 = degrees2radians * coordinates1[0];
+        var lon2 = degrees2radians * coordinates2[0];
+        var lat1 = degrees2radians * coordinates1[1];
+        var lat2 = degrees2radians * coordinates2[1];
+        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
+        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+
+        var bear = radians2degrees * Math.atan2(a, b);
+
+        return bear;
+    }
+
+    /**
+     * Calculates Final Bearing
+     * @private
+     * @param {Feature<Point>} start starting Point
+     * @param {Feature<Point>} end ending Point
+     * @returns {number} bearing
+     */
+    function calculateFinalBearing(start, end) {
+        // Swap start & end
+        var bear = bearing(end, start);
+        bear = (bear + 180) % 360;
+        return bear;
+    }
+
+    module.exports = bearing;
+});
+$__System.registerDynamic('12', ['20', 'd'], true, function ($__require, exports, module) {
+  var global = this || self,
+      GLOBAL = global;
+  var getCoord = $__require('20').getCoord;
+  var radiansToDistance = $__require('d').radiansToDistance;
+  //http://en.wikipedia.org/wiki/Haversine_formula
+  //http://www.movable-type.co.uk/scripts/latlong.html
+
+  /**
+   * Calculates the distance between two {@link Point|points} in degrees, radians,
+   * miles, or kilometers. This uses the
+   * [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula)
+   * to account for global curvature.
+   *
+   * @name distance
+   * @param {Geometry|Feature<Point>|Array<number>} from origin point
+   * @param {Geometry|Feature<Point>|Array<number>} to destination point
+   * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers
+   * @returns {number} distance between the two points
+   * @example
+   * var from = turf.point([-75.343, 39.984]);
+   * var to = turf.point([-75.534, 39.123]);
+   *
+   * var distance = turf.distance(from, to, "miles");
+   *
+   * //addToMap
+   * var addToMap = [from, to];
+   * from.properties.distance = distance;
+   * to.properties.distance = distance;
+   */
+  module.exports = function (from, to, units) {
+    var degrees2radians = Math.PI / 180;
+    var coordinates1 = getCoord(from);
+    var coordinates2 = getCoord(to);
+    var dLat = degrees2radians * (coordinates2[1] - coordinates1[1]);
+    var dLon = degrees2radians * (coordinates2[0] - coordinates1[0]);
+    var lat1 = degrees2radians * coordinates1[1];
+    var lat2 = degrees2radians * coordinates2[1];
+
+    var a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+
+    return radiansToDistance(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), units);
+  };
+});
+$__System.registerDynamic('17', ['20', 'd'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    //http://en.wikipedia.org/wiki/Haversine_formula
+    //http://www.movable-type.co.uk/scripts/latlong.html
+    var getCoord = $__require('20').getCoord;
+    var helpers = $__require('d');
+    var point = helpers.point;
+    var distanceToRadians = helpers.distanceToRadians;
+
+    /**
+     * Takes a {@link Point} and calculates the location of a destination point given a distance in degrees, radians, miles, or kilometers; and bearing in degrees. This uses the [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula) to account for global curvature.
+     *
+     * @name destination
+     * @param {Geometry|Feature<Point>|Array<number>} origin starting point
+     * @param {number} distance distance from the origin point
+     * @param {number} bearing ranging from -180 to 180
+     * @param {string} [units=kilometers] miles, kilometers, degrees, or radians
+     * @returns {Feature<Point>} destination point
+     * @example
+     * var point = turf.point([-75.343, 39.984]);
+     * var distance = 50;
+     * var bearing = 90;
+     * var units = 'miles';
+     *
+     * var destination = turf.destination(point, distance, bearing, units);
+     *
+     * //addToMap
+     * var addToMap = [point, destination]
+     * destination.properties['marker-color'] = '#f00';
+     * point.properties['marker-color'] = '#0f0';
+     */
+    module.exports = function (origin, distance, bearing, units) {
+        var degrees2radians = Math.PI / 180;
+        var radians2degrees = 180 / Math.PI;
+        var coordinates1 = getCoord(origin);
+        var longitude1 = degrees2radians * coordinates1[0];
+        var latitude1 = degrees2radians * coordinates1[1];
+        var bearing_rad = degrees2radians * bearing;
+
+        var radians = distanceToRadians(distance, units);
+
+        var latitude2 = Math.asin(Math.sin(latitude1) * Math.cos(radians) + Math.cos(latitude1) * Math.sin(radians) * Math.cos(bearing_rad));
+        var longitude2 = longitude1 + Math.atan2(Math.sin(bearing_rad) * Math.sin(radians) * Math.cos(latitude1), Math.cos(radians) - Math.sin(latitude1) * Math.sin(latitude2));
+
+        return point([radians2degrees * longitude2, radians2degrees * latitude2]);
+    };
+});
+$__System.registerDynamic('2d', ['24'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var each = $__require('24').coordEach;
+
+    /**
+     * Takes a set of features, calculates the bbox of all input features, and returns a bounding box.
+     *
+     * @name bbox
+     * @param {(Feature|FeatureCollection)} geojson input features
+     * @returns {Array<number>} bbox extent in [minX, minY, maxX, maxY] order
+     * @addToMap features, bboxPolygon
+     * @example
+     * var pt1 = turf.point([114.175329, 22.2524])
+     * var pt2 = turf.point([114.170007, 22.267969])
+     * var pt3 = turf.point([114.200649, 22.274641])
+     * var pt4 = turf.point([114.200649, 22.274641])
+     * var pt5 = turf.point([114.186744, 22.265745])
+     * var features = turf.featureCollection([pt1, pt2, pt3, pt4, pt5])
+     *
+     * var bbox = turf.bbox(features);
+     *
+     * var bboxPolygon = turf.bboxPolygon(bbox);
+     *
+     * //=bbox
+     *
+     * //=bboxPolygon
+     */
+    module.exports = function (geojson) {
+        var bbox = [Infinity, Infinity, -Infinity, -Infinity];
+        each(geojson, function (coord) {
+            if (bbox[0] > coord[0]) bbox[0] = coord[0];
+            if (bbox[1] > coord[1]) bbox[1] = coord[1];
+            if (bbox[2] < coord[0]) bbox[2] = coord[0];
+            if (bbox[3] < coord[1]) bbox[3] = coord[1];
+        });
+        return bbox;
+    };
+});
+$__System.registerDynamic('29', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -15366,221 +16986,6 @@ $__System.registerDynamic('1f', [], true, function ($__require, exports, module)
 
         return distance / factor * 57.2958;
     };
-});
-$__System.registerDynamic('20', ['21'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var invariant = $__require('21');
-    var getCoord = invariant.getCoord;
-    var getCoords = invariant.getCoords;
-
-    // http://en.wikipedia.org/wiki/Even%E2%80%93odd_rule
-    // modified from: https://github.com/substack/point-in-polygon/blob/master/index.js
-    // which was modified from http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-
-    /**
-     * Takes a {@link Point} and a {@link Polygon} or {@link MultiPolygon} and determines if the point resides inside the polygon. The polygon can
-     * be convex or concave. The function accounts for holes.
-     *
-     * @name inside
-     * @param {Feature<Point>} point input point
-     * @param {Feature<Polygon|MultiPolygon>} polygon input polygon or multipolygon
-     * @param {boolean} [ignoreBoundary=false] True if polygon boundary should be ignored when determining if the point is inside the polygon otherwise false.
-     * @returns {boolean} `true` if the Point is inside the Polygon; `false` if the Point is not inside the Polygon
-     * @example
-     * var pt = turf.point([-77, 44]);
-     * var poly = turf.polygon([[
-     *   [-81, 41],
-     *   [-81, 47],
-     *   [-72, 47],
-     *   [-72, 41],
-     *   [-81, 41]
-     * ]]);
-     *
-     * turf.inside(pt, poly);
-     * //= true
-     */
-    module.exports = function (point, polygon, ignoreBoundary) {
-        // validation
-        if (!point) throw new Error('point is required');
-        if (!polygon) throw new Error('polygon is required');
-
-        var pt = getCoord(point);
-        var polys = getCoords(polygon);
-        var type = polygon.geometry ? polygon.geometry.type : polygon.type;
-        var bbox = polygon.bbox;
-
-        // Quick elimination if point is not inside bbox
-        if (bbox && inBBox(pt, bbox) === false) return false;
-
-        // normalize to multipolygon
-        if (type === 'Polygon') polys = [polys];
-
-        for (var i = 0, insidePoly = false; i < polys.length && !insidePoly; i++) {
-            // check if it is in the outer ring first
-            if (inRing(pt, polys[i][0], ignoreBoundary)) {
-                var inHole = false;
-                var k = 1;
-                // check for the point in any of the holes
-                while (k < polys[i].length && !inHole) {
-                    if (inRing(pt, polys[i][k], !ignoreBoundary)) {
-                        inHole = true;
-                    }
-                    k++;
-                }
-                if (!inHole) insidePoly = true;
-            }
-        }
-        return insidePoly;
-    };
-
-    /**
-     * inRing
-     *
-     * @private
-     * @param {[number, number]} pt [x,y]
-     * @param {Array<[number, number]>} ring [[x,y], [x,y],..]
-     * @param {boolean} ignoreBoundary ignoreBoundary
-     * @returns {boolean} inRing
-     */
-    function inRing(pt, ring, ignoreBoundary) {
-        var isInside = false;
-        if (ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]) ring = ring.slice(0, ring.length - 1);
-
-        for (var i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-            var xi = ring[i][0],
-                yi = ring[i][1];
-            var xj = ring[j][0],
-                yj = ring[j][1];
-            var onBoundary = pt[1] * (xi - xj) + yi * (xj - pt[0]) + yj * (pt[0] - xi) === 0 && (xi - pt[0]) * (xj - pt[0]) <= 0 && (yi - pt[1]) * (yj - pt[1]) <= 0;
-            if (onBoundary) return !ignoreBoundary;
-            var intersect = yi > pt[1] !== yj > pt[1] && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi;
-            if (intersect) isInside = !isInside;
-        }
-        return isInside;
-    }
-
-    /**
-     * inBBox
-     *
-     * @private
-     * @param {[number, number]} pt point [x,y]
-     * @param {[number, number, number, number]} bbox BBox [west, south, east, north]
-     * @returns {boolean} true/false if point is inside BBox
-     */
-    function inBBox(pt, bbox) {
-        return bbox[0] <= pt[0] && bbox[1] <= pt[1] && bbox[2] >= pt[0] && bbox[3] >= pt[1];
-    }
-});
-$__System.registerDynamic("22", [], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-  module.exports.RADIUS = 6378137;
-  module.exports.FLATTENING = 1 / 298.257223563;
-  module.exports.POLAR_RADIUS = 6356752.3142;
-});
-$__System.registerDynamic('23', ['22'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var wgs84 = $__require('22');
-
-    module.exports.geometry = geometry;
-    module.exports.ring = ringArea;
-
-    function geometry(_) {
-        var area = 0,
-            i;
-        switch (_.type) {
-            case 'Polygon':
-                return polygonArea(_.coordinates);
-            case 'MultiPolygon':
-                for (i = 0; i < _.coordinates.length; i++) {
-                    area += polygonArea(_.coordinates[i]);
-                }
-                return area;
-            case 'Point':
-            case 'MultiPoint':
-            case 'LineString':
-            case 'MultiLineString':
-                return 0;
-            case 'GeometryCollection':
-                for (i = 0; i < _.geometries.length; i++) {
-                    area += geometry(_.geometries[i]);
-                }
-                return area;
-        }
-    }
-
-    function polygonArea(coords) {
-        var area = 0;
-        if (coords && coords.length > 0) {
-            area += Math.abs(ringArea(coords[0]));
-            for (var i = 1; i < coords.length; i++) {
-                area -= Math.abs(ringArea(coords[i]));
-            }
-        }
-        return area;
-    }
-
-    /**
-     * Calculate the approximate area of the polygon were it projected onto
-     *     the earth.  Note that this area will be positive if ring is oriented
-     *     clockwise, otherwise it will be negative.
-     *
-     * Reference:
-     * Robert. G. Chamberlain and William H. Duquette, "Some Algorithms for
-     *     Polygons on a Sphere", JPL Publication 07-03, Jet Propulsion
-     *     Laboratory, Pasadena, CA, June 2007 http://trs-new.jpl.nasa.gov/dspace/handle/2014/40409
-     *
-     * Returns:
-     * {float} The approximate signed geodesic area of the polygon in square
-     *     meters.
-     */
-
-    function ringArea(coords) {
-        var p1,
-            p2,
-            p3,
-            lowerIndex,
-            middleIndex,
-            upperIndex,
-            i,
-            area = 0,
-            coordsLength = coords.length;
-
-        if (coordsLength > 2) {
-            for (i = 0; i < coordsLength; i++) {
-                if (i === coordsLength - 2) {
-                    // i = N-2
-                    lowerIndex = coordsLength - 2;
-                    middleIndex = coordsLength - 1;
-                    upperIndex = 0;
-                } else if (i === coordsLength - 1) {
-                    // i = N-1
-                    lowerIndex = coordsLength - 1;
-                    middleIndex = 0;
-                    upperIndex = 1;
-                } else {
-                    // i = 0 to N-3
-                    lowerIndex = i;
-                    middleIndex = i + 1;
-                    upperIndex = i + 2;
-                }
-                p1 = coords[lowerIndex];
-                p2 = coords[middleIndex];
-                p3 = coords[upperIndex];
-                area += (rad(p3[0]) - rad(p1[0])) * Math.sin(rad(p2[1]));
-            }
-
-            area = area * wgs84.RADIUS * wgs84.RADIUS / 2;
-        }
-
-        return area;
-    }
-
-    function rad(_) {
-        return _ * Math.PI / 180;
-    }
 });
 $__System.registerDynamic('24', [], true, function ($__require, exports, module) {
     var global = this || self,
@@ -16231,1533 +17636,35 @@ $__System.registerDynamic('24', [], true, function ($__require, exports, module)
     }
     module.exports.geomReduce = geomReduce;
 });
-$__System.registerDynamic('25', ['23', '24'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2e', ['d'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var area = $__require('23').geometry;
-    var geomReduce = $__require('24').geomReduce;
+    var polygon = $__require('d').polygon;
 
     /**
-     * Takes one or more features and returns their area in square meters.
+     * Takes a bbox and returns an equivalent {@link Polygon|polygon}.
      *
-     * @name area
-     * @param {FeatureCollection|Feature<any>} geojson input GeoJSON feature(s)
-     * @returns {number} area in square meters
-     * @addToMap polygon
+     * @name bboxPolygon
+     * @param {Array<number>} bbox extent in [minX, minY, maxX, maxY] order
+     * @returns {Feature<Polygon>} a Polygon representation of the bounding box
      * @example
-     * var polygon = {
-     *   "type": "Feature",
-     *   "properties": {},
-     *   "geometry": {
-     *     "type": "Polygon",
-     *     "coordinates": [
-     *       [
-     *         [125, -15],
-     *         [113, -22],
-     *         [117, -37],
-     *         [130, -33],
-     *         [148, -39],
-     *         [154, -27],
-     *         [144, -15],
-     *         [125, -15]
-     *       ]
-     *     ]
-     *   }
-     * }
-     * var area = turf.area(polygon);
-     * //=area => square meters
-     * //=polygon
-     */
-    module.exports = function (geojson) {
-        return geomReduce(geojson, function (value, geometry) {
-            return value + area(geometry);
-        }, 0);
-    };
-});
-$__System.registerDynamic('26', [], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-  /**
-   * Helpers.
-   */
-
-  var s = 1000;
-  var m = s * 60;
-  var h = m * 60;
-  var d = h * 24;
-  var y = d * 365.25;
-
-  /**
-   * Parse or format the given `val`.
-   *
-   * Options:
-   *
-   *  - `long` verbose formatting [false]
-   *
-   * @param {String|Number} val
-   * @param {Object} [options]
-   * @throws {Error} throw an error if val is not a non-empty string or a number
-   * @return {String|Number}
-   * @api public
-   */
-
-  module.exports = function (val, options) {
-    options = options || {};
-    var type = typeof val;
-    if (type === 'string' && val.length > 0) {
-      return parse(val);
-    } else if (type === 'number' && isNaN(val) === false) {
-      return options.long ? fmtLong(val) : fmtShort(val);
-    }
-    throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
-  };
-
-  /**
-   * Parse the given `str` and return milliseconds.
-   *
-   * @param {String} str
-   * @return {Number}
-   * @api private
-   */
-
-  function parse(str) {
-    str = String(str);
-    if (str.length > 100) {
-      return;
-    }
-    var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-    if (!match) {
-      return;
-    }
-    var n = parseFloat(match[1]);
-    var type = (match[2] || 'ms').toLowerCase();
-    switch (type) {
-      case 'years':
-      case 'year':
-      case 'yrs':
-      case 'yr':
-      case 'y':
-        return n * y;
-      case 'days':
-      case 'day':
-      case 'd':
-        return n * d;
-      case 'hours':
-      case 'hour':
-      case 'hrs':
-      case 'hr':
-      case 'h':
-        return n * h;
-      case 'minutes':
-      case 'minute':
-      case 'mins':
-      case 'min':
-      case 'm':
-        return n * m;
-      case 'seconds':
-      case 'second':
-      case 'secs':
-      case 'sec':
-      case 's':
-        return n * s;
-      case 'milliseconds':
-      case 'millisecond':
-      case 'msecs':
-      case 'msec':
-      case 'ms':
-        return n;
-      default:
-        return undefined;
-    }
-  }
-
-  /**
-   * Short format for `ms`.
-   *
-   * @param {Number} ms
-   * @return {String}
-   * @api private
-   */
-
-  function fmtShort(ms) {
-    if (ms >= d) {
-      return Math.round(ms / d) + 'd';
-    }
-    if (ms >= h) {
-      return Math.round(ms / h) + 'h';
-    }
-    if (ms >= m) {
-      return Math.round(ms / m) + 'm';
-    }
-    if (ms >= s) {
-      return Math.round(ms / s) + 's';
-    }
-    return ms + 'ms';
-  }
-
-  /**
-   * Long format for `ms`.
-   *
-   * @param {Number} ms
-   * @return {String}
-   * @api private
-   */
-
-  function fmtLong(ms) {
-    return plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms';
-  }
-
-  /**
-   * Pluralization helper.
-   */
-
-  function plural(ms, n, name) {
-    if (ms < n) {
-      return;
-    }
-    if (ms < n * 1.5) {
-      return Math.floor(ms / n) + ' ' + name;
-    }
-    return Math.ceil(ms / n) + ' ' + name + 's';
-  }
-});
-$__System.registerDynamic('27', ['26'], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-
-  /**
-   * This is the common logic for both the Node.js and web browser
-   * implementations of `debug()`.
-   *
-   * Expose `debug()` as the module.
-   */
-
-  exports = module.exports = createDebug.debug = createDebug['default'] = createDebug;
-  exports.coerce = coerce;
-  exports.disable = disable;
-  exports.enable = enable;
-  exports.enabled = enabled;
-  exports.humanize = $__require('26');
-
-  /**
-   * The currently active debug mode names, and names to skip.
-   */
-
-  exports.names = [];
-  exports.skips = [];
-
-  /**
-   * Map of special "%n" handling functions, for the debug "format" argument.
-   *
-   * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
-   */
-
-  exports.formatters = {};
-
-  /**
-   * Previous log timestamp.
-   */
-
-  var prevTime;
-
-  /**
-   * Select a color.
-   * @param {String} namespace
-   * @return {Number}
-   * @api private
-   */
-
-  function selectColor(namespace) {
-    var hash = 0,
-        i;
-
-    for (i in namespace) {
-      hash = (hash << 5) - hash + namespace.charCodeAt(i);
-      hash |= 0; // Convert to 32bit integer
-    }
-
-    return exports.colors[Math.abs(hash) % exports.colors.length];
-  }
-
-  /**
-   * Create a debugger with the given `namespace`.
-   *
-   * @param {String} namespace
-   * @return {Function}
-   * @api public
-   */
-
-  function createDebug(namespace) {
-
-    function debug() {
-      // disabled?
-      if (!debug.enabled) return;
-
-      var self = debug;
-
-      // set `diff` timestamp
-      var curr = +new Date();
-      var ms = curr - (prevTime || curr);
-      self.diff = ms;
-      self.prev = prevTime;
-      self.curr = curr;
-      prevTime = curr;
-
-      // turn the `arguments` into a proper Array
-      var args = new Array(arguments.length);
-      for (var i = 0; i < args.length; i++) {
-        args[i] = arguments[i];
-      }
-
-      args[0] = exports.coerce(args[0]);
-
-      if ('string' !== typeof args[0]) {
-        // anything else let's inspect with %O
-        args.unshift('%O');
-      }
-
-      // apply any `formatters` transformations
-      var index = 0;
-      args[0] = args[0].replace(/%([a-zA-Z%])/g, function (match, format) {
-        // if we encounter an escaped % then don't increase the array index
-        if (match === '%%') return match;
-        index++;
-        var formatter = exports.formatters[format];
-        if ('function' === typeof formatter) {
-          var val = args[index];
-          match = formatter.call(self, val);
-
-          // now we need to remove `args[index]` since it's inlined in the `format`
-          args.splice(index, 1);
-          index--;
-        }
-        return match;
-      });
-
-      // apply env-specific formatting (colors, etc.)
-      exports.formatArgs.call(self, args);
-
-      var logFn = debug.log || exports.log || console.log.bind(console);
-      logFn.apply(self, args);
-    }
-
-    debug.namespace = namespace;
-    debug.enabled = exports.enabled(namespace);
-    debug.useColors = exports.useColors();
-    debug.color = selectColor(namespace);
-
-    // env-specific initialization logic for debug instances
-    if ('function' === typeof exports.init) {
-      exports.init(debug);
-    }
-
-    return debug;
-  }
-
-  /**
-   * Enables a debug mode by namespaces. This can include modes
-   * separated by a colon and wildcards.
-   *
-   * @param {String} namespaces
-   * @api public
-   */
-
-  function enable(namespaces) {
-    exports.save(namespaces);
-
-    exports.names = [];
-    exports.skips = [];
-
-    var split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
-    var len = split.length;
-
-    for (var i = 0; i < len; i++) {
-      if (!split[i]) continue; // ignore empty strings
-      namespaces = split[i].replace(/\*/g, '.*?');
-      if (namespaces[0] === '-') {
-        exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-      } else {
-        exports.names.push(new RegExp('^' + namespaces + '$'));
-      }
-    }
-  }
-
-  /**
-   * Disable debug output.
-   *
-   * @api public
-   */
-
-  function disable() {
-    exports.enable('');
-  }
-
-  /**
-   * Returns true if the given mode name is enabled, false otherwise.
-   *
-   * @param {String} name
-   * @return {Boolean}
-   * @api public
-   */
-
-  function enabled(name) {
-    var i, len;
-    for (i = 0, len = exports.skips.length; i < len; i++) {
-      if (exports.skips[i].test(name)) {
-        return false;
-      }
-    }
-    for (i = 0, len = exports.names.length; i < len; i++) {
-      if (exports.names[i].test(name)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Coerce `val`.
-   *
-   * @param {Mixed} val
-   * @return {Mixed}
-   * @api private
-   */
-
-  function coerce(val) {
-    if (val instanceof Error) return val.stack || val.message;
-    return val;
-  }
-});
-$__System.registerDynamic('28', ['27'], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-  /**
-   * This is the web browser implementation of `debug()`.
-   *
-   * Expose `debug()` as the module.
-   */
-
-  exports = module.exports = $__require('27');
-  exports.log = log;
-  exports.formatArgs = formatArgs;
-  exports.save = save;
-  exports.load = load;
-  exports.useColors = useColors;
-  exports.storage = 'undefined' != typeof chrome && 'undefined' != typeof chrome.storage ? chrome.storage.local : localstorage();
-
-  /**
-   * Colors.
-   */
-
-  exports.colors = ['lightseagreen', 'forestgreen', 'goldenrod', 'dodgerblue', 'darkorchid', 'crimson'];
-
-  /**
-   * Currently only WebKit-based Web Inspectors, Firefox >= v31,
-   * and the Firebug extension (any Firefox version) are known
-   * to support "%c" CSS customizations.
-   *
-   * TODO: add a `localStorage` variable to explicitly enable/disable colors
-   */
-
-  function useColors() {
-    // NB: In an Electron preload script, document will be defined but not fully
-    // initialized. Since we know we're in Chrome, we'll just detect this case
-    // explicitly
-    if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
-      return true;
-    }
-
-    // is webkit? http://stackoverflow.com/a/16459606/376773
-    // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-    return typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    typeof window !== 'undefined' && window.console && (window.console.firebug || window.console.exception && window.console.table) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 ||
-    // double check webkit in userAgent just in case we are in a worker
-    typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
-  }
-
-  /**
-   * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
-   */
-
-  exports.formatters.j = function (v) {
-    try {
-      return JSON.stringify(v);
-    } catch (err) {
-      return '[UnexpectedJSONParseError]: ' + err.message;
-    }
-  };
-
-  /**
-   * Colorize log arguments if enabled.
-   *
-   * @api public
-   */
-
-  function formatArgs(args) {
-    var useColors = this.useColors;
-
-    args[0] = (useColors ? '%c' : '') + this.namespace + (useColors ? ' %c' : ' ') + args[0] + (useColors ? '%c ' : ' ') + '+' + exports.humanize(this.diff);
-
-    if (!useColors) return;
-
-    var c = 'color: ' + this.color;
-    args.splice(1, 0, c, 'color: inherit');
-
-    // the final "%c" is somewhat tricky, because there could be other
-    // arguments passed either before or after the %c, so we need to
-    // figure out the correct index to insert the CSS into
-    var index = 0;
-    var lastC = 0;
-    args[0].replace(/%[a-zA-Z%]/g, function (match) {
-      if ('%%' === match) return;
-      index++;
-      if ('%c' === match) {
-        // we only are interested in the *last* %c
-        // (the user may have provided their own)
-        lastC = index;
-      }
-    });
-
-    args.splice(lastC, 0, c);
-  }
-
-  /**
-   * Invokes `console.log()` when available.
-   * No-op when `console.log` is not a "function".
-   *
-   * @api public
-   */
-
-  function log() {
-    // this hackery is required for IE8/9, where
-    // the `console.log` function doesn't have 'apply'
-    return 'object' === typeof console && console.log && Function.prototype.apply.call(console.log, console, arguments);
-  }
-
-  /**
-   * Save `namespaces`.
-   *
-   * @param {String} namespaces
-   * @api private
-   */
-
-  function save(namespaces) {
-    try {
-      if (null == namespaces) {
-        exports.storage.removeItem('debug');
-      } else {
-        exports.storage.debug = namespaces;
-      }
-    } catch (e) {}
-  }
-
-  /**
-   * Load `namespaces`.
-   *
-   * @return {String} returns the previously persisted debug modes
-   * @api private
-   */
-
-  function load() {
-    var r;
-    try {
-      r = exports.storage.debug;
-    } catch (e) {}
-
-    // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-    if (!r && typeof process !== 'undefined' && 'env' in process) {
-      r = process.env.DEBUG;
-    }
-
-    return r;
-  }
-
-  /**
-   * Enable namespaces listed in `localStorage.debug` initially.
-   */
-
-  exports.enable(load());
-
-  /**
-   * Localstorage attempts to return the localstorage.
-   *
-   * This is necessary because safari throws
-   * when a user disables cookies/localstorage
-   * and you attempt to access it.
-   *
-   * @return {LocalStorage}
-   * @api private
-   */
-
-  function localstorage() {
-    try {
-      return window.localStorage;
-    } catch (e) {}
-  }
-});
-$__System.registerDynamic('29', ['1d', '1f', '20', '25', '1e', '28'], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-  var isects = $__require('1d');
-  var helpers = $__require('1f');
-  var inside = $__require('20');
-  var area = $__require('25');
-  var rbush = $__require('1e');
-  var debug = $__require('28')('simplepolygon');
-  var debugAll = $__require('28')('simplepolygon:all');
-
-  /**
-  * Takes a complex (i.e. self-intersecting) geojson polygon, and breaks it down into its composite simple, non-self-intersecting one-ring polygons.
-  *
-  * @module simplepolygon
-  * @param {Feature} feature Input polygon. This polygon may be unconform the {@link https://en.wikipedia.org/wiki/Simple_Features|Simple Features standard} in the sense that it's inner and outer rings may cross-intersect or self-intersect, that the outer ring must not contain the optional inner rings and that the winding number must not be positive for the outer and negative for the inner rings.
-  * @return {FeatureCollection} Feature collection containing the simple, non-self-intersecting one-ring polygon features that the complex polygon is composed of. These simple polygons have properties such as their parent polygon, winding number and net winding number.
-  *
-  * @example
-  * var poly = {
-  *   "type": "Feature",
-  *   "geometry": {
-  *     "type": "Polygon",
-  *     "coordinates": [[[0,0],[2,0],[0,2],[2,2],[0,0]]]
-  *   }
-  * };
-  *
-  * var result = simplepolygon(poly);
-  *
-  * // =result
-  * // which will be a featureCollection of two polygons, one with coordinates [[[0,0],[2,0],[1,1],[0,0]]], parent -1, winding 1 and net winding 1, and one with coordinates [[[1,1],[0,2],[2,2],[1,1]]], parent -1, winding -1 and net winding -1
-  */
-
-  module.exports = function (feature) {
-    // Check input
-    if (feature.type != "Feature") throw new Error("The input must a geojson object of type Feature");
-    if (feature.geometry === undefined || feature.geometry == null) throw new Error("The input must a geojson object with a non-empty geometry");
-    if (feature.geometry.type != "Polygon") throw new Error("The input must be a geojson Polygon");
-
-    // Process input
-    var numRings = feature.geometry.coordinates.length;
-    var vertices = [];
-    for (var i = 0; i < numRings; i++) {
-      var ring = feature.geometry.coordinates[i];
-      if (!equalArrays(ring[0], ring[ring.length - 1])) {
-        ring.push(ring[0]); // Close input ring if it is not
-      }
-      vertices.push.apply(vertices, ring.slice(0, ring.length - 1));
-    }
-    if (!isUnique(vertices)) throw new Error("The input polygon may not have duplicate vertices (except for the first and last vertex of each ring)");
-    var numvertices = vertices.length; // number of input ring vertices, with the last closing vertices not counted
-    debug("Processing input");
-
-    // Compute self-intersections
-    var selfIsectsData = isects(feature, function filterFn(isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique) {
-      return [isect, ring0, edge0, start0, end0, frac0, ring1, edge1, start1, end1, frac1, unique];
-    });
-    var numSelfIsect = selfIsectsData.length;
-    debug("Computing self-intersections");
-
-    // If no self-intersections are found, the input rings are the output rings. Hence, we must only compute their winding numbers, net winding numbers and (since ohers rings could lie outside the first ring) parents.
-    if (numSelfIsect == 0) {
-      var outputFeatureArray = [];
-      for (var i = 0; i < numRings; i++) {
-        outputFeatureArray.push(helpers.polygon([feature.geometry.coordinates[i]], { parent: -1, winding: windingOfRing(feature.geometry.coordinates[i]) }));
-      }
-      var output = helpers.featureCollection(outputFeatureArray);
-      determineParents();
-      setNetWinding();
-      debugAll("No self-intersections found. Input rings are output rings. Computed winding numbers, net winding numbers and parents");
-      debug("Finishing without self-intersections");
-      return output;
-    }
-
-    // If self-intersections are found, we will compute the output rings with the help of two intermediate variables
-    // First, we build the pseudo vertex list and intersection list
-    // The Pseudo vertex list is an array with for each ring an array with for each edge an array containing the pseudo-vertices (as made by their constructor) that have this ring and edge as ringAndEdgeIn, sorted for each edge by their fractional distance on this edge. It's length hence equals numRings.
-    var pseudoVtxListByRingAndEdge = [];
-    // The intersection list is an array containing intersections (as made by their constructor). First all numvertices ring-vertex-intersections, then all self-intersections (intra- and inter-ring). The order of the latter is not important but is permanent once given.
-    var isectList = [];
-    // Adding ring-pseudo-vertices to pseudoVtxListByRingAndEdge and ring-vertex-intersections to isectList
-    for (var i = 0; i < numRings; i++) {
-      pseudoVtxListByRingAndEdge.push([]);
-      for (var j = 0; j < feature.geometry.coordinates[i].length - 1; j++) {
-        // Each edge will feature one ring-pseudo-vertex in its array, on the last position. i.e. edge j features the ring-pseudo-vertex of the ring vertex j+1, which has ringAndEdgeIn = [i,j], on the last position.
-        pseudoVtxListByRingAndEdge[i].push([new PseudoVtx(feature.geometry.coordinates[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)], 1, [i, j], [i, (j + 1).modulo(feature.geometry.coordinates[i].length - 1)], undefined)]);
-        // The first numvertices elements in isectList correspond to the ring-vertex-intersections
-        isectList.push(new Isect(feature.geometry.coordinates[i][j], [i, (j - 1).modulo(feature.geometry.coordinates[i].length - 1)], [i, j], undefined, undefined, false, true));
-      }
-    }
-    // Adding intersection-pseudo-vertices to pseudoVtxListByRingAndEdge and self-intersections to isectList
-    for (var i = 0; i < numSelfIsect; i++) {
-      // Adding intersection-pseudo-vertices made using selfIsectsData to pseudoVtxListByRingAndEdge's array corresponding to the incomming ring and edge
-      pseudoVtxListByRingAndEdge[selfIsectsData[i][1]][selfIsectsData[i][2]].push(new PseudoVtx(selfIsectsData[i][0], selfIsectsData[i][5], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined));
-      // selfIsectsData contains double mentions of each intersection, but we only want to add them once to isectList
-      if (selfIsectsData[i][11]) isectList.push(new Isect(selfIsectsData[i][0], [selfIsectsData[i][1], selfIsectsData[i][2]], [selfIsectsData[i][6], selfIsectsData[i][7]], undefined, undefined, true, true));
-    }
-    var numIsect = isectList.length;
-    // Sort edge arrays of pseudoVtxListByRingAndEdge by the fractional distance 'param'
-    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
-      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
-        pseudoVtxListByRingAndEdge[i][j].sort(function (a, b) {
-          return a.param < b.param ? -1 : 1;
-        });
-      }
-    }
-    debug("Setting up pseudoVtxListByRingAndEdge and isectList");
-
-    // Make a spatial index of intersections, in preperation for the following two steps
-    allIsectsAsIsectRbushTreeItem = [];
-    for (var i = 0; i < numIsect; i++) {
-      allIsectsAsIsectRbushTreeItem.push({ minX: isectList[i].coord[0], minY: isectList[i].coord[1], maxX: isectList[i].coord[0], maxY: isectList[i].coord[1], index: i }); // could pass isect: isectList[i], but not necessary
-    }
-    var isectRbushTree = rbush();
-    isectRbushTree.load(allIsectsAsIsectRbushTreeItem);
-
-    // Now we will teach each intersection in isectList which is the next intersection along both it's [ring, edge]'s, in two steps.
-    // First, we find the next intersection for each pseudo-vertex in pseudoVtxListByRingAndEdge:
-    // For each pseudovertex in pseudoVtxListByRingAndEdge (3 loops) look at the next pseudovertex on that edge and find the corresponding intersection by comparing coordinates
-    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
-      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
-        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
-          var coordToFind;
-          if (k == pseudoVtxListByRingAndEdge[i][j].length - 1) {
-            // If it's the last pseudoVertex on that edge, then the next pseudoVertex is the first one on the next edge of that ring.
-            coordToFind = pseudoVtxListByRingAndEdge[i][(j + 1).modulo(feature.geometry.coordinates[i].length - 1)][0].coord;
-          } else {
-            coordToFind = pseudoVtxListByRingAndEdge[i][j][k + 1].coord;
-          }
-          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
-          pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn = IsectRbushTreeItemFound.index;
-        }
-      }
-    }
-    debug("Computing nextIsect for pseudoVtxListByRingAndEdge");
-
-    // Second, we port this knowledge of the next intersection over to the intersections in isectList, by finding the intersection corresponding to each pseudo-vertex and copying the pseudo-vertex' knownledge of the next-intersection over to the intersection
-    for (var i = 0; i < pseudoVtxListByRingAndEdge.length; i++) {
-      for (var j = 0; j < pseudoVtxListByRingAndEdge[i].length; j++) {
-        for (var k = 0; k < pseudoVtxListByRingAndEdge[i][j].length; k++) {
-          var coordToFind = pseudoVtxListByRingAndEdge[i][j][k].coord;
-          var IsectRbushTreeItemFound = isectRbushTree.search({ minX: coordToFind[0], minY: coordToFind[1], maxX: coordToFind[0], maxY: coordToFind[1] })[0]; // We can take [0] of the result, because there is only one isect correponding to a pseudo-vertex
-          var l = IsectRbushTreeItemFound.index;
-          if (l < numvertices) {
-            // Special treatment at ring-vertices: we correct the misnaming that happened in the previous block, since ringAndEdgeOut = ringAndEdge2 for ring vertices.
-            isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
-          } else {
-            // Port the knowledge of the next intersection from the pseudo-vertices to the intersections, depending on how the edges are labeled in the pseudo-vertex and intersection.
-            if (equalArrays(isectList[l].ringAndEdge1, pseudoVtxListByRingAndEdge[i][j][k].ringAndEdgeIn)) {
-              isectList[l].nxtIsectAlongRingAndEdge1 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
-            } else {
-              isectList[l].nxtIsectAlongRingAndEdge2 = pseudoVtxListByRingAndEdge[i][j][k].nxtIsectAlongEdgeIn;
-            }
-          }
-        }
-      }
-    }
-    // This explains why, eventhough when we will walk away from an intersection, we will walk way from the corresponding pseudo-vertex along edgeOut, pseudo-vertices have the property 'nxtIsectAlongEdgeIn' in stead of some propery 'nxtPseudoVtxAlongEdgeOut'. This is because this property (which is easy to find out) is used in the above for nxtIsectAlongRingAndEdge1 and nxtIsectAlongRingAndEdge2!
-    debug("Porting nextIsect to isectList");
-
-    // Before we start walking over the intersections to build the output rings, we prepare a queue that stores information on intersections we still have to deal with, and put at least one intersection in it.
-    // This queue will contain information on intersections where we can start walking from once the current walk is finished, and its parent output ring (the smallest output ring it lies within, -1 if no parent or parent unknown yet) and its winding number (which we can already determine).
-    var queue = [];
-    // For each output ring, add the ring-vertex-intersection with the smalles x-value (i.e. the left-most) as a start intersection. By choosing such an extremal intersections, we are sure to start at an intersection that is a convex vertex of its output ring. By adding them all to the queue, we are sure that no rings will be forgotten. If due to ring-intersections such an intersection will be encountered while walking, it will be removed from the queue.
-    var i = 0;
-    for (var j = 0; j < numRings; j++) {
-      var leftIsect = i;
-      for (var k = 0; k < feature.geometry.coordinates[j].length - 1; k++) {
-        if (isectList[i].coord[0] < isectList[leftIsect].coord[0]) {
-          leftIsect = i;
-        }
-        i++;
-      }
-      // Compute winding at this left-most ring-vertex-intersection. We thus this by using our knowledge that this extremal vertex must be a convex vertex.
-      // We first find the intersection before and after it, and then use them to determine the winding number of the corresponding output ring, since we know that an extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it would not be is because the winding number we use to compute it is wrong
-      var isectAfterLeftIsect = isectList[leftIsect].nxtIsectAlongRingAndEdge2;
-      for (var k = 0; k < isectList.length; k++) {
-        if (isectList[k].nxtIsectAlongRingAndEdge1 == leftIsect || isectList[k].nxtIsectAlongRingAndEdge2 == leftIsect) {
-          var isectBeforeLeftIsect = k;
-          break;
-        }
-      }
-      var windingAtIsect = isConvex([isectList[isectBeforeLeftIsect].coord, isectList[leftIsect].coord, isectList[isectAfterLeftIsect].coord], true) ? 1 : -1;
-
-      queue.push({ isect: leftIsect, parent: -1, winding: windingAtIsect });
-    }
-    // Sort the queue by the same criterion used to find the leftIsect: the left-most leftIsect must be last in the queue, such that it will be popped first, such that we will work from out to in regarding input rings. This assumtion is used when predicting the winding number and parent of a new queue member.
-    queue.sort(function (a, b) {
-      return isectList[a.isect].coord > isectList[b.isect].coord ? -1 : 1;
-    });
-    debugAll("Initial state of the queue: " + JSON.stringify(queue));
-    debug("Setting up queue");
-
-    // Initialise output
-    var outputFeatureArray = [];
-
-    // While the queue is not empty, take the last object (i.e. its intersection) out and start making an output ring by walking in the direction that has not been walked away over yet.
-    while (queue.length > 0) {
-      // Get the last object out of the queue
-      var popped = queue.pop();
-      var startIsect = popped.isect;
-      var currentOutputRingParent = popped.parent;
-      var currentOutputRingWinding = popped.winding;
-      // Make new output ring and add vertex from starting intersection
-      var currentOutputRing = outputFeatureArray.length;
-      var currentOutputRingCoords = [isectList[startIsect].coord];
-      debugAll("# Starting output ring number " + outputFeatureArray.length + " with winding " + currentOutputRingWinding + " from intersection " + startIsect);
-      if (startIsect < numvertices) debugAll("This is a ring-vertex-intersections, which means this output ring does not touch existing output rings");
-      // Set up the variables used while walking over intersections: 'currentIsect', 'nxtIsect' and 'walkingRingAndEdge'
-      var currentIsect = startIsect;
-      if (isectList[startIsect].ringAndEdge1Walkable) {
-        var walkingRingAndEdge = isectList[startIsect].ringAndEdge1;
-        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge1;
-      } else {
-        var walkingRingAndEdge = isectList[startIsect].ringAndEdge2;
-        var nxtIsect = isectList[startIsect].nxtIsectAlongRingAndEdge2;
-      }
-      // While we have not arrived back at the same intersection, keep walking
-      while (!equalArrays(isectList[startIsect].coord, isectList[nxtIsect].coord)) {
-        debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1]);
-        currentOutputRingCoords.push(isectList[nxtIsect].coord);
-        debugAll("Adding intersection " + nxtIsect + " to current output ring");
-        // If the next intersection is queued, we can remove it, because we will go there now.
-        var nxtIsectInQueue = undefined;
-        for (var i = 0; i < queue.length; i++) {
-          if (queue[i].isect == nxtIsect) {
-            nxtIsectInQueue = i;break;
-          }
-        }
-        if (nxtIsectInQueue != undefined) {
-          debugAll("Removing intersection " + nxtIsect + " from queue");
-          queue.splice(nxtIsectInQueue, 1);
-        }
-        // Arriving at this new intersection, we know which will be our next walking ring and edge (if we came from 1 we will walk away from 2 and vice versa),
-        // So we can set it as our new walking ring and intersection and remember that we (will) have walked over it
-        // If we have never walked away from this new intersection along the other ring and edge then we will soon do, add the intersection (and the parent wand winding number) to the queue
-        // (We can predict the winding number and parent as follows: if the edge is convex, the other output ring started from there will have the alternate winding and lie outside of the current one, and thus have the same parent ring as the current ring. Otherwise, it will have the same winding number and lie inside of the current ring. We are, however, only sure of this of an output ring started from there does not enclose the current ring. This is why the initial queue's intersections must be sorted such that outer ones come out first.)
-        // We then update the other two walking variables.
-        if (equalArrays(walkingRingAndEdge, isectList[nxtIsect].ringAndEdge1)) {
-          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge2;
-          isectList[nxtIsect].ringAndEdge2Walkable = false;
-          if (isectList[nxtIsect].ringAndEdge1Walkable) {
-            debugAll("Adding intersection " + nxtIsect + " to queue");
-            var pushing = { isect: nxtIsect };
-            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge2].coord], currentOutputRingWinding == 1)) {
-              pushing.parent = currentOutputRingParent;
-              pushing.winding = -currentOutputRingWinding;
-            } else {
-              pushing.parent = currentOutputRing;
-              pushing.winding = currentOutputRingWinding;
-            }
-            queue.push(pushing);
-          }
-          currentIsect = nxtIsect;
-          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge2;
-        } else {
-          walkingRingAndEdge = isectList[nxtIsect].ringAndEdge1;
-          isectList[nxtIsect].ringAndEdge1Walkable = false;
-          if (isectList[nxtIsect].ringAndEdge2Walkable) {
-            debugAll("Adding intersection " + nxtIsect + " to queue");
-            var pushing = { isect: nxtIsect };
-            if (isConvex([isectList[currentIsect].coord, isectList[nxtIsect].coord, isectList[isectList[nxtIsect].nxtIsectAlongRingAndEdge1].coord], currentOutputRingWinding == 1)) {
-              pushing.parent = currentOutputRingParent;
-              pushing.winding = -currentOutputRingWinding;
-            } else {
-              pushing.parent = currentOutputRing;
-              pushing.winding = currentOutputRingWinding;
-            }
-            queue.push(pushing);
-          }
-          currentIsect = nxtIsect;
-          nxtIsect = isectList[nxtIsect].nxtIsectAlongRingAndEdge1;
-        }
-        debugAll("Current state of the queue: " + JSON.stringify(queue));
-      }
-      debugAll("Walking from intersection " + currentIsect + " to " + nxtIsect + " over ring " + walkingRingAndEdge[0] + " and edge " + walkingRingAndEdge[1] + " and closing ring");
-      // Close output ring
-      currentOutputRingCoords.push(isectList[nxtIsect].coord);
-      // Push output ring to output
-      outputFeatureArray.push(helpers.polygon([currentOutputRingCoords], { index: currentOutputRing, parent: currentOutputRingParent, winding: currentOutputRingWinding, netWinding: undefined }));
-    }
-
-    var output = helpers.featureCollection(outputFeatureArray);
-    debug("Walking");
-
-    determineParents();
-    debug("Determining parents");
-
-    setNetWinding();
-    debug("Setting winding number");
-
-    // These functions are also used if no intersections are found
-    function determineParents() {
-      var featuresWithoutParent = [];
-      for (var i = 0; i < output.features.length; i++) {
-        debugAll("Output ring " + i + " has parent " + output.features[i].properties.parent);
-        if (output.features[i].properties.parent == -1) featuresWithoutParent.push(i);
-      }
-      debugAll("The following output ring(s) have no parent: " + featuresWithoutParent);
-      if (featuresWithoutParent.length > 1) {
-        for (var i = 0; i < featuresWithoutParent.length; i++) {
-          var parent = -1;
-          var parentArea = Infinity;
-          for (var j = 0; j < output.features.length; j++) {
-            if (featuresWithoutParent[i] == j) continue;
-            if (inside(helpers.point(output.features[featuresWithoutParent[i]].geometry.coordinates[0][0]), output.features[j], true)) {
-              if (area(output.features[j]) < parentArea) {
-                parent = j;
-                debugAll("Ring " + featuresWithoutParent[i] + " lies inside output ring " + j);
-              }
-            }
-          }
-          output.features[featuresWithoutParent[i]].properties.parent = parent;
-          debugAll("Ring " + featuresWithoutParent[i] + " is assigned parent " + parent);
-        }
-      }
-    }
-
-    function setNetWinding() {
-      for (var i = 0; i < output.features.length; i++) {
-        if (output.features[i].properties.parent == -1) {
-          var netWinding = output.features[i].properties.winding;
-          output.features[i].properties.netWinding = netWinding;
-          setNetWindingOfChildren(i, netWinding);
-        }
-      }
-    }
-
-    function setNetWindingOfChildren(parent, ParentNetWinding) {
-      for (var i = 0; i < output.features.length; i++) {
-        if (output.features[i].properties.parent == parent) {
-          var netWinding = ParentNetWinding + output.features[i].properties.winding;
-          output.features[i].properties.netWinding = netWinding;
-          setNetWindingOfChildren(i, netWinding);
-        }
-      }
-    }
-
-    debugAll("# Total of " + output.features.length + " rings");
-
-    return output;
-  };
-
-  // Constructor for (ring- or intersection-) pseudo-vertices.
-  var PseudoVtx = function (coord, param, ringAndEdgeIn, ringAndEdgeOut, nxtIsectAlongEdgeIn) {
-    this.coord = coord; // [x,y] of this pseudo-vertex
-    this.param = param; // fractional distance of this intersection on incomming edge
-    this.ringAndEdgeIn = ringAndEdgeIn; // [ring index, edge index] of incomming edge
-    this.ringAndEdgeOut = ringAndEdgeOut; // [ring index, edge index] of outgoing edge
-    this.nxtIsectAlongEdgeIn = nxtIsectAlongEdgeIn; // The next intersection when following the incomming edge (so not when following ringAndEdgeOut!)
-  };
-
-  // Constructor for an intersection. There are two intersection-pseudo-vertices per self-intersection and one ring-pseudo-vertex per ring-vertex-intersection. Their labels 1 and 2 are not assigned a particular meaning but are permanent once given.
-  var Isect = function (coord, ringAndEdge1, ringAndEdge2, nxtIsectAlongRingAndEdge1, nxtIsectAlongRingAndEdge2, ringAndEdge1Walkable, ringAndEdge2Walkable) {
-    this.coord = coord; // [x,y] of this intersection
-    this.ringAndEdge1 = ringAndEdge1; // first edge of this intersection
-    this.ringAndEdge2 = ringAndEdge2; // second edge of this intersection
-    this.nxtIsectAlongRingAndEdge1 = nxtIsectAlongRingAndEdge1; // the next intersection when following ringAndEdge1
-    this.nxtIsectAlongRingAndEdge2 = nxtIsectAlongRingAndEdge2; // the next intersection when following ringAndEdge2
-    this.ringAndEdge1Walkable = ringAndEdge1Walkable; // May we (still) walk away from this intersection over ringAndEdge1?
-    this.ringAndEdge2Walkable = ringAndEdge2Walkable; // May we (still) walk away from this intersection over ringAndEdge2?
-  };
-
-  // Function to determine if three consecutive points of a simple, non-self-intersecting ring make up a convex vertex, assuming the ring is right- or lefthanded
-  function isConvex(pts, righthanded) {
-    // 'pts' is an [x,y] pair
-    // 'righthanded' is a boolean
-    if (typeof righthanded === 'undefined') righthanded = true;
-    if (pts.length != 3) throw new Error("This function requires an array of three points [x,y]");
-    var d = (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[0][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[0][0]);
-    return d >= 0 == righthanded;
-  }
-
-  // Function to compute winding of simple, non-self-intersecting ring
-  function windingOfRing(ring) {
-    // 'ring' is an array of [x,y] pairs with the last equal to the first
-    // Compute the winding number based on the vertex with the smallest x-value, it precessor and successor. An extremal vertex of a simple, non-self-intersecting ring is always convex, so the only reason it is not is because the winding number we use to compute it is wrong
-    var leftVtx = 0;
-    for (var i = 0; i < ring.length - 1; i++) {
-      if (ring[i][0] < ring[leftVtx][0]) leftVtx = i;
-    }
-    if (isConvex([ring[(leftVtx - 1).modulo(ring.length - 1)], ring[leftVtx], ring[(leftVtx + 1).modulo(ring.length - 1)]], true)) {
-      var winding = 1;
-    } else {
-      var winding = -1;
-    }
-    return winding;
-  }
-
-  // Function to compare Arrays of numbers. From http://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
-  function equalArrays(array1, array2) {
-    // if the other array is a falsy value, return
-    if (!array1 || !array2) return false;
-
-    // compare lengths - can save a lot of time
-    if (array1.length != array2.length) return false;
-
-    for (var i = 0, l = array1.length; i < l; i++) {
-      // Check if we have nested arrays
-      if (array1[i] instanceof Array && array2[i] instanceof Array) {
-        // recurse into the nested arrays
-        if (!equalArrays(array1[i], array2[i])) return false;
-      } else if (array1[i] != array2[i]) {
-        // Warning - two different object instances will never be equal: {x:20} != {x:20}
-        return false;
-      }
-    }
-    return true;
-  }
-
-  // Fix Javascript modulo for negative number. From http://stackoverflow.com/questions/4467539/javascript-modulo-not-behaving
-  Number.prototype.modulo = function (n) {
-    return (this % n + n) % n;
-  };
-
-  // Function to get array with only unique elements. From http://stackoverflow.com/questions/1960473/unique-values-in-an-array
-  function getUnique(array) {
-    var u = {},
-        a = [];
-    for (var i = 0, l = array.length; i < l; ++i) {
-      if (u.hasOwnProperty(array[i])) {
-        continue;
-      }
-      a.push(array[i]);
-      u[array[i]] = 1;
-    }
-    return a;
-  }
-
-  // Function to check if array is unique (i.e. all unique elements, i.e. no duplicate elements)
-  function isUnique(array) {
-    var u = {},
-        a = [];
-    var isUnique = 1;
-    for (var i = 0, l = array.length; i < l; ++i) {
-      if (u.hasOwnProperty(array[i])) {
-        isUnique = 0;
-        break;
-      }
-      u[array[i]] = 1;
-    }
-    return isUnique;
-  }
-});
-$__System.registerDynamic('2a', ['c', 'd'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var flattenEach = $__require('c').flattenEach;
-    var featureCollection = $__require('d').featureCollection;
-
-    /**
-     * Flattens any {@link GeoJSON} to a {@link FeatureCollection} inspired by [geojson-flatten](https://github.com/tmcw/geojson-flatten).
+     * var bbox = [0, 0, 10, 10];
      *
-     * @name flatten
-     * @param {FeatureCollection|Geometry|Feature<any>} geojson any valid GeoJSON Object
-     * @returns {FeatureCollection<any>} all Multi-Geometries are flattened into single Features
-     * @example
-     * var multiGeometry = turf.multiPolygon([
-     *   [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
-     *   [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
-     *   [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
-     * ]);
-     *
-     * var flatten = turf.flatten(multiGeometry);
+     * var poly = turf.bboxPolygon(bbox);
      *
      * //addToMap
-     * var addToMap = [flatten]
+     * var addToMap = [poly]
      */
-    module.exports = function (geojson) {
-        if (!geojson) throw new Error('geojson is required');
+    module.exports = function (bbox) {
+        var lowLeft = [bbox[0], bbox[1]];
+        var topLeft = [bbox[0], bbox[3]];
+        var topRight = [bbox[2], bbox[3]];
+        var lowRight = [bbox[2], bbox[1]];
 
-        var results = [];
-        flattenEach(geojson, function (feature) {
-            results.push(feature);
-        });
-        return featureCollection(results);
+        return polygon([[lowLeft, lowRight, topRight, topLeft, lowLeft]]);
     };
 });
-$__System.registerDynamic('2b', ['29', '2a', 'c', 'd'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var simplepolygon = $__require('29');
-    var flatten = $__require('2a');
-    var featureEach = $__require('c').featureEach;
-    var featureCollection = $__require('d').featureCollection;
-
-    /**
-     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks.
-     * Uses [simplepolygon](https://github.com/mclaeysb/simplepolygon) internally.
-     *
-     * @name unkinkPolygon
-     * @param {FeatureCollection|Feature<Polygon|MultiPolygon>} geojson GeoJSON Polygon or MultiPolygon
-     * @returns {FeatureCollection<Polygon>} Unkinked polygons
-     * @example
-     * var poly = turf.polygon([[[0, 0], [2, 0], [0, 2], [2, 2], [0, 0]]]);
-     *
-     * var result = turf.unkinkPolygon(poly);
-     *
-     * //addToMap
-     * var addToMap = [poly, result]
-     */
-    module.exports = function (geojson) {
-        var results = featureCollection([]);
-
-        // Handles FeatureCollection & Feature
-        featureEach(geojson, function (feature) {
-
-            // Handle MultiPolygons as Feature or FeatureCollection
-            if (feature.geometry.type === 'MultiPolygon') {
-                feature = flatten(feature);
-            }
-
-            // Store simple polygons in results
-            featureEach(feature, function (polygon) {
-                var simple = simplepolygon(polygon);
-
-                featureEach(simple, function (poly) {
-                    poly.properties = polygon.properties ? polygon.properties : {};
-                    results.features.push(poly);
-                });
-            });
-        });
-        return results;
-    };
-});
-$__System.registerDynamic('2c', ['d'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var point = $__require('d').point;
-
-    /**
-     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
-     *
-     * @name kinks
-     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
-     * @returns {FeatureCollection<Point>} self-intersections
-     * @example
-     * var poly = turf.polygon([[
-     *   [-12.034835, 8.901183],
-     *   [-12.060413, 8.899826],
-     *   [-12.03638, 8.873199],
-     *   [-12.059383, 8.871418],
-     *   [-12.034835, 8.901183]
-     * ]]);
-     *
-     * var kinks = turf.kinks(poly);
-     *
-     * //addToMap
-     * var addToMap = [poly, kinks]
-     */
-    module.exports = function (featureIn) {
-        var coordinates;
-        var feature;
-        var results = {
-            type: 'FeatureCollection',
-            features: []
-        };
-        if (featureIn.type === 'Feature') {
-            feature = featureIn.geometry;
-        } else {
-            feature = featureIn;
-        }
-        if (feature.type === 'LineString') {
-            coordinates = [feature.coordinates];
-        } else if (feature.type === 'MultiLineString') {
-            coordinates = feature.coordinates;
-        } else if (feature.type === 'MultiPolygon') {
-            coordinates = [].concat.apply([], feature.coordinates);
-        } else if (feature.type === 'Polygon') {
-            coordinates = feature.coordinates;
-        } else {
-            throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
-        }
-        coordinates.forEach(function (segment1) {
-            coordinates.forEach(function (segment2) {
-                for (var i = 0; i < segment1.length - 1; i++) {
-                    for (var k = 0; k < segment2.length - 1; k++) {
-                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
-                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
-                            continue;
-                        }
-
-                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
-                        if (intersection) {
-                            results.features.push(point([intersection[0], intersection[1]]));
-                        }
-                    }
-                }
-            });
-        });
-        return results;
-    };
-
-    // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
-    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
-        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
-        var denominator,
-            a,
-            b,
-            numerator1,
-            numerator2,
-            result = {
-            x: null,
-            y: null,
-            onLine1: false,
-            onLine2: false
-        };
-        denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY);
-        if (denominator === 0) {
-            if (result.x !== null && result.y !== null) {
-                return result;
-            } else {
-                return false;
-            }
-        }
-        a = line1StartY - line2StartY;
-        b = line1StartX - line2StartX;
-        numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b;
-        numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b;
-        a = numerator1 / denominator;
-        b = numerator2 / denominator;
-
-        // if we cast these lines infinitely in both directions, they intersect here:
-        result.x = line1StartX + a * (line1EndX - line1StartX);
-        result.y = line1StartY + a * (line1EndY - line1StartY);
-
-        // if line1 is a segment and line2 is infinite, they intersect if:
-        if (a >= 0 && a <= 1) {
-            result.onLine1 = true;
-        }
-        // if line2 is a segment and line1 is infinite, they intersect if:
-        if (b >= 0 && b <= 1) {
-            result.onLine2 = true;
-        }
-        // if line1 and line2 are segments, they intersect if both of the above are true
-        if (result.onLine1 && result.onLine2) {
-            return [result.x, result.y];
-        } else {
-            return false;
-        }
-    }
-});
-$__System.registerDynamic('16', ['21'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var getCoord = $__require('21').getCoord;
-    //http://en.wikipedia.org/wiki/Haversine_formula
-    //http://www.movable-type.co.uk/scripts/latlong.html
-
-    /**
-     * Takes two {@link Point|points} and finds the geographic bearing between them,
-     * i.e. the angle measured in degrees from the north line (0 degrees)
-     *
-     * @name bearing
-     * @param {Geometry|Feature<Point>|Array<number>} start starting Point
-     * @param {Geometry|Feature<Point>|Array<number>} end ending Point
-     * @param {boolean} [final=false] calculates the final bearing if true
-     * @returns {number} bearing in decimal degrees, between -180 and 180 degrees (positive clockwise)
-     * @example
-     * var point1 = turf.point([-75.343, 39.984]);
-     * var point2 = turf.point([-75.534, 39.123]);
-     *
-     * var bearing = turf.bearing(point1, point2);
-     *
-     * //addToMap
-     * var addToMap = [point1, point2]
-     * point1.properties['marker-color'] = '#f00'
-     * point2.properties['marker-color'] = '#0f0'
-     * point1.properties.bearing = bearing
-     */
-    function bearing(start, end, final) {
-        if (final === true) return calculateFinalBearing(start, end);
-
-        var degrees2radians = Math.PI / 180;
-        var radians2degrees = 180 / Math.PI;
-        var coordinates1 = getCoord(start);
-        var coordinates2 = getCoord(end);
-
-        var lon1 = degrees2radians * coordinates1[0];
-        var lon2 = degrees2radians * coordinates2[0];
-        var lat1 = degrees2radians * coordinates1[1];
-        var lat2 = degrees2radians * coordinates2[1];
-        var a = Math.sin(lon2 - lon1) * Math.cos(lat2);
-        var b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-
-        var bear = radians2degrees * Math.atan2(a, b);
-
-        return bear;
-    }
-
-    /**
-     * Calculates Final Bearing
-     * @private
-     * @param {Feature<Point>} start starting Point
-     * @param {Feature<Point>} end ending Point
-     * @returns {number} bearing
-     */
-    function calculateFinalBearing(start, end) {
-        // Swap start & end
-        var bear = bearing(end, start);
-        bear = (bear + 180) % 360;
-        return bear;
-    }
-
-    module.exports = bearing;
-});
-$__System.registerDynamic('12', ['21', 'd'], true, function ($__require, exports, module) {
-  var global = this || self,
-      GLOBAL = global;
-  var getCoord = $__require('21').getCoord;
-  var radiansToDistance = $__require('d').radiansToDistance;
-  //http://en.wikipedia.org/wiki/Haversine_formula
-  //http://www.movable-type.co.uk/scripts/latlong.html
-
-  /**
-   * Calculates the distance between two {@link Point|points} in degrees, radians,
-   * miles, or kilometers. This uses the
-   * [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula)
-   * to account for global curvature.
-   *
-   * @name distance
-   * @param {Geometry|Feature<Point>|Array<number>} from origin point
-   * @param {Geometry|Feature<Point>|Array<number>} to destination point
-   * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers
-   * @returns {number} distance between the two points
-   * @example
-   * var from = turf.point([-75.343, 39.984]);
-   * var to = turf.point([-75.534, 39.123]);
-   *
-   * var distance = turf.distance(from, to, "miles");
-   *
-   * //addToMap
-   * var addToMap = [from, to];
-   * from.properties.distance = distance;
-   * to.properties.distance = distance;
-   */
-  module.exports = function (from, to, units) {
-    var degrees2radians = Math.PI / 180;
-    var coordinates1 = getCoord(from);
-    var coordinates2 = getCoord(to);
-    var dLat = degrees2radians * (coordinates2[1] - coordinates1[1]);
-    var dLon = degrees2radians * (coordinates2[0] - coordinates1[0]);
-    var lat1 = degrees2radians * coordinates1[1];
-    var lat2 = degrees2radians * coordinates2[1];
-
-    var a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
-
-    return radiansToDistance(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), units);
-  };
-});
-$__System.registerDynamic('17', ['21', 'd'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    //http://en.wikipedia.org/wiki/Haversine_formula
-    //http://www.movable-type.co.uk/scripts/latlong.html
-    var getCoord = $__require('21').getCoord;
-    var helpers = $__require('d');
-    var point = helpers.point;
-    var distanceToRadians = helpers.distanceToRadians;
-
-    /**
-     * Takes a {@link Point} and calculates the location of a destination point given a distance in degrees, radians, miles, or kilometers; and bearing in degrees. This uses the [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula) to account for global curvature.
-     *
-     * @name destination
-     * @param {Geometry|Feature<Point>|Array<number>} origin starting point
-     * @param {number} distance distance from the origin point
-     * @param {number} bearing ranging from -180 to 180
-     * @param {string} [units=kilometers] miles, kilometers, degrees, or radians
-     * @returns {Feature<Point>} destination point
-     * @example
-     * var point = turf.point([-75.343, 39.984]);
-     * var distance = 50;
-     * var bearing = 90;
-     * var units = 'miles';
-     *
-     * var destination = turf.destination(point, distance, bearing, units);
-     *
-     * //addToMap
-     * var addToMap = [point, destination]
-     * destination.properties['marker-color'] = '#f00';
-     * point.properties['marker-color'] = '#0f0';
-     */
-    module.exports = function (origin, distance, bearing, units) {
-        var degrees2radians = Math.PI / 180;
-        var radians2degrees = 180 / Math.PI;
-        var coordinates1 = getCoord(origin);
-        var longitude1 = degrees2radians * coordinates1[0];
-        var latitude1 = degrees2radians * coordinates1[1];
-        var bearing_rad = degrees2radians * bearing;
-
-        var radians = distanceToRadians(distance, units);
-
-        var latitude2 = Math.asin(Math.sin(latitude1) * Math.cos(radians) + Math.cos(latitude1) * Math.sin(radians) * Math.cos(bearing_rad));
-        var longitude2 = longitude1 + Math.atan2(Math.sin(bearing_rad) * Math.sin(radians) * Math.cos(latitude1), Math.cos(radians) - Math.sin(latitude1) * Math.sin(latitude2));
-
-        return point([radians2degrees * longitude2, radians2degrees * latitude2]);
-    };
-});
-$__System.registerDynamic('2d', ['c', 'd', '16', '12', '21', '17', '2e'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var meta = $__require('c');
-    var helpers = $__require('d');
-    var bearing = $__require('16');
-    var distance = $__require('12');
-    var invariant = $__require('21');
-    var destination = $__require('17');
-    var lineIntersects = $__require('2e');
-    var point = helpers.point;
-    var getCoords = invariant.getCoords;
-    var lineString = helpers.lineString;
-    var flattenEach = meta.flattenEach;
-
-    /**
-     * Takes a {@link Point} and a {@link LineString} and calculates the closest Point on the (Multi)LineString.
-     *
-     * @name pointOnLine
-     * @param {Geometry|Feature<LineString|MultiLineString>} lines lines to snap to
-     * @param {Geometry|Feature<Point>|number[]} pt point to snap from
-     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers
-     * @returns {Feature<Point>} closest point on the `line` to `point`. The properties object will contain three values: `index`: closest point was found on nth line part, `dist`: distance between pt and the closest point, `location`: distance along the line between start and the closest point.
-     * @example
-     * var line = turf.lineString([
-     *     [-77.031669, 38.878605],
-     *     [-77.029609, 38.881946],
-     *     [-77.020339, 38.884084],
-     *     [-77.025661, 38.885821],
-     *     [-77.021884, 38.889563],
-     *     [-77.019824, 38.892368]
-     * ]);
-     * var pt = turf.point([-77.037076, 38.884017]);
-     *
-     * var snapped = turf.pointOnLine(line, pt, 'miles');
-     *
-     * //addToMap
-     * var addToMap = [line, pt, snapped];
-     * snapped.properties['marker-color'] = '#00f';
-     */
-    module.exports = function (lines, pt, units) {
-        // validation
-        var type = lines.geometry ? lines.geometry.type : lines.type;
-        if (type !== 'LineString' && type !== 'MultiLineString') {
-            throw new Error('lines must be LineString or MultiLineString');
-        }
-
-        var closestPt = point([Infinity, Infinity], {
-            dist: Infinity
-        });
-
-        var length = 0.0;
-        flattenEach(lines, function (line) {
-            var coords = getCoords(line);
-
-            for (var i = 0; i < coords.length - 1; i++) {
-                //start
-                var start = point(coords[i]);
-                start.properties.dist = distance(pt, start, units);
-                //stop
-                var stop = point(coords[i + 1]);
-                stop.properties.dist = distance(pt, stop, units);
-                // sectionLength
-                var sectionLength = distance(start, stop, units);
-                //perpendicular
-                var heightDistance = Math.max(start.properties.dist, stop.properties.dist);
-                var direction = bearing(start, stop);
-                var perpendicularPt1 = destination(pt, heightDistance, direction + 90, units);
-                var perpendicularPt2 = destination(pt, heightDistance, direction - 90, units);
-                var intersect = lineIntersects(lineString([perpendicularPt1.geometry.coordinates, perpendicularPt2.geometry.coordinates]), lineString([start.geometry.coordinates, stop.geometry.coordinates]));
-                var intersectPt = null;
-                if (intersect.features.length > 0) {
-                    intersectPt = intersect.features[0];
-                    intersectPt.properties.dist = distance(pt, intersectPt, units);
-                    intersectPt.properties.location = length + distance(start, intersectPt, units);
-                }
-
-                if (start.properties.dist < closestPt.properties.dist) {
-                    closestPt = start;
-                    closestPt.properties.index = i;
-                    closestPt.properties.location = length;
-                }
-                if (stop.properties.dist < closestPt.properties.dist) {
-                    closestPt = stop;
-                    closestPt.properties.index = i + 1;
-                    closestPt.properties.location = length + sectionLength;
-                }
-                if (intersectPt && intersectPt.properties.dist < closestPt.properties.dist) {
-                    closestPt = intersectPt;
-                    closestPt.properties.index = i;
-                }
-                // update length
-                length += sectionLength;
-            }
-        });
-
-        return closestPt;
-    };
-});
-$__System.registerDynamic('2f', ['d', '2d'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var linestring = $__require('d').lineString;
-    var pointOnLine = $__require('2d');
-
-    /**
-     * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
-     * and returns a subsection of the line in-between those points.
-     * The start & stop points don't need to fall exactly on the line.
-     *
-     * This can be useful for extracting only the part of a route between waypoints.
-     *
-     * @name lineSlice
-     * @param {Feature<Point>} startPt starting point
-     * @param {Feature<Point>} stopPt stopping point
-     * @param {Feature<LineString>|LineString} line line to slice
-     * @returns {Feature<LineString>} sliced line
-     * @example
-     * var line = turf.lineString([
-     *     [-77.031669, 38.878605],
-     *     [-77.029609, 38.881946],
-     *     [-77.020339, 38.884084],
-     *     [-77.025661, 38.885821],
-     *     [-77.021884, 38.889563],
-     *     [-77.019824, 38.892368]
-     * ]);
-     * var start = turf.point([-77.029609, 38.881946]);
-     * var stop = turf.point([-77.021884, 38.889563]);
-     *
-     * var sliced = turf.lineSlice(start, stop, line);
-     *
-     * //addToMap
-     * var addToMap = [start, stop, line]
-     */
-    module.exports = function lineSlice(startPt, stopPt, line) {
-        var coords;
-        if (line.type === 'Feature') {
-            coords = line.geometry.coordinates;
-        } else if (line.type === 'LineString') {
-            coords = line.coordinates;
-        } else {
-            throw new Error('input must be a LineString Feature or Geometry');
-        }
-
-        var startVertex = pointOnLine(line, startPt);
-        var stopVertex = pointOnLine(line, stopPt);
-        var ends;
-        if (startVertex.properties.index <= stopVertex.properties.index) {
-            ends = [startVertex, stopVertex];
-        } else {
-            ends = [stopVertex, startVertex];
-        }
-        var clipCoords = [ends[0].geometry.coordinates];
-        for (var i = ends[0].properties.index + 1; i < ends[1].properties.index + 1; i++) {
-            clipCoords.push(coords[i]);
-        }
-        clipCoords.push(ends[1].geometry.coordinates);
-        return linestring(clipCoords, line.properties);
-    };
-});
-$__System.registerDynamic('30', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('2f', [], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
@@ -17820,14 +17727,14 @@ $__System.registerDynamic('30', [], true, function ($__require, exports, module)
         return a < b ? -1 : a > b ? 1 : 0;
     }
 });
-$__System.registerDynamic('1e', ['30'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1e', ['2f'], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
         GLOBAL = global;
     module.exports = rbush;
 
-    var quickselect = $__require('30');
+    var quickselect = $__require('2f');
 
     function rbush(maxEntries, format) {
         if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -18390,13 +18297,14 @@ $__System.registerDynamic('1e', ['30'], true, function ($__require, exports, mod
         }
     }
 });
-$__System.registerDynamic('31', ['1e', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('30', ['2d', '29', '24', '2e', '1e'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
+    var turfBBox = $__require('2d');
+    var featureCollection = $__require('29').featureCollection;
+    var featureEach = $__require('24').featureEach;
+    var bboxPolygon = $__require('2e');
     var rbush = $__require('1e');
-    var meta = $__require('c');
-    var featureEach = meta.featureEach;
-    var coordEach = meta.coordEach;
 
     /**
      * GeoJSON implementation of [RBush](https://github.com/mourner/rbush#rbush) spatial index.
@@ -18539,11 +18447,8 @@ $__System.registerDynamic('31', ['1e', 'c'], true, function ($__require, exports
          * tree.search(polygon)
          */
         tree.search = function (geojson) {
-            var features = rbush.prototype.search.call(this, this.toBBox(geojson));
-            return {
-                type: 'FeatureCollection',
-                features: features
-            };
+            var search = rbush.prototype.search.call(this, this.toBBox(geojson));
+            return featureCollection(search);
         };
 
         /**
@@ -18575,11 +18480,8 @@ $__System.registerDynamic('31', ['1e', 'c'], true, function ($__require, exports
          * //=FeatureCollection
          */
         tree.all = function () {
-            var features = rbush.prototype.all.call(this);
-            return {
-                type: 'FeatureCollection',
-                features: features
-            };
+            var all = rbush.prototype.all.call(this);
+            return featureCollection(all);
         };
 
         /**
@@ -18645,65 +18547,6 @@ $__System.registerDynamic('31', ['1e', 'c'], true, function ($__require, exports
         };
         return tree;
     };
-
-    /**
-     * Takes a bbox and returns an equivalent {@link Polygon|polygon}.
-     *
-     * @private
-     * @name bboxPolygon
-     * @param {Array<number>} bbox extent in [minX, minY, maxX, maxY] order
-     * @returns {Feature<Polygon>} a Polygon representation of the bounding box
-     * @example
-     * var bbox = [0, 0, 10, 10];
-     *
-     * var poly = turf.bboxPolygon(bbox);
-     *
-     * //addToMap
-     * var addToMap = [poly]
-     */
-    function bboxPolygon(bbox) {
-        var lowLeft = [bbox[0], bbox[1]];
-        var topLeft = [bbox[0], bbox[3]];
-        var topRight = [bbox[2], bbox[3]];
-        var lowRight = [bbox[2], bbox[1]];
-        var coordinates = [[lowLeft, lowRight, topRight, topLeft, lowLeft]];
-
-        return {
-            type: 'Feature',
-            bbox: bbox,
-            properties: {},
-            geometry: {
-                type: 'Polygon',
-                coordinates: coordinates
-            }
-        };
-    }
-
-    /**
-     * Takes a set of features, calculates the bbox of all input features, and returns a bounding box.
-     *
-     * @private
-     * @name bbox
-     * @param {FeatureCollection|Feature<any>} geojson input features
-     * @returns {Array<number>} bbox extent in [minX, minY, maxX, maxY] order
-     * @example
-     * var line = turf.lineString([[-74, 40], [-78, 42], [-82, 35]]);
-     * var bbox = turf.bbox(line);
-     * var bboxPolygon = turf.bboxPolygon(bbox);
-     *
-     * //addToMap
-     * var addToMap = [line, bboxPolygon]
-     */
-    function turfBBox(geojson) {
-        var bbox = [Infinity, Infinity, -Infinity, -Infinity];
-        coordEach(geojson, function (coord) {
-            if (bbox[0] > coord[0]) bbox[0] = coord[0];
-            if (bbox[1] > coord[1]) bbox[1] = coord[1];
-            if (bbox[2] < coord[0]) bbox[2] = coord[0];
-            if (bbox[3] < coord[1]) bbox[3] = coord[1];
-        });
-        return bbox;
-    }
 });
 $__System.registerDynamic('d', [], true, function ($__require, exports, module) {
     var global = this || self,
@@ -19239,7 +19082,7 @@ $__System.registerDynamic('d', [], true, function ($__require, exports, module) 
         round: round
     };
 });
-$__System.registerDynamic('21', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('20', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -20271,11 +20114,11 @@ $__System.registerDynamic('c', [], true, function ($__require, exports, module) 
         segmentReduce: segmentReduce
     };
 });
-$__System.registerDynamic('32', ['d', '21', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('31', ['d', '20', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var helpers = $__require('d');
-    var getCoords = $__require('21').getCoords;
+    var getCoords = $__require('20').getCoords;
     var flattenEach = $__require('c').flattenEach;
     var lineString = helpers.lineString;
     var featureCollection = helpers.featureCollection;
@@ -20369,14 +20212,14 @@ $__System.registerDynamic('32', ['d', '21', 'c'], true, function ($__require, ex
         return [west, south, east, north];
     }
 });
-$__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($__require, exports, module) {
+$__System.registerDynamic('32', ['c', '30', 'd', '20', '31'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var meta = $__require('c');
-    var rbush = $__require('31');
+    var rbush = $__require('30');
     var helpers = $__require('d');
-    var getCoords = $__require('21').getCoords;
-    var lineSegment = $__require('32');
+    var getCoords = $__require('20').getCoords;
+    var lineSegment = $__require('31');
     var point = helpers.point;
     var featureEach = meta.featureEach;
     var featureCollection = helpers.featureCollection;
@@ -20476,10 +20319,170 @@ $__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($_
         return null;
     }
 });
-$__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b', '2c', '2f', '2e'], function (_export, _context) {
+$__System.registerDynamic('33', ['c', 'd', '16', '12', '20', '17', '32'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var meta = $__require('c');
+    var helpers = $__require('d');
+    var bearing = $__require('16');
+    var distance = $__require('12');
+    var invariant = $__require('20');
+    var destination = $__require('17');
+    var lineIntersects = $__require('32');
+    var point = helpers.point;
+    var getCoords = invariant.getCoords;
+    var lineString = helpers.lineString;
+    var flattenEach = meta.flattenEach;
+
+    /**
+     * Takes a {@link Point} and a {@link LineString} and calculates the closest Point on the (Multi)LineString.
+     *
+     * @name pointOnLine
+     * @param {Geometry|Feature<LineString|MultiLineString>} lines lines to snap to
+     * @param {Geometry|Feature<Point>|number[]} pt point to snap from
+     * @param {string} [units=kilometers] can be degrees, radians, miles, or kilometers
+     * @returns {Feature<Point>} closest point on the `line` to `point`. The properties object will contain three values: `index`: closest point was found on nth line part, `dist`: distance between pt and the closest point, `location`: distance along the line between start and the closest point.
+     * @example
+     * var line = turf.lineString([
+     *     [-77.031669, 38.878605],
+     *     [-77.029609, 38.881946],
+     *     [-77.020339, 38.884084],
+     *     [-77.025661, 38.885821],
+     *     [-77.021884, 38.889563],
+     *     [-77.019824, 38.892368]
+     * ]);
+     * var pt = turf.point([-77.037076, 38.884017]);
+     *
+     * var snapped = turf.pointOnLine(line, pt, 'miles');
+     *
+     * //addToMap
+     * var addToMap = [line, pt, snapped];
+     * snapped.properties['marker-color'] = '#00f';
+     */
+    module.exports = function (lines, pt, units) {
+        // validation
+        var type = lines.geometry ? lines.geometry.type : lines.type;
+        if (type !== 'LineString' && type !== 'MultiLineString') {
+            throw new Error('lines must be LineString or MultiLineString');
+        }
+
+        var closestPt = point([Infinity, Infinity], {
+            dist: Infinity
+        });
+
+        var length = 0.0;
+        flattenEach(lines, function (line) {
+            var coords = getCoords(line);
+
+            for (var i = 0; i < coords.length - 1; i++) {
+                //start
+                var start = point(coords[i]);
+                start.properties.dist = distance(pt, start, units);
+                //stop
+                var stop = point(coords[i + 1]);
+                stop.properties.dist = distance(pt, stop, units);
+                // sectionLength
+                var sectionLength = distance(start, stop, units);
+                //perpendicular
+                var heightDistance = Math.max(start.properties.dist, stop.properties.dist);
+                var direction = bearing(start, stop);
+                var perpendicularPt1 = destination(pt, heightDistance, direction + 90, units);
+                var perpendicularPt2 = destination(pt, heightDistance, direction - 90, units);
+                var intersect = lineIntersects(lineString([perpendicularPt1.geometry.coordinates, perpendicularPt2.geometry.coordinates]), lineString([start.geometry.coordinates, stop.geometry.coordinates]));
+                var intersectPt = null;
+                if (intersect.features.length > 0) {
+                    intersectPt = intersect.features[0];
+                    intersectPt.properties.dist = distance(pt, intersectPt, units);
+                    intersectPt.properties.location = length + distance(start, intersectPt, units);
+                }
+
+                if (start.properties.dist < closestPt.properties.dist) {
+                    closestPt = start;
+                    closestPt.properties.index = i;
+                    closestPt.properties.location = length;
+                }
+                if (stop.properties.dist < closestPt.properties.dist) {
+                    closestPt = stop;
+                    closestPt.properties.index = i + 1;
+                    closestPt.properties.location = length + sectionLength;
+                }
+                if (intersectPt && intersectPt.properties.dist < closestPt.properties.dist) {
+                    closestPt = intersectPt;
+                    closestPt.properties.index = i;
+                }
+                // update length
+                length += sectionLength;
+            }
+        });
+
+        return closestPt;
+    };
+});
+$__System.registerDynamic('34', ['d', '33'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var linestring = $__require('d').lineString;
+    var pointOnLine = $__require('33');
+
+    /**
+     * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
+     * and returns a subsection of the line in-between those points.
+     * The start & stop points don't need to fall exactly on the line.
+     *
+     * This can be useful for extracting only the part of a route between waypoints.
+     *
+     * @name lineSlice
+     * @param {Feature<Point>} startPt starting point
+     * @param {Feature<Point>} stopPt stopping point
+     * @param {Feature<LineString>|LineString} line line to slice
+     * @returns {Feature<LineString>} sliced line
+     * @example
+     * var line = turf.lineString([
+     *     [-77.031669, 38.878605],
+     *     [-77.029609, 38.881946],
+     *     [-77.020339, 38.884084],
+     *     [-77.025661, 38.885821],
+     *     [-77.021884, 38.889563],
+     *     [-77.019824, 38.892368]
+     * ]);
+     * var start = turf.point([-77.029609, 38.881946]);
+     * var stop = turf.point([-77.021884, 38.889563]);
+     *
+     * var sliced = turf.lineSlice(start, stop, line);
+     *
+     * //addToMap
+     * var addToMap = [start, stop, line]
+     */
+    module.exports = function lineSlice(startPt, stopPt, line) {
+        var coords;
+        if (line.type === 'Feature') {
+            coords = line.geometry.coordinates;
+        } else if (line.type === 'LineString') {
+            coords = line.coordinates;
+        } else {
+            throw new Error('input must be a LineString Feature or Geometry');
+        }
+
+        var startVertex = pointOnLine(line, startPt);
+        var stopVertex = pointOnLine(line, stopPt);
+        var ends;
+        if (startVertex.properties.index <= stopVertex.properties.index) {
+            ends = [startVertex, stopVertex];
+        } else {
+            ends = [stopVertex, startVertex];
+        }
+        var clipCoords = [ends[0].geometry.coordinates];
+        for (var i = ends[0].properties.index + 1; i < ends[1].properties.index + 1; i++) {
+            clipCoords.push(coords[i]);
+        }
+        clipCoords.push(ends[1].geometry.coordinates);
+        return linestring(clipCoords, line.properties);
+    };
+});
+$__System.register('a', ['35', 'b', 'f', 'd', '11', '14', '15', '1c', '1f', '2b', '2c', '34'], function (_export, _context) {
     "use strict";
 
-    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
+    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
 
 
     function Wicket() {
@@ -23694,38 +23697,17 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 
     /**
      * Determina si dos lineas se intersectan
-     * @param  {Array.<number>} line1Start [description]
-     * @param  {Array.<number>} line1End   [description]
-     * @param  {Array.<number>} line2Start [description]
-     * @param  {Array.<number>} line2End   [description]
-     * @param {boolean} useOldMethod if true, use old method instead of turf_line_intersect 
+     * @param  {Number} line1StartX [description]
+     * @param  {Number} line1StartY [description]
+     * @param  {Number} line1EndX   [description]
+     * @param  {Number} line1EndY   [description]
+     * @param  {Number} line2StartX [description]
+     * @param  {Number} line2StartY [description]
+     * @param  {Number} line2EndX   [description]
+     * @param  {Number} line2EndY   [description]
      * @return {Array}             [description]
      */
-    function lineIntersects(line1Start, line1End, line2Start, line2End, useOldMethod) {
-
-        if (!useOldMethod) {
-            var line1 = turf_linestring$3([line1Start, line1End]),
-                line2 = turf_linestring$3([line2Start, line2End]),
-                intersectionFC = turf_line_intersect(line1, line2);
-
-            if (intersectionFC.features.length) {
-                var instersection = intersectionFC.features[0].geometry.coordinates;
-                instersection[0] = Math.round(instersection[0] * 100000000) / 100000000;
-                instersection[1] = Math.round(instersection[1] * 100000000) / 100000000;
-                return instersection;
-            } else {
-                return false;
-            }
-        }
-
-        var line1StartX = line1Start[0],
-            line1StartY = line1Start[1],
-            line1EndX = line1End[0],
-            line1EndY = line1End[1],
-            line2StartX = line2Start[0],
-            line2StartY = line2Start[1],
-            line2EndX = line2End[0],
-            line2EndY = line2End[1];
+    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
         // if the lines intersect, the result contains the x and y of the intersection
         // (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
         var denominator,
@@ -23768,9 +23750,6 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         }
         // if line1 and line2 are segments, they intersect if both of the above are true
         if (result.onLine1 && result.onLine2) {
-            result.x = Math.round(result.x * 100000000) / 100000000;
-            result.y = Math.round(result.y * 100000000) / 100000000;
-
             return [result.x, result.y];
         } else {
             return false;
@@ -23778,15 +23757,16 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
     }
 
     /**
-     * Takes two rings and finds their instersection points. If the rings are the same, the second ring is iterated skipping points already checked in the first one
-     * @param  {Array.Array<number>} ring1 Array of coordinates [lng, lat]
-     * @param  {Array.Array<number>} ring1 Array of coordinates [lng, lat]
-     * @param {boolean} useOldMethod if true, use old method instead of turf_line_intersect 
-     * @return {Object}       an object containing
+     * Takes two 
+     * @param  {[type]} ring1 [description]
+     * @param  {[type]} ring2 [description]
+     * @return {[type]}       [description]
      */
-    function traverseRings(ring1, ring2, useOldMethod) {
-        var intersections = turf_featurecollection([]);
-
+    function traverseRings(ring1, ring2) {
+        var results = {
+            intersections: turf_featurecollection([]),
+            fixed: null
+        };
         var samering = false,
             consecutive = false;
         if (isEqual(ring1, ring2)) {
@@ -23800,86 +23780,79 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     continue;
                 }
 
-                var intersection = lineIntersects(ring1[i], ring1[i + 1], ring2[k], ring2[k + 1], useOldMethod);
-                if (!intersection) {
-                    continue;
-                }
+                var intersection = lineIntersects(ring1[i][0], ring1[i][1], ring1[i + 1][0], ring1[i + 1][1], ring2[k][0], ring2[k][1], ring2[k + 1][0], ring2[k + 1][1]);
 
                 // si son lineas consecutivas no quiero detectar el límite entre ambas
                 if ((diffCoords(intersection, ring1[0]) < 0.000005 || diffCoords(intersection, ring1[ring1.length - 1]) < 0.000005) && (diffCoords(intersection, ring2[0]) < 0.000005 || diffCoords(intersection, ring2[ring2.length - 1]) < 0.000005)) {
                     continue;
                 }
-
-                //debug('intersection at',
-                // intersection,
-                //diffCoords(intersection, ring2[0]),
-                //diffCoords(intersection, ring1[ring1.length - 1]));
-                var FeatureIntersection = turf_point([intersection[0], intersection[1]]);
-                FeatureIntersection.properties = {
-                    position1: i,
-                    position2: k
-                };
-                intersections.features.push(FeatureIntersection);
+                if (intersection) {
+                    //debug('intersection at',
+                    // intersection,
+                    //diffCoords(intersection, ring2[0]),
+                    //diffCoords(intersection, ring1[ring1.length - 1]));
+                    var FeatureIntersection = turf_point([intersection[0], intersection[1]]);
+                    FeatureIntersection.properties = {
+                        position1: i,
+                        position2: k
+                    };
+                    results.intersections.features.push(FeatureIntersection);
+                }
             }
         }
-        return intersections;
+        return results;
     }
 
     /**
-     * Finds the {@link Point|points} where two {@link LineString|linestrings} intersect each other
-     * @param  {Array.<google.maps.LatLng>} arrayLatLng1 array de posiciones {@link google.maps.LatLng}
-     * @param  {Array.<google.maps.LatLng>} arrayLatLng2 array de posiciones {@link google.maps.LatLng}
-     * @param {boolean} useOldMethod if true,use old method instead of turf_line_intersect 
-     * @return {Array}        an array with [line1 trimmed at intersection,line2 trimmed at intersection,intersection ] 
+     * [polylineToFeatureLinestring description]
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
+     * @return {Feature.<LineString>}          [description]
      */
-    function trimPaths(arrayLatLng1, arrayLatLng2, useOldMethod) {
+    function polylineToFeatureLinestring(objeto) {
+        var vertices;
+        if (objeto instanceof google.maps.Polyline) {
+            vertices = toCoords(objeto.getPath().getArray());
+        } else {
+            vertices = toCoords(objeto);
+        }
 
-        var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
-        var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
+        return turf_linestring$3(vertices);
+    }
 
-        var line1 = turf_linestring$3(ring1);
-        var line2 = turf_linestring$3(ring2);
-        var line1Start = turf_point(ring1[0]);
-        var line2End = turf_point(ring2.slice(-1)[0]);
-        var sliced1, sliced2;
+    /**
+     * Trims two Polylines against each other, returns array of both segments and the intersection point
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng1 array of positions or a google.maps.Polyline
+     * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} arrayLatLng2 array of positions or a google.maps.Polyline
+     * @return {Array}            array of trimmed segments and the intersection point
+     */
+    function trimPaths(arrayLatLng1, arrayLatLng2, debugflag) {
 
-        var intersections = traverseRings(ring1, ring2, useOldMethod);
+        var line1 = polylineToFeatureLinestring(arrayLatLng1);
+        var line2 = polylineToFeatureLinestring(arrayLatLng2);
 
-        if (intersections.features.length > 0) {
+        var ring1 = line1.geometry.coordinates;
+        var ring2 = line2.geometry.coordinates;
 
-            // The first segment of the first ring with a kink
-            var first_segment_with_kinks = min(intersections.features, function (kink) {
+        var thiskinks = traverseRings(ring1, ring2);
+
+        if (thiskinks.intersections.features.length > 0) {
+
+            var minRing1 = min(thiskinks.intersections.features, function (kink) {
                 return kink.properties.position1;
             });
-            //console.log('first_segment_with_kinks', JSON.stringify(first_segment_with_kinks));
 
-            // All the intersections which belong to the first segment with a kink of the first ring
-            var kinks_in_first_segment = filter(intersections.features, function (kink) {
-                return kink.properties.position1 === first_segment_with_kinks.properties.position1;
-            });
-
-            // Among the kinks in the first segment, which one happens further along the ring2
-            var chosenIntersection = max(kinks_in_first_segment, function (kink) {
+            var firstIntersection = max(filter(thiskinks.intersections.features, function (kink) {
+                return kink.properties.position1 === minRing1.properties.position1;
+            }), function (kink) {
                 return kink.properties.position2;
             });
 
-            var intersectLatLng = toLatLng(chosenIntersection.geometry.coordinates);
+            var intersectLatLng = toLatLng(firstIntersection.geometry.coordinates);
 
-            // if the first intersection happens in the first segment of line1
-            // then we don't slice it
-            if (chosenIntersection.properties.position1 === 0) {
-                sliced1 = line1;
-            } else {
-                sliced1 = turf_line_slice(line1Start, chosenIntersection, line1);
-            }
-
-            // if the first intersection happens after the last segment of line2
-            // then we don't slice it
-            if (chosenIntersection.properties.position2 >= ring2.length - 1) {
-                sliced2 = line2;
-            } else {
-                sliced2 = turf_line_slice(chosenIntersection, line2End, line2);
-            }
+            var line1Start = turf_point(ring1[0]);
+            var line2End = turf_point(ring2.slice(-1)[0]);
+            var sliced1 = firstIntersection.properties.position1 === 0 ? line1 : turf_line_slice(line1Start, firstIntersection, line1);
+            var sliced2 = firstIntersection.properties.position2 >= ring2.length - 1 ? line2 : turf_line_slice(firstIntersection, line2End, line2);
 
             return [toLatLngs(sliced1.geometry.coordinates), toLatLngs(sliced2.geometry.coordinates), intersectLatLng];
         }
@@ -23931,16 +23904,14 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
             turf_along = _4.default;
         }, function (_c) {
             turf_buffer = _c.default;
-        }, function (_5) {
-            turf_inside = _5.default;
+        }, function (_f2) {
+            turf_inside = _f2.default;
         }, function (_b2) {
             turf_unkink = _b2.default;
         }, function (_c2) {
             turk_kinks = _c2.default;
-        }, function (_f2) {
-            turf_line_slice = _f2.default;
-        }, function (_e) {
-            turf_line_intersect = _e.default;
+        }, function (_5) {
+            turf_line_slice = _5.default;
         }],
         execute: function () {
             Wkt = function Wkt(obj) {
@@ -25792,10 +25763,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 });
 })
 (function(factory) {
-  if (typeof define == 'function' && define.amd)
-    define(["gmaps"], factory);
-  else if (typeof module == 'object' && module.exports && typeof require == 'function')
-    module.exports = factory(require("gmaps"));
-  else
-    turfHelper = factory(gmaps);
+  main = factory();
 });
+
+export default main;

@@ -99,16 +99,6 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/line-intersect@4.6.0": {
-    "deps": {
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
-      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
-      "@turf/line-segment": "npm:@turf/line-segment@^4.6.0",
-      "@turf/meta": "npm:@turf/meta@^4.6.0",
-      "geojson-rbush": "npm:geojson-rbush@^1.0.1"
-    },
-    "peerDeps": {}
-  },
   "npm:@turf/bearing@4.6.0": {
     "deps": {
       "@turf/invariant": "npm:@turf/invariant@^4.6.0"
@@ -119,36 +109,6 @@
     "deps": {
       "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/invariant": "npm:@turf/invariant@^4.6.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:geojson-rbush@1.1.1": {
-    "deps": {
-      "@turf/bbox": "npm:@turf/bbox@^3.10.5",
-      "@turf/bbox-polygon": "npm:@turf/bbox-polygon@^4.3.0",
-      "@turf/helpers": "npm:@turf/helpers@^3.10.5",
-      "@turf/meta": "npm:@turf/meta@^3.10.5",
-      "rbush": "npm:rbush@^2.0.1"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/line-segment@4.6.0": {
-    "deps": {
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
-      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
-      "@turf/meta": "npm:@turf/meta@^4.6.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/bbox-polygon@4.6.0": {
-    "deps": {
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0"
-    },
-    "peerDeps": {}
-  },
-  "npm:@turf/bbox@3.14.0": {
-    "deps": {
-      "@turf/meta": "npm:@turf/meta@^3.14.0"
     },
     "peerDeps": {}
   },
@@ -221,23 +181,9 @@
     "deps": {},
     "peerDeps": {}
   },
-  "npm:@turf/helpers@4.6.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:@turf/meta@4.6.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:geojson-polygon-self-intersections@1.1.2": {
     "deps": {
       "rbush": "npm:rbush@^2.0.1"
-    },
-    "peerDeps": {}
-  },
-  "npm:rbush@2.0.1": {
-    "deps": {
-      "quickselect": "npm:quickselect@^1.0.0"
     },
     "peerDeps": {}
   },
@@ -277,10 +223,6 @@
     },
     "peerDeps": {}
   },
-  "npm:quickselect@1.0.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
   "npm:ms@2.0.0": {
     "deps": {},
     "peerDeps": {}
@@ -295,11 +237,54 @@
     "deps": {},
     "peerDeps": {}
   },
+  "npm:wgs84@0.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/line-intersect@4.6.0": {
+    "deps": {
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
+      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
+      "@turf/line-segment": "npm:@turf/line-segment@^4.6.0",
+      "@turf/meta": "npm:@turf/meta@^4.6.0",
+      "geojson-rbush": "npm:geojson-rbush@^1.0.1"
+    },
+    "peerDeps": {}
+  },
+  "npm:geojson-rbush@1.2.0": {
+    "deps": {
+      "@turf/meta": "npm:@turf/meta@^4.6.0",
+      "rbush": "npm:rbush@^2.0.1"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/helpers@4.6.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/line-segment@4.6.0": {
+    "deps": {
+      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
+      "@turf/invariant": "npm:@turf/invariant@^4.6.0",
+      "@turf/meta": "npm:@turf/meta@^4.6.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/meta@4.6.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
   "npm:@turf/invariant@4.6.0": {
     "deps": {},
     "peerDeps": {}
   },
-  "npm:wgs84@0.0.0": {
+  "npm:rbush@2.0.1": {
+    "deps": {
+      "quickselect": "npm:quickselect@^1.0.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:quickselect@1.0.0": {
     "deps": {},
     "peerDeps": {}
   }
