@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.2.0",
+  "version": "17.2.1",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"

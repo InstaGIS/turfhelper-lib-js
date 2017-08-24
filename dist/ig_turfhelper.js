@@ -23837,15 +23837,16 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         var ring1 = toCoords(arrayLatLng1); // googleGeom1.geometry.coordinates;
         var ring2 = toCoords(arrayLatLng2); // googleGeom2.geometry.coordinates;
 
-        var line1 = turf_linestring$3(ring1);
-        var line2 = turf_linestring$3(ring2);
-        var line1Start = turf_point(ring1[0]);
-        var line2End = turf_point(ring2.slice(-1)[0]);
-        var sliced1, sliced2;
 
         var intersections = traverseRings(ring1, ring2, useOldMethod);
 
         if (intersections.features.length > 0) {
+
+            var line1 = turf_linestring$3(ring1);
+            var line2 = turf_linestring$3(ring2);
+            var line1Start = turf_point(ring1[0]);
+            var line2End = turf_point(ring2.slice(-1)[0]);
+            var sliced1, sliced2;
 
             // The first segment of the first ring with a kink
             var first_segment_with_kinks = min(intersections.features, function (kink) {
