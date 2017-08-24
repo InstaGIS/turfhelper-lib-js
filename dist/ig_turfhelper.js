@@ -23506,9 +23506,9 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         var theFeature;
         if (object instanceof google.maps.Polyline) {
             theFeature = polylineToFeatureLinestring(object);
+        } else {
+            theFeature = polygonToFeaturePolygon(object);
         }
-
-        theFeature = polygonToFeaturePolygon(object);
 
         return turk_kinks(theFeature);
     }

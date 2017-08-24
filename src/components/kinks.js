@@ -35,9 +35,10 @@ export function kinks(object) {
 	var theFeature;
 	if (object instanceof google.maps.Polyline) {
 		theFeature = polylineToFeatureLinestring(object);
+	} else {
+		theFeature = polygonToFeaturePolygon(object);
 	}
 
-	theFeature = polygonToFeaturePolygon(object);
 
 	return turk_kinks(theFeature);
 }
