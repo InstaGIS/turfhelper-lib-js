@@ -258,7 +258,13 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/helpers@4.6.0": {
+  "npm:rbush@2.0.1": {
+    "deps": {
+      "quickselect": "npm:quickselect@^1.0.0"
+    },
+    "peerDeps": {}
+  },
+  "npm:@turf/invariant@4.6.0": {
     "deps": {},
     "peerDeps": {}
   },
@@ -270,21 +276,15 @@
     },
     "peerDeps": {}
   },
-  "npm:@turf/meta@4.6.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:@turf/invariant@4.6.0": {
-    "deps": {},
-    "peerDeps": {}
-  },
-  "npm:rbush@2.0.1": {
-    "deps": {
-      "quickselect": "npm:quickselect@^1.0.0"
-    },
-    "peerDeps": {}
-  },
   "npm:quickselect@1.0.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/helpers@4.6.0": {
+    "deps": {},
+    "peerDeps": {}
+  },
+  "npm:@turf/meta@4.6.0": {
     "deps": {},
     "peerDeps": {}
   }

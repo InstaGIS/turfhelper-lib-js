@@ -33,7 +33,8 @@ SystemJS.config({
             "@turf/line-slice": "npm:@turf/line-slice@4.6.0",
             "@turf/concave": "npm:@turf/concave@4.6.0",
             "@turf/truncate": "npm:@turf/truncate@4.6.0",
-            "@turf/unkink-polygon": "npm:@turf/unkink-polygon@4.6.0"
+            "@turf/unkink-polygon": "npm:@turf/unkink-polygon@4.6.0",
+            "@turf/line-intersect": "npm:@turf/line-intersect@4.6.0"
         },
         "packages": {
             "npm:@turf/kinks@4.6.0": {
@@ -202,6 +203,33 @@ SystemJS.config({
                 "map": {
                     "wgs84": "npm:wgs84@0.0.0"
                 }
+            },
+            "npm:@turf/line-intersect@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0",
+                    "geojson-rbush": "npm:geojson-rbush@1.2.0",
+                    "@turf/line-segment": "npm:@turf/line-segment@4.6.0"
+                }
+            },
+            "npm:@turf/line-segment@4.6.0": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.6.0",
+                    "@turf/invariant": "npm:@turf/invariant@4.6.0",
+                    "@turf/meta": "npm:@turf/meta@4.6.0"
+                }
+            },
+            "npm:rbush@2.0.1": {
+                "map": {
+                    "quickselect": "npm:quickselect@1.0.0"
+                }
+            },
+            "npm:geojson-rbush@1.2.0": {
+                "map": {
+                    "@turf/meta": "npm:@turf/meta@4.6.0",
+                    "rbush": "npm:rbush@2.0.1"
+                }
             }
         }
     },
@@ -226,38 +254,9 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
-        "@turf/line-intersect": "npm:@turf/line-intersect@4.6.0",
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
         "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
         "gmap": "npm:amd-googlemaps-loader@1.8.6"
     },
-    packages: {
-        "npm:@turf/line-intersect@4.6.0": {
-            "map": {
-                "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                "@turf/invariant": "npm:@turf/invariant@4.6.0",
-                "@turf/meta": "npm:@turf/meta@4.6.0",
-                "geojson-rbush": "npm:geojson-rbush@1.2.0",
-                "@turf/line-segment": "npm:@turf/line-segment@4.6.0"
-            }
-        },
-        "npm:@turf/line-segment@4.6.0": {
-            "map": {
-                "@turf/helpers": "npm:@turf/helpers@4.6.0",
-                "@turf/invariant": "npm:@turf/invariant@4.6.0",
-                "@turf/meta": "npm:@turf/meta@4.6.0"
-            }
-        },
-        "npm:rbush@2.0.1": {
-            "map": {
-                "quickselect": "npm:quickselect@1.0.0"
-            }
-        },
-        "npm:geojson-rbush@1.2.0": {
-            "map": {
-                "@turf/meta": "npm:@turf/meta@4.6.0",
-                "rbush": "npm:rbush@2.0.1"
-            }
-        }
-    }
+    packages: {}
 });
