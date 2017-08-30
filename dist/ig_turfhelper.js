@@ -20479,10 +20479,10 @@ $__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($_
 $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b', '2c', '2f', '2e'], function (_export, _context) {
     "use strict";
 
-    var gmaps, turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
+    var turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
 
 
-    function Wicket() {
+    function Wicket$1() {
         return new Wkt.Wkt();
     }
 
@@ -23127,9 +23127,10 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         };
 
         FeatureCollection.features = map(wktArray, function (WKTString) {
-            var geoJsonPolygon = Wicket().read(WKTString).toJson();
+            var geoJsonPolygon = Wicket$1().read(WKTString).toJson();
             return {
                 type: "Feature",
+                properties: {},
                 geometry: geoJsonPolygon
             };
         });
@@ -23213,6 +23214,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         } else if (object.geometry) {
             polygonFeature = {
                 type: "Feature",
+                properties: {},
                 geometry: object.geometry
             };
         } else {
@@ -23301,7 +23303,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         } else {
             var theFeature = mergeWKTGeoms(arraygeometry);
             try {
-                WKTmerged = Wicket().fromJson(theFeature.geometry).toString();
+                WKTmerged = Wicket$1().fromJson(theFeature.geometry).toString();
             } catch (err) {
                 console.warn('Exception wicket reading ', theFeature.geometry);
             }
@@ -23354,16 +23356,29 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 
     /**
      * Simplified a Feature or google.maps.Polygon
-     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object feature to be simplified
-     * @param  {string} output either 'feature' or 'geometry'
+     * @param  {google.maps.Polygon|google.maps.Polyline|Array.<google.maps.LatLng>|Feature.<Polygon>|Feature.<LineString>} object feature to be simplified
+     * @param  {string} output either 'feature', 'geometry' or 'object' (google maps). Case insensitive. Defaults to feature
      * @param  {mumber} tolerance   simplification tolerance
      * @param  {boolean} highQuality [description]
      * @return {Feature|Geometry} whether or not to spend more time to create a higher-quality simplification with a different algorithm
      */
     function simplifyFeature(object, output, tolerance, highQuality) {
 
-        output = output || 'feature';
-        var Feature = polygonToFeaturePolygon(object);
+        output = (output || 'feature').toLowerCase();
+
+        var Feature;
+        if (object instanceof google.maps.Polyline || object instanceof google.maps.Polygon) {
+            var geometry = Wicket$1().fromObject(object).toJson();
+            Feature = {
+                type: "Feature",
+                properties: {},
+                geometry: geometry
+            };
+        } else if (object.type && object.type === 'Feature' && object.geometry) {
+            Feature = object;
+        } else {
+            Feature = polygonToFeaturePolygon(object);
+        }
 
         if (Feature.geometry.type === 'MultiPolygon') {
             Feature.geometry.type = 'Polygon';
@@ -23373,28 +23388,44 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 
         if (simplifiedgeom && simplifiedgeom.geometry) {
             //debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-            return output === 'feature' ? simplifiedgeom : simplifiedgeom.feature;
+            Feature = simplifiedgeom;
         } else {
             warn('Cannot simplify  Feature', Feature);
-            return output === 'feature' ? Feature : Feature.geometry;
+        }
+        if (output === 'geometry') {
+            return Feature.geometry;
+        } else if (output === 'object') {
+            return Wicket$1().fromJson(Feature.geometry).toObject();
+        } else {
+            return Feature;
         }
     }
 
     /**
      * Takes a linestring and returns a {@link Point|point} at a specified distance along the line.
-     * @param  {google.maps.Polyline|Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng either a Polyline or an array of points
+     * @param  {google.maps.Polyline|Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>|Feature<LineString>} object input object
      * @param  {Number} distance    [description]
-     * @return {Point}             [description]
+     * @param  {string} units can be degrees, radians, miles, or kilometers. Defaults to kilometers
+     * @return {Feature.<Point>} Point distance units along the line
      */
-    function along(arrayLatLng, distance) {
+    function along(object, distance, units) {
+        var Feature;
 
-        if (arrayLatLng instanceof gmaps.Polyline) {
-            arrayLatLng = arrayLatLng.getPath();
+        if (object instanceof google.maps.Polyline) {
+            var geometry = Wicket$1().fromObject(object).toJson();
+            Feature = {
+                type: "Feature",
+                properties: {},
+                geometry: geometry
+            };
+        } else if (object.type && object.type === 'Feature' && object.geometry) {
+            Feature = object;
+        } else {
+            var arrayCoords = toCoords(object);
+            Feature = turf_linestring$2(arrayCoords);
         }
-        var arrayCoords = toCoords(arrayLatLng);
-        var LineString = turf_linestring$2(arrayCoords);
 
-        return turf_along(LineString, distance, 'kilometers');
+        return turf_along(Feature, distance, units);
     }
 
     /**
@@ -23412,34 +23443,42 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 
     /**
      * Calculates a buffer for input features for a given radius. Units supported are miles, kilometers, and degrees.
-     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object [description]
-     * @param  {String} output  either 'geometry' or 'feature', case insensitive, defaults to 'feature'
+     * @param  {google.maps.Polygon|google.maps.Polyline|google.maps.Marker|google.maps.LatLng|Array.<google.maps.LatLng>|Feature.<Polygon|Linestring|Point>} object input object
+     * @param  {String} output  either 'geometry','object' (google.maps) or 'feature', case insensitive, defaults to 'feature'
      * @param  {Number} distance    [description]
      * @param  {String} units       'meters' or 'miles' etc
      * @return {Feature|Feature.<Geometry>}  A GeoJson Feature or its geometry, according to output parameter
      */
     function createbuffer(object, output, distance, units, comment, steps) {
         units = units || 'meters';
+        output = (output || 'feature').toLowerCase();
 
-        output = output || 'feature';
-        var polygonFeature = polygonToFeaturePolygon(object),
-            ring = polygonFeature.geometry.coordinates[0];
-
-        if (ring.length <= 3) {
-            return polygonFeature;
+        var Feature;
+        if (object instanceof google.maps.Polyline || object instanceof google.maps.Polygon || object instanceof google.maps.Marker || object instanceof google.maps.LatLng) {
+            var geometry = Wicket$1().fromObject(object).toJson();
+            Feature = {
+                type: "Feature",
+                properties: {},
+                geometry: geometry
+            };
+        } else if (object.type && object.type === 'Feature' && object.geometry) {
+            Feature = object;
         } else {
-            try {
-                var buffered = turf_buffer(polygonFeature, distance, units, steps);
+            Feature = polygonToFeaturePolygon(object);
+        }
 
-                if (buffered.type === 'Feature') {
-                    return output === 'feature' ? buffered : buffered.geometry;
-                }
+        var buffered = turf_buffer(Feature, distance, units, steps);
 
-                return output === 'feature' ? buffered.features[0] : buffered.features[0].geometry;
-            } catch (e) {
-                warn('Exception buffer', e);
-                return output === 'feature' ? polygonFeature : polygonFeature.geometry;
-            }
+        if (buffered.type === 'FeatureCollection') {
+            buffered = buffered.features[0];
+        }
+
+        if (output === 'geometry') {
+            return buffered.geometry;
+        } else if (output === 'object') {
+            return Wicket$1().fromJson(buffered.geometry).toObject();
+        } else {
+            return buffered;
         }
     }
 
@@ -23497,20 +23536,23 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
      * @param  {google.maps.Polyline|google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
      * @returns {FeatureCollection<Point>} self-intersections
      *
-     * var kinks = turf.kinks(poly);
-     *
-     * //addToMap
-     * var addToMap = [poly, kinks]
      */
     function kinks(object) {
-        var theFeature;
-        if (object instanceof google.maps.Polyline) {
-            theFeature = polylineToFeatureLinestring(object);
+        var Feature;
+        if (object instanceof google.maps.Polyline || object instanceof google.maps.Polygon) {
+            var geometry = Wicket().fromObject(object).toJson();
+            Feature = {
+                type: "Feature",
+                properties: {},
+                geometry: geometry
+            };
+        } else if (object.type && object.type === 'Feature' && object.geometry) {
+            Feature = object;
         } else {
-            theFeature = polygonToFeaturePolygon(object);
+            Feature = polygonToFeaturePolygon(object);
         }
 
-        return turk_kinks(theFeature);
+        return turk_kinks(Feature);
     }
 
     /**
@@ -23936,9 +23978,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
      */
 
     return {
-        setters: [function (_) {
-            gmaps = _.default;
-        }, function (_b) {
+        setters: [function (_) {}, function (_b) {
             turf_centroid = _b.default;
         }, function (_f) {
             turf_union = _f.default;
@@ -24798,15 +24838,15 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                         optimized: true
                     };
 
-                    config.position = new gmaps.LatLng(c[0].y, c[0].x);
+                    config.position = new google.maps.LatLng(c[0].y, c[0].x);
 
-                    return new gmaps.Marker(config);
+                    return new google.maps.Marker(config);
                 },
 
                 /**
                  * Creates the framework's equivalent multipoint geometry object.
                  * @param   config  {Object}    An optional properties hash the object should use
-                 * @return          {Array}     Array containing multiple gmaps.Marker
+                 * @return          {Array}     Array containing multiple google.maps.Marker
                  */
                 multipoint: function multipoint(config) {
                     var i, c, arr;
@@ -24842,16 +24882,16 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     config.path = [];
 
                     for (i = 0; i < c.length; i += 1) {
-                        config.path.push(new gmaps.LatLng(c[i].y, c[i].x));
+                        config.path.push(new google.maps.LatLng(c[i].y, c[i].x));
                     }
 
-                    return new gmaps.Polyline(config);
+                    return new google.maps.Polyline(config);
                 },
 
                 /**
                  * Creates the framework's equivalent multilinestring geometry object.
                  * @param   config  {Object}    An optional properties hash the object should use
-                 * @return          {Array}     Array containing multiple gmaps.Polyline instances
+                 * @return          {Array}     Array containing multiple google.maps.Polyline instances
                  */
                 multilinestring: function multilinestring(config) {
                     var i, c, arr;
@@ -24884,9 +24924,9 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
 
                     config = config || {};
 
-                    config.bounds = new gmaps.LatLngBounds(new gmaps.LatLng(c[0].y, c[0].x), new gmaps.LatLng(c[1].y, c[1].x));
+                    config.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(c[0].y, c[0].x), new google.maps.LatLng(c[1].y, c[1].x));
 
-                    return new gmaps.Rectangle(config);
+                    return new google.maps.Rectangle(config);
                 },
 
                 /**
@@ -24914,7 +24954,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                         // NOTE: We iterate to one (1) less than the Array length to skip the last vertex
                         for (k = 0; k < c[j].length - 1; k += 1) {
                             // For each vertex...
-                            verts.push(new gmaps.LatLng(c[j][k].y, c[j][k].x));
+                            verts.push(new google.maps.LatLng(c[j][k].y, c[j][k].x));
                         } // eo for each vertex
 
                         if (j !== 0) {
@@ -24933,7 +24973,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                         return function () {
                             var bounds, v;
 
-                            bounds = new gmaps.LatLngBounds();
+                            bounds = new google.maps.LatLngBounds();
 
                             for (v in rings[0]) {
                                 // Ought to be only 1 ring in a Rectangle
@@ -24942,19 +24982,19 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                                 }
                             }
 
-                            return new gmaps.Rectangle({
+                            return new google.maps.Rectangle({
                                 bounds: bounds
                             });
                         }();
                     } else {
-                        return new gmaps.Polygon(config);
+                        return new google.maps.Polygon(config);
                     }
                 },
 
                 /**
                  * Creates the framework's equivalent multipolygon geometry object.
                  * @param   config  {Object}    An optional properties hash the object should use
-                 * @return          {Array}     Array containing multiple gmaps.Polygon
+                 * @return          {Array}     Array containing multiple google.maps.Polygon
                  */
                 multipolygon: function multipolygon(config) {
                     var i, c, arr;
@@ -24992,12 +25032,12 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                 var features, i, j, verts, rings, sign, tmp, response, lat, lng, vertex, ring;
                 var polygons, polygon, k, linestring, linestrings;
                 // Shortcut to signed area function (determines clockwise vs counter-clock)
-                if (gmaps.geometry) {
-                    sign = gmaps.geometry.spherical.computeSignedArea;
+                if (google.maps.geometry) {
+                    sign = google.maps.geometry.spherical.computeSignedArea;
                 }
 
-                // gmaps.LatLng //////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.LatLng) {
+                // google.maps.LatLng //////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.LatLng) {
 
                     response = {
                         type: 'point',
@@ -25009,8 +25049,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Point //////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Point) {
+                // google.maps.Point //////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Point) {
                     response = {
                         type: 'point',
                         components: [{
@@ -25021,8 +25061,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Marker //////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Marker) {
+                // google.maps.Marker //////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Marker) {
                     response = {
                         type: 'point',
                         components: [{
@@ -25033,8 +25073,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Polyline ////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Polyline) {
+                // google.maps.Polyline ////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Polyline) {
 
                     verts = [];
                     for (i = 0; i < obj.getPath().length; i += 1) {
@@ -25051,8 +25091,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Polygon /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Polygon) {
+                // google.maps.Polygon /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Polygon) {
 
                     rings = [];
 
@@ -25142,8 +25182,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Circle //////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Circle) {
+                // google.maps.Circle //////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Circle) {
                     var point = obj.getCenter();
                     var radius = obj.getRadius();
                     verts = [];
@@ -25173,8 +25213,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.LatLngBounds ///////////////////////////////////////////////////
-                if (obj.constructor === gmaps.LatLngBounds) {
+                // google.maps.LatLngBounds ///////////////////////////////////////////////////
+                if (obj.constructor === google.maps.LatLngBounds) {
 
                     tmp = obj;
                     verts = [];
@@ -25212,8 +25252,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Rectangle ///////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Rectangle) {
+                // google.maps.Rectangle ///////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Rectangle) {
 
                     tmp = obj.getBounds();
                     verts = [];
@@ -25251,16 +25291,16 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data Geometry Types /////////////////////////////////////////////////////
+                // google.maps.Data Geometry Types /////////////////////////////////////////////////////
 
-                // gmaps.Data.Feature /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.Feature) {
+                // google.maps.Data.Feature /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.Feature) {
                     return this.deconstruct.call(this, obj.getGeometry());
                 }
 
-                // gmaps.Data.Point /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.Point) {
-                    //console.zlog('It is a gmaps.Data.Point');
+                // google.maps.Data.Point /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.Point) {
+                    //console.zlog('It is a google.maps.Data.Point');
                     response = {
                         type: 'point',
                         components: [{
@@ -25271,10 +25311,10 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.LineString /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.LineString) {
+                // google.maps.Data.LineString /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.LineString) {
                     verts = [];
-                    //console.zlog('It is a gmaps.Data.LineString');
+                    //console.zlog('It is a google.maps.Data.LineString');
                     for (i = 0; i < obj.getLength(); i += 1) {
                         vertex = obj.getAt(i);
                         verts.push({
@@ -25289,10 +25329,10 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.Polygon /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.Polygon) {
+                // google.maps.Data.Polygon /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.Polygon) {
                     rings = [];
-                    //console.zlog('It is a gmaps.Data.Polygon');
+                    //console.zlog('It is a google.maps.Data.Polygon');
                     for (i = 0; i < obj.getLength(); i += 1) {
                         // For each ring...
                         ring = obj.getAt(i);
@@ -25320,8 +25360,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.MultiPoint /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.MultiPoint) {
+                // google.maps.Data.MultiPoint /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.MultiPoint) {
                     verts = [];
                     for (i = 0; i < obj.getLength(); i += 1) {
                         vertex = obj.getAt(i);
@@ -25337,8 +25377,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.MultiLineString /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.MultiLineString) {
+                // google.maps.Data.MultiLineString /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.MultiLineString) {
                     linestrings = [];
                     for (i = 0; i < obj.getLength(); i += 1) {
                         verts = [];
@@ -25359,12 +25399,12 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.MultiPolygon /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.MultiPolygon) {
+                // google.maps.Data.MultiPolygon /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.MultiPolygon) {
 
                     polygons = [];
 
-                    //console.zlog('It is a gmaps.Data.MultiPolygon');
+                    //console.zlog('It is a google.maps.Data.MultiPolygon');
                     for (k = 0; k < obj.getLength(); k += 1) {
                         // For each multipolygon
                         polygon = obj.getAt(k);
@@ -25398,8 +25438,8 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                     return response;
                 }
 
-                // gmaps.Data.GeometryCollection /////////////////////////////////////////////////////
-                if (obj.constructor === gmaps.Data.GeometryCollection) {
+                // google.maps.Data.GeometryCollection /////////////////////////////////////////////////////
+                if (obj.constructor === google.maps.Data.GeometryCollection) {
 
                     var objects = [];
                     for (k = 0; k < obj.getLength(); k += 1) {
@@ -25407,7 +25447,7 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                         var object = obj.getAt(k);
                         objects.push(this.deconstruct.call(this, object));
                     }
-                    //console.zlog('It is a gmaps.Data.GeometryCollection', objects);
+                    //console.zlog('It is a google.maps.Data.GeometryCollection', objects);
                     response = {
                         type: 'geometrycollection',
                         components: objects
@@ -25438,11 +25478,11 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
                             }
 
                             switch (type) {
-                                case gmaps.Marker:
+                                case google.maps.Marker:
                                     return 'multipoint';
-                                case gmaps.Polyline:
+                                case google.maps.Polyline:
                                     return 'multilinestring';
-                                case gmaps.Polygon:
+                                case google.maps.Polygon:
                                     return 'multipolygon';
                                 default:
                                     return 'geometrycollection';

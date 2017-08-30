@@ -1,5 +1,9 @@
 import gmaps from 'gmaps';
 
+import {
+	Wicket
+} from './wicket_helper.js';
+
 
 import turf_simplify from '@turf/simplify';
 import {
@@ -38,16 +42,30 @@ export function simplifyPointArray(coordArray, tolerance, highQuality) {
 
 /**
  * Simplified a Feature or google.maps.Polygon
- * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature.Polygon} object feature to be simplified
- * @param  {string} output either 'feature' or 'geometry'
+ * @param  {google.maps.Polygon|google.maps.Polyline|Array.<google.maps.LatLng>|Feature.<Polygon>|Feature.<LineString>} object feature to be simplified
+ * @param  {string} output either 'feature', 'geometry' or 'object' (google maps). Case insensitive. Defaults to feature
  * @param  {mumber} tolerance   simplification tolerance
  * @param  {boolean} highQuality [description]
  * @return {Feature|Geometry} whether or not to spend more time to create a higher-quality simplification with a different algorithm
  */
 export function simplifyFeature(object, output, tolerance, highQuality) {
 
-	output = output || 'feature';
-	var Feature = polygonToFeaturePolygon(object);
+	output = (output || 'feature').toLowerCase();
+
+	var Feature;
+	if (object instanceof google.maps.Polyline || object instanceof google.maps.Polygon) {
+		var geometry = Wicket().fromObject(object).toJson();
+		Feature = {
+			type: "Feature",
+			properties: {},
+			geometry: geometry
+		};
+	} else if (object.type && object.type === 'Feature' && object.geometry) {
+		Feature = object;
+	} else {
+		Feature = polygonToFeaturePolygon(object);
+	}
+
 
 	if (Feature.geometry.type === 'MultiPolygon') {
 		Feature.geometry.type = 'Polygon';
@@ -55,12 +73,20 @@ export function simplifyFeature(object, output, tolerance, highQuality) {
 	}
 	var simplifiedgeom = turf_simplify(Feature, tolerance, highQuality);
 
+
 	if (simplifiedgeom && simplifiedgeom.geometry) {
 		//debug('Simplified Feature', Feature, 'simplifiedgeom', simplifiedgeom);
-		return (output === 'feature') ? simplifiedgeom : simplifiedgeom.feature;
+		Feature = simplifiedgeom;
 	} else {
 		warn('Cannot simplify  Feature', Feature);
-		return (output === 'feature') ? Feature : Feature.geometry;
+
+	}
+	if (output === 'geometry') {
+		return Feature.geometry;
+	} else if (output === 'object') {
+		return Wicket().fromJson(Feature.geometry).toObject();
+	} else {
+		return Feature;
 	}
 
 };

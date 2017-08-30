@@ -26,19 +26,22 @@ export function unkink(object) {
  * @param  {google.maps.Polyline|google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, google.maps.Polygon or Feature<Polygon>
  * @returns {FeatureCollection<Point>} self-intersections
  *
- * var kinks = turf.kinks(poly);
- *
- * //addToMap
- * var addToMap = [poly, kinks]
  */
 export function kinks(object) {
-	var theFeature;
-	if (object instanceof google.maps.Polyline) {
-		theFeature = polylineToFeatureLinestring(object);
+	var Feature;
+	if (object instanceof google.maps.Polyline || object instanceof google.maps.Polygon) {
+		var geometry = Wicket().fromObject(object).toJson();
+		Feature = {
+			type: "Feature",
+			properties: {},
+			geometry: geometry
+		};
+	} else if (object.type && object.type === 'Feature' && object.geometry) {
+		Feature = object;
 	} else {
-		theFeature = polygonToFeaturePolygon(object);
+		Feature = polygonToFeaturePolygon(object);
 	}
 
 
-	return turk_kinks(theFeature);
+	return turk_kinks(Feature);
 }

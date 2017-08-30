@@ -416,7 +416,7 @@
         assert.deepEqual(result, turfHelper.toCoords(simplified), 'simplifies points correctly with the given tolerance');
     });
 
-    QUnit.test('turfHelpers.simplifyFeature simplified a google.maps.Polygon into a Feature.Polygon', function (assert) {
+    QUnit.test('turfHelpers.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -446,7 +446,7 @@
                 simplified_result_geom
             ];
 
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.simplifyFeature simplified a google.maps.Polygon into a Feature.Polygon');
+            assert.deepEqual(result, featurePolygon, 'turfHelpers.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon');
             done();
         };
         if (window.gmaps.then) {
@@ -457,4 +457,46 @@
             runtest(window.gmaps);
         }
     });
+
+    QUnit.test('turfHelpers.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString', function (assert) {
+        var done = assert.async();
+
+        var runtest = function (gmaps) {
+
+            var gmPolyline = new gmaps.Polyline({
+                path: points
+            });
+
+
+            var featurePolygon = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": turfHelper.toCoords(simplified)
+
+                }
+            };
+
+
+            var result = turfHelper.simplifyFeature(gmPolyline, 'feature', 0.5);
+
+            var simplified_result_geom = result.geometry.coordinates.map(function (point) {
+                return [Math.round(point[0] * 1000000000) / 1000000000, Math.round(point[1] * 1000000000) / 1000000000];
+            });
+            result.geometry.coordinates = simplified_result_geom;
+
+            assert.deepEqual(result, featurePolygon, 'turfHelpers.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString');
+            done();
+        };
+        if (window.gmaps.then) {
+            window.gmaps.then(function (gmaps) {
+                runtest(gmaps);
+            })
+        } else {
+            runtest(window.gmaps);
+        }
+    });
+
+
 })(QUnit);

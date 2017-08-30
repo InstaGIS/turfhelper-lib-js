@@ -333,7 +333,7 @@ Creates the framework's equivalent multipoint geometry object.
 
 -   `config`  {Object}    An optional properties hash the object should use
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple gmaps.Marker
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple google.maps.Marker
 
 ## linestring
 
@@ -354,7 +354,7 @@ Creates the framework's equivalent multilinestring geometry object.
 
 -   `config`  {Object}    An optional properties hash the object should use
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple gmaps.Polyline instances
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple google.maps.Polyline instances
 
 ## box
 
@@ -386,4 +386,4 @@ Creates the framework's equivalent multipolygon geometry object.
 
 -   `config`  {Object}    An optional properties hash the object should use
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple gmaps.Polygon
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array containing multiple google.maps.Polygon

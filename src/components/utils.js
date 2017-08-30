@@ -54,6 +54,7 @@ function wktArrayToFeatureCollection(wktArray) {
         var geoJsonPolygon = Wicket().read(WKTString).toJson();
         return {
             type: "Feature",
+            properties: {},
             geometry: geoJsonPolygon
         };
     });
@@ -142,6 +143,7 @@ function polygonToFeaturePolygon(object) {
     } else if (object.geometry) {
         polygonFeature = {
             type: "Feature",
+            properties: {},
             geometry: object.geometry
         };
     } else {
