@@ -14892,11 +14892,128 @@ $__System.registerDynamic('1c', ['19', '10', 'c', '1b', 'd'], true, function ($_
         return projection;
     }
 });
-$__System.registerDynamic("1d", ["1e"], true, function ($__require, exports, module) {
+$__System.registerDynamic('1d', ['d'], true, function ($__require, exports, module) {
+    var global = this || self,
+        GLOBAL = global;
+    var point = $__require('d').point;
+
+    /**
+     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
+     *
+     * @name kinks
+     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
+     * @returns {FeatureCollection<Point>} self-intersections
+     * @example
+     * var poly = turf.polygon([[
+     *   [-12.034835, 8.901183],
+     *   [-12.060413, 8.899826],
+     *   [-12.03638, 8.873199],
+     *   [-12.059383, 8.871418],
+     *   [-12.034835, 8.901183]
+     * ]]);
+     *
+     * var kinks = turf.kinks(poly);
+     *
+     * //addToMap
+     * var addToMap = [poly, kinks]
+     */
+    module.exports = function (featureIn) {
+        var coordinates;
+        var feature;
+        var results = {
+            type: 'FeatureCollection',
+            features: []
+        };
+        if (featureIn.type === 'Feature') {
+            feature = featureIn.geometry;
+        } else {
+            feature = featureIn;
+        }
+        if (feature.type === 'LineString') {
+            coordinates = [feature.coordinates];
+        } else if (feature.type === 'MultiLineString') {
+            coordinates = feature.coordinates;
+        } else if (feature.type === 'MultiPolygon') {
+            coordinates = [].concat.apply([], feature.coordinates);
+        } else if (feature.type === 'Polygon') {
+            coordinates = feature.coordinates;
+        } else {
+            throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
+        }
+        coordinates.forEach(function (segment1) {
+            coordinates.forEach(function (segment2) {
+                for (var i = 0; i < segment1.length - 1; i++) {
+                    for (var k = 0; k < segment2.length - 1; k++) {
+                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
+                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
+                            continue;
+                        }
+
+                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
+                        if (intersection) {
+                            results.features.push(point([intersection[0], intersection[1]]));
+                        }
+                    }
+                }
+            });
+        });
+        return results;
+    };
+
+    // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
+    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
+        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
+        var denominator,
+            a,
+            b,
+            numerator1,
+            numerator2,
+            result = {
+            x: null,
+            y: null,
+            onLine1: false,
+            onLine2: false
+        };
+        denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY);
+        if (denominator === 0) {
+            if (result.x !== null && result.y !== null) {
+                return result;
+            } else {
+                return false;
+            }
+        }
+        a = line1StartY - line2StartY;
+        b = line1StartX - line2StartX;
+        numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b;
+        numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b;
+        a = numerator1 / denominator;
+        b = numerator2 / denominator;
+
+        // if we cast these lines infinitely in both directions, they intersect here:
+        result.x = line1StartX + a * (line1EndX - line1StartX);
+        result.y = line1StartY + a * (line1EndY - line1StartY);
+
+        // if line1 is a segment and line2 is infinite, they intersect if:
+        if (a >= 0 && a <= 1) {
+            result.onLine1 = true;
+        }
+        // if line2 is a segment and line1 is infinite, they intersect if:
+        if (b >= 0 && b <= 1) {
+            result.onLine2 = true;
+        }
+        // if line1 and line2 are segments, they intersect if both of the above are true
+        if (result.onLine1 && result.onLine2) {
+            return [result.x, result.y];
+        } else {
+            return false;
+        }
+    }
+});
+$__System.registerDynamic("1e", ["1f"], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // Find self-intersections in geojson polygon (possibly with interior rings)
-  var rbush = $__require("1e");
+  var rbush = $__require("1f");
 
   module.exports = function (feature, filterFn, useSpatialIndex) {
     if (feature.geometry.type != "Polygon") throw new Error("The input feature must be a Polygon");
@@ -15040,7 +15157,7 @@ $__System.registerDynamic("1d", ["1e"], true, function ($__require, exports, mod
     return true;
   }
 });
-$__System.registerDynamic('1f', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('20', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -15367,10 +15484,10 @@ $__System.registerDynamic('1f', [], true, function ($__require, exports, module)
         return distance / factor * 57.2958;
     };
 });
-$__System.registerDynamic('20', ['21'], true, function ($__require, exports, module) {
+$__System.registerDynamic('21', ['22'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var invariant = $__require('21');
+    var invariant = $__require('22');
     var getCoord = invariant.getCoord;
     var getCoords = invariant.getCoords;
 
@@ -15472,17 +15589,17 @@ $__System.registerDynamic('20', ['21'], true, function ($__require, exports, mod
         return bbox[0] <= pt[0] && bbox[1] <= pt[1] && bbox[2] >= pt[0] && bbox[3] >= pt[1];
     }
 });
-$__System.registerDynamic("22", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("23", [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   module.exports.RADIUS = 6378137;
   module.exports.FLATTENING = 1 / 298.257223563;
   module.exports.POLAR_RADIUS = 6356752.3142;
 });
-$__System.registerDynamic('23', ['22'], true, function ($__require, exports, module) {
+$__System.registerDynamic('24', ['23'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var wgs84 = $__require('22');
+    var wgs84 = $__require('23');
 
     module.exports.geometry = geometry;
     module.exports.ring = ringArea;
@@ -15582,7 +15699,7 @@ $__System.registerDynamic('23', ['22'], true, function ($__require, exports, mod
         return _ * Math.PI / 180;
     }
 });
-$__System.registerDynamic('24', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('25', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -16231,11 +16348,11 @@ $__System.registerDynamic('24', [], true, function ($__require, exports, module)
     }
     module.exports.geomReduce = geomReduce;
 });
-$__System.registerDynamic('25', ['23', '24'], true, function ($__require, exports, module) {
+$__System.registerDynamic('26', ['24', '25'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var area = $__require('23').geometry;
-    var geomReduce = $__require('24').geomReduce;
+    var area = $__require('24').geometry;
+    var geomReduce = $__require('25').geomReduce;
 
     /**
      * Takes one or more features and returns their area in square meters.
@@ -16274,7 +16391,7 @@ $__System.registerDynamic('25', ['23', '24'], true, function ($__require, export
         }, 0);
     };
 });
-$__System.registerDynamic('26', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('27', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -16421,7 +16538,7 @@ $__System.registerDynamic('26', [], true, function ($__require, exports, module)
     return Math.ceil(ms / n) + ' ' + name + 's';
   }
 });
-$__System.registerDynamic('27', ['26'], true, function ($__require, exports, module) {
+$__System.registerDynamic('28', ['27'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
 
@@ -16437,7 +16554,7 @@ $__System.registerDynamic('27', ['26'], true, function ($__require, exports, mod
   exports.disable = disable;
   exports.enable = enable;
   exports.enabled = enabled;
-  exports.humanize = $__require('26');
+  exports.humanize = $__require('27');
 
   /**
    * The currently active debug mode names, and names to skip.
@@ -16628,7 +16745,7 @@ $__System.registerDynamic('27', ['26'], true, function ($__require, exports, mod
     return val;
   }
 });
-$__System.registerDynamic('28', ['27'], true, function ($__require, exports, module) {
+$__System.registerDynamic('29', ['28'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -16637,7 +16754,7 @@ $__System.registerDynamic('28', ['27'], true, function ($__require, exports, mod
    * Expose `debug()` as the module.
    */
 
-  exports = module.exports = $__require('27');
+  exports = module.exports = $__require('28');
   exports.log = log;
   exports.formatArgs = formatArgs;
   exports.save = save;
@@ -16799,16 +16916,16 @@ $__System.registerDynamic('28', ['27'], true, function ($__require, exports, mod
     } catch (e) {}
   }
 });
-$__System.registerDynamic('29', ['1d', '1f', '20', '25', '1e', '28'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2a', ['1e', '20', '21', '26', '1f', '29'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var isects = $__require('1d');
-  var helpers = $__require('1f');
-  var inside = $__require('20');
-  var area = $__require('25');
-  var rbush = $__require('1e');
-  var debug = $__require('28')('simplepolygon');
-  var debugAll = $__require('28')('simplepolygon:all');
+  var isects = $__require('1e');
+  var helpers = $__require('20');
+  var inside = $__require('21');
+  var area = $__require('26');
+  var rbush = $__require('1f');
+  var debug = $__require('29')('simplepolygon');
+  var debugAll = $__require('29')('simplepolygon:all');
 
   /**
   * Takes a complex (i.e. self-intersecting) geojson polygon, and breaks it down into its composite simple, non-self-intersecting one-ring polygons.
@@ -17243,7 +17360,7 @@ $__System.registerDynamic('29', ['1d', '1f', '20', '25', '1e', '28'], true, func
     return isUnique;
   }
 });
-$__System.registerDynamic('2a', ['c', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2b', ['c', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var flattenEach = $__require('c').flattenEach;
@@ -17277,11 +17394,11 @@ $__System.registerDynamic('2a', ['c', 'd'], true, function ($__require, exports,
         return featureCollection(results);
     };
 });
-$__System.registerDynamic('2b', ['29', '2a', 'c', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2c', ['2a', '2b', 'c', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var simplepolygon = $__require('29');
-    var flatten = $__require('2a');
+    var simplepolygon = $__require('2a');
+    var flatten = $__require('2b');
     var featureEach = $__require('c').featureEach;
     var featureCollection = $__require('d').featureCollection;
 
@@ -17324,127 +17441,10 @@ $__System.registerDynamic('2b', ['29', '2a', 'c', 'd'], true, function ($__requi
         return results;
     };
 });
-$__System.registerDynamic('2c', ['d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('16', ['22'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var point = $__require('d').point;
-
-    /**
-     * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
-     *
-     * @name kinks
-     * @param {Feature<LineString|MultiLineString|MultiPolygon|Polygon>} featureIn input feature
-     * @returns {FeatureCollection<Point>} self-intersections
-     * @example
-     * var poly = turf.polygon([[
-     *   [-12.034835, 8.901183],
-     *   [-12.060413, 8.899826],
-     *   [-12.03638, 8.873199],
-     *   [-12.059383, 8.871418],
-     *   [-12.034835, 8.901183]
-     * ]]);
-     *
-     * var kinks = turf.kinks(poly);
-     *
-     * //addToMap
-     * var addToMap = [poly, kinks]
-     */
-    module.exports = function (featureIn) {
-        var coordinates;
-        var feature;
-        var results = {
-            type: 'FeatureCollection',
-            features: []
-        };
-        if (featureIn.type === 'Feature') {
-            feature = featureIn.geometry;
-        } else {
-            feature = featureIn;
-        }
-        if (feature.type === 'LineString') {
-            coordinates = [feature.coordinates];
-        } else if (feature.type === 'MultiLineString') {
-            coordinates = feature.coordinates;
-        } else if (feature.type === 'MultiPolygon') {
-            coordinates = [].concat.apply([], feature.coordinates);
-        } else if (feature.type === 'Polygon') {
-            coordinates = feature.coordinates;
-        } else {
-            throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
-        }
-        coordinates.forEach(function (segment1) {
-            coordinates.forEach(function (segment2) {
-                for (var i = 0; i < segment1.length - 1; i++) {
-                    for (var k = 0; k < segment2.length - 1; k++) {
-                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
-                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
-                            continue;
-                        }
-
-                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
-                        if (intersection) {
-                            results.features.push(point([intersection[0], intersection[1]]));
-                        }
-                    }
-                }
-            });
-        });
-        return results;
-    };
-
-    // modified from http://jsfiddle.net/justin_c_rounds/Gd2S2/light/
-    function lineIntersects(line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) {
-        // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
-        var denominator,
-            a,
-            b,
-            numerator1,
-            numerator2,
-            result = {
-            x: null,
-            y: null,
-            onLine1: false,
-            onLine2: false
-        };
-        denominator = (line2EndY - line2StartY) * (line1EndX - line1StartX) - (line2EndX - line2StartX) * (line1EndY - line1StartY);
-        if (denominator === 0) {
-            if (result.x !== null && result.y !== null) {
-                return result;
-            } else {
-                return false;
-            }
-        }
-        a = line1StartY - line2StartY;
-        b = line1StartX - line2StartX;
-        numerator1 = (line2EndX - line2StartX) * a - (line2EndY - line2StartY) * b;
-        numerator2 = (line1EndX - line1StartX) * a - (line1EndY - line1StartY) * b;
-        a = numerator1 / denominator;
-        b = numerator2 / denominator;
-
-        // if we cast these lines infinitely in both directions, they intersect here:
-        result.x = line1StartX + a * (line1EndX - line1StartX);
-        result.y = line1StartY + a * (line1EndY - line1StartY);
-
-        // if line1 is a segment and line2 is infinite, they intersect if:
-        if (a >= 0 && a <= 1) {
-            result.onLine1 = true;
-        }
-        // if line2 is a segment and line1 is infinite, they intersect if:
-        if (b >= 0 && b <= 1) {
-            result.onLine2 = true;
-        }
-        // if line1 and line2 are segments, they intersect if both of the above are true
-        if (result.onLine1 && result.onLine2) {
-            return [result.x, result.y];
-        } else {
-            return false;
-        }
-    }
-});
-$__System.registerDynamic('16', ['21'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var getCoord = $__require('21').getCoord;
+    var getCoord = $__require('22').getCoord;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
 
@@ -17505,10 +17505,10 @@ $__System.registerDynamic('16', ['21'], true, function ($__require, exports, mod
 
     module.exports = bearing;
 });
-$__System.registerDynamic('12', ['21', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('12', ['22', 'd'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var getCoord = $__require('21').getCoord;
+  var getCoord = $__require('22').getCoord;
   var radiansToDistance = $__require('d').radiansToDistance;
   //http://en.wikipedia.org/wiki/Haversine_formula
   //http://www.movable-type.co.uk/scripts/latlong.html
@@ -17549,12 +17549,12 @@ $__System.registerDynamic('12', ['21', 'd'], true, function ($__require, exports
     return radiansToDistance(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), units);
   };
 });
-$__System.registerDynamic('17', ['21', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('17', ['22', 'd'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
-    var getCoord = $__require('21').getCoord;
+    var getCoord = $__require('22').getCoord;
     var helpers = $__require('d');
     var point = helpers.point;
     var distanceToRadians = helpers.distanceToRadians;
@@ -17597,14 +17597,14 @@ $__System.registerDynamic('17', ['21', 'd'], true, function ($__require, exports
         return point([radians2degrees * longitude2, radians2degrees * latitude2]);
     };
 });
-$__System.registerDynamic('2d', ['c', 'd', '16', '12', '21', '17', '2e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2d', ['c', 'd', '16', '12', '22', '17', '2e'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var meta = $__require('c');
     var helpers = $__require('d');
     var bearing = $__require('16');
     var distance = $__require('12');
-    var invariant = $__require('21');
+    var invariant = $__require('22');
     var destination = $__require('17');
     var lineIntersects = $__require('2e');
     var point = helpers.point;
@@ -17820,7 +17820,7 @@ $__System.registerDynamic('30', [], true, function ($__require, exports, module)
         return a < b ? -1 : a > b ? 1 : 0;
     }
 });
-$__System.registerDynamic('1e', ['30'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1f', ['30'], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
@@ -18390,10 +18390,10 @@ $__System.registerDynamic('1e', ['30'], true, function ($__require, exports, mod
         }
     }
 });
-$__System.registerDynamic('31', ['1e', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('31', ['1f', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var rbush = $__require('1e');
+    var rbush = $__require('1f');
     var meta = $__require('c');
     var featureEach = meta.featureEach;
     var coordEach = meta.coordEach;
@@ -19239,7 +19239,7 @@ $__System.registerDynamic('d', [], true, function ($__require, exports, module) 
         round: round
     };
 });
-$__System.registerDynamic('21', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('22', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -20271,11 +20271,11 @@ $__System.registerDynamic('c', [], true, function ($__require, exports, module) 
         segmentReduce: segmentReduce
     };
 });
-$__System.registerDynamic('32', ['d', '21', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('32', ['d', '22', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var helpers = $__require('d');
-    var getCoords = $__require('21').getCoords;
+    var getCoords = $__require('22').getCoords;
     var flattenEach = $__require('c').flattenEach;
     var lineString = helpers.lineString;
     var featureCollection = helpers.featureCollection;
@@ -20369,13 +20369,13 @@ $__System.registerDynamic('32', ['d', '21', 'c'], true, function ($__require, ex
         return [west, south, east, north];
     }
 });
-$__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2e', ['c', '31', 'd', '22', '32'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     var meta = $__require('c');
     var rbush = $__require('31');
     var helpers = $__require('d');
-    var getCoords = $__require('21').getCoords;
+    var getCoords = $__require('22').getCoords;
     var lineSegment = $__require('32');
     var point = helpers.point;
     var featureEach = meta.featureEach;
@@ -20476,10 +20476,10 @@ $__System.registerDynamic('2e', ['c', '31', 'd', '21', '32'], true, function ($_
         return null;
     }
 });
-$__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b', '2c', '2f', '2e'], function (_export, _context) {
+$__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '21', '1d', '2c', '2f', '2e'], function (_export, _context) {
     "use strict";
 
-    var turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turf_unkink, turk_kinks, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
+    var turf_centroid, turf_union, turf_helpers, turf_concave, turf_simplify, turf_along, turf_buffer, turf_inside, turk_kinks, turf_unkink, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, stringTag$2, asciiSize, rsAstralRange, rsComboMarksRange, reComboHalfMarksRange, rsComboSymbolsRange, rsComboRange, rsVarRange, rsZWJ, reHasUnicode, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, mapTag$3, setTag$3, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
 
 
     function Wicket$1() {
@@ -23518,18 +23518,6 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
     }
 
     /**
-     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks. 
-     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, a google.maps.Polygon or Feature<Polygon>
-     * @return {FeatureCollection<Polygon>}  Unkinked polygons
-     */
-    function unkink(object) {
-
-        var polygonFeature = polygonToFeaturePolygon(object);
-
-        return turf_unkink(polygonFeature);
-    }
-
-    /**
      * Takes an array of points, google.maps.Polygon or Feature<Polygon> and returns {@link Point|points} at all self-intersections.
      *
      * @name kinks
@@ -23553,6 +23541,18 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
         }
 
         return turk_kinks(Feature);
+    }
+
+    /**
+     * Takes a kinked polygon and returns a feature collection of polygons that have no kinks. 
+     * @param  {google.maps.Polygon|Array.<google.maps.LatLng>|Feature<Polygon>} object array of points, a google.maps.Polygon or Feature<Polygon>
+     * @return {FeatureCollection<Polygon>}  Unkinked polygons
+     */
+    function unkink(object) {
+
+        var polygonFeature = polygonToFeaturePolygon(object);
+
+        return turf_unkink(polygonFeature);
     }
 
     /**
@@ -23994,10 +23994,10 @@ $__System.register('a', ['33', 'b', 'f', 'd', '11', '14', '15', '1c', '20', '2b'
             turf_buffer = _c.default;
         }, function (_5) {
             turf_inside = _5.default;
-        }, function (_b2) {
-            turf_unkink = _b2.default;
+        }, function (_d2) {
+            turk_kinks = _d2.default;
         }, function (_c2) {
-            turk_kinks = _c2.default;
+            turf_unkink = _c2.default;
         }, function (_f2) {
             turf_line_slice = _f2.default;
         }, function (_e) {

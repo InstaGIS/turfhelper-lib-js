@@ -63,8 +63,11 @@ import {
 
 import {
     kinks,
-    unkink
 } from './components/kinks.js';
+
+import {
+    unkink
+} from './components/unkink.js';
 
 import {
 
