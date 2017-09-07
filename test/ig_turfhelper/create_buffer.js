@@ -106,7 +106,7 @@
             };
 
 
-            var result = turfHelper.createbuffer(gmPolygon, 'feature', 500, 'meters', 4);
+            var result = turfHelper.createbuffer(gmPolygon, 'feature', 500, 'meters', 64);
 
             var simplified_result_geom = result.geometry.coordinates[0].map(function (point) {
                 return [Math.round(point[0] * 1000000000) / 1000000000, Math.round(point[1] * 1000000000) / 1000000000];

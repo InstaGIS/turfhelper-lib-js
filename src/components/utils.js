@@ -30,7 +30,6 @@ from 'lodash-es/reduce.js';
 
 import turf_centroid from '@turf/centroid';
 
-import turf_union from '@turf/union';
 
 import turf_helpers from '@turf/helpers';
 
@@ -38,50 +37,6 @@ var turf_linestring = turf_helpers.lineString;
 
 var debug = console.debug.bind(console, '%c turfHelper' + ':', "color:#00CC00;font-weight:bold;"),
     warn = console.debug.bind(console, '%c turfHelper' + ':', "color:orange;font-weight:bold;");
-
-
-/**
- * Transforma un array de geometrías WKT en un FeatureCollection
- * @param  {Array<String>} wktArray Array de string WKT
- * @return {Object}          FeatureCollection
- */
-function wktArrayToFeatureCollection(wktArray) {
-    var FeatureCollection = {
-        "type": "FeatureCollection"
-    };
-
-    FeatureCollection.features = _map(wktArray, function (WKTString) {
-        var geoJsonPolygon = Wicket().read(WKTString).toJson();
-        return {
-            type: "Feature",
-            properties: {},
-            geometry: geoJsonPolygon
-        };
-    });
-    return FeatureCollection;
-}
-
-
-/**
- * Merges transform an array of WKT string to a Polygon or Multipolygon
- * @param  {String[]} WKTArray Array of WKT strings
- * @param  {[type]} debug    [description]
- * @return {[type]}          [description]
- */
-function mergeWKTGeoms(WKTArray, debug) {
-    if (debug) {
-        console.log('merging', WKTArray);
-    }
-    var FC = wktArrayToFeatureCollection(WKTArray),
-        geom_zero = FC.features.pop();
-
-    var theUnion = _reduce(FC.features, function (acumulado, feature, index) {
-        acumulado = turf_union(acumulado, feature);
-        return acumulado;
-    }, geom_zero);
-
-    return theUnion;
-};
 
 
 /**
@@ -185,6 +140,11 @@ function arrayToFeaturePoints(latLngArray) {
 
 }
 
+/**
+ * Returns the centroid of a FeatureCollection
+ * @param  {FeatureCollection} FeatureCollection [description]
+ * @return {Feature<Point>}                   [description]
+ */
 function centroid(FeatureCollection) {
     return turf_centroid(FeatureCollection);
 }
@@ -217,87 +177,14 @@ function polygonToFeaturePolygonCollection(polygon) {
     return FeatureCollection;
 }
 
-/**
- * representGeometry: Obtiene distintas representaciones de acuerdo con lo obtenido en globalvars.globalmap.multipolygon
- * @param  {Object}   parentObj object with a key named multipolygon and other calles contextMenu
- * @param  {Function} callback    [description]
- * @return {object}               [description]
- */
-function representGeometry(parentObj, callback) {
-    var resultado = {};
-    /**
-     * geometryMultipolygon: Obtiene las geometrias de los poligonos seleccionados
-     * @param  {Object}   multipolygon object where each value is a google.maps.Polygon
-     * @return {array} Array de Geometria/s
-     */
-    var geometryMultipolygon = function (multipolygon) {
-            // reads the multipolygon array (where we store objects on shift+click)
-
-            var geometry = [];
-
-            if (_size(multipolygon) === 0) {
-
-                if (parentObj.contextMenu.Polygons && parentObj.contextMenu.Polygons.jqMenu.data('geometry')) {
-                    geometry.push(parentObj.contextMenu.Polygons.jqMenu.data('geometry'));
-                }
-
-            } else {
-                _each(multipolygon, function (obj) {
-                    geometry.push(obj.geometry);
-                });
-            }
-            return geometry;
-        },
-        WKTmerged,
-        arraygeometry = geometryMultipolygon(parentObj.multipolygon);
-
-    if (arraygeometry.length === 0) {
-
-        resultado = {
-            arraygeometry: arraygeometry
-        };
-
-    } else if (arraygeometry.length === 1) {
-
-        resultado = {
-            arraygeometry: arraygeometry,
-            wkt: arraygeometry[0]
-        };
-
-    } else {
-        var theFeature = mergeWKTGeoms(arraygeometry);
-        try {
-            WKTmerged = Wicket().fromJson(theFeature.geometry).toString();
-        } catch (err) {
-            console.warn('Exception wicket reading ', theFeature.geometry);
-        }
-
-        resultado = {
-            arraygeometry: arraygeometry,
-            theFeature: theFeature,
-            wkt: WKTmerged
-        };
-
-    }
-
-    if (callback) {
-        callback(resultado);
-    }
-
-    return resultado;
-}
 
 export {
     debug,
     warn,
     arrayToFeaturePolygon,
     polygonToFeaturePolygonCollection,
-    representGeometry,
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
     centroid,
-    mergeWKTGeoms,
-    verticesInPolygon,
-    polylineToFeatureLinestring,
-    objectToFeaturePolygon
+    polylineToFeatureLinestring
 };

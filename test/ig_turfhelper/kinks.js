@@ -20,25 +20,17 @@
     };
 
     var hourglass_out = {
-        "type": "FeatureCollection",
         "features": [{
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-45, -2.5]
-                }
+            "geometry": {
+                "coordinates": [-45, -2.5],
+                "type": "Point"
             },
-            {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-45, -2.5]
-                }
-            }
-        ]
+            "properties": {},
+            "type": "Feature"
+        }],
+        "type": "FeatureCollection"
     };
+
     var multipolygon_in = {
         "type": "Feature",
         "properties": {},
@@ -68,41 +60,26 @@
     };
 
     var multipolygon_out = {
-        "type": "FeatureCollection",
         "features": [{
-                "type": "Feature",
-                "properties": {},
                 "geometry": {
-                    "type": "Point",
-                    "coordinates": [-45, -8.798225459016345]
-                }
+                    "coordinates": [-45, -8.798225459016345],
+                    "type": "Point"
+                },
+                "properties": {},
+                "type": "Feature"
             },
             {
-                "type": "Feature",
-                "properties": {},
                 "geometry": {
-                    "type": "Point",
-                    "coordinates": [-39.7705078125, -4.08345277203862]
-                }
-            },
-            {
-                "type": "Feature",
+                    "coordinates": [-39.7705078125, -4.08345277203862],
+                    "type": "Point"
+                },
                 "properties": {},
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-39.7705078125, -4.083452772038619]
-                }
-            },
-            {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-45, -8.798225459016345]
-                }
+                "type": "Feature"
             }
-        ]
+        ],
+        "type": "FeatureCollection"
     };
+
 
     var unkinked_hourglass = {
         "type": "FeatureCollection",

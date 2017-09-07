@@ -17,9 +17,6 @@
         assert.equal(typeof turfHelper.pointInPolygon, 'function', 'turfHelpers.pointInPolygon should be of type function');
     });
 
-    QUnit.test('turfHelpers.representGeometry should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.representGeometry, 'function', 'turfHelpers.representGeometry should be of type function');
-    });
 
     QUnit.test('turfHelpers.toLatLngs should be of type function', function (assert) {
         assert.equal(typeof turfHelper.toLatLngs, 'function', 'turfHelpers.toLatLngs should be of type function');

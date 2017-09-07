@@ -27,7 +27,6 @@
  */
 
 import {
-    representGeometry,
     polylineToFeatureLinestring,
     polygonToFeaturePolygon,
     arrayToFeaturePoints,
@@ -87,7 +86,6 @@ export {
     pointInPolygon,
     polygonToFeaturePolygon,
     polylineToFeatureLinestring,
-    representGeometry,
     simplifyFeature,
     simplifyPointArray,
     toLatLngs,
@@ -107,7 +105,6 @@ export default {
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,
     polylineToFeatureLinestring: polylineToFeatureLinestring,
-    representGeometry: representGeometry,
     simplifyFeature: simplifyFeature,
     simplifyPointArray: simplifyPointArray,
     toLatLngs: toLatLngs,
