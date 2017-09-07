@@ -1,14 +1,14 @@
 (function (QUnit) {
 
 
-    QUnit.module("turfHelpers Concave");
+    QUnit.module("turfHelper Concave");
 
 
-    QUnit.test('turfHelpers.concave should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.concave, 'function', 'turfHelpers.concave should be of type function');
+    QUnit.test('turfHelper.concave should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.concave, 'function', 'turfHelper.concave should be of type function');
     });
 
-    QUnit.test('turfHelpers.concave should create a correct concave hull from an array of LatLngLiterals', function (assert) {
+    QUnit.test('turfHelper.concave should create a correct concave hull from an array of LatLngLiterals', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -70,7 +70,7 @@
             ];
 
 
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.concave should create a correct concave hull from an array of LatLngLiterals');
+            assert.deepEqual(result, featurePolygon, 'turfHelper.concave should create a correct concave hull from an array of LatLngLiterals');
             done();
         };
         if (window.gmaps.then) {

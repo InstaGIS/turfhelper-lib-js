@@ -1,5 +1,3 @@
-import gmaps from 'gmaps';
-
 import {
 	Wicket
 } from './wicket_helper.js';
@@ -41,7 +39,7 @@ export function simplifyPointArray(coordArray, tolerance, highQuality) {
 };
 
 /**
- * Simplified a Feature or google.maps.Polygon
+ * Simplified a Feature, google.maps.Polygon or google.maps.Polyline
  * @param  {google.maps.Polygon|google.maps.Polyline|Array.<google.maps.LatLng>|Feature.<Polygon>|Feature.<LineString>} object feature to be simplified
  * @param  {string} output either 'feature', 'geometry' or 'object' (google maps). Case insensitive. Defaults to feature
  * @param  {mumber} tolerance   simplification tolerance

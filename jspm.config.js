@@ -2,33 +2,20 @@ SystemJS.config({
     paths: {
         "npm:": "jspm_packages/npm/",
         "github:": "jspm_packages/github/",
-        "gmaps": "https://maps.googleapis.com/maps/api/js",
         "turfhelper-lib-js/": "src/"
     },
     browserConfig: {
         "baseURL": "/"
     },
-    meta: {
-        "https://maps.googleapis.com/maps/api/*": {
-            "build": false,
-            "parameters": {
-                "v": "3.exp",
-                "libraries": "visualization,places,drawing,geometry",
-                "key": "AIzaSyCIa4v2dHNb4jMpdLaMCHy8vZZCj8HYv40"
-            },
-            "loader": "gmap"
-        }
-    },
     devConfig: {
         "map": {
             "lodash-es": "npm:lodash-es@4.17.4",
-            "@turf/kinks": "npm:@turf/kinks@4.7.1",
+            "@turf/kinks": "npm:@turf/kinks@4.7.2",
             "@turf/buffer": "npm:@turf/buffer@4.7.1",
             "@turf/simplify": "npm:@turf/simplify@4.7.1",
             "@turf/along": "npm:@turf/along@4.7.1",
             "@turf/inside": "npm:@turf/inside@4.7.1",
             "@turf/union": "npm:@turf/union@4.7.1",
-            "@turf/centroid": "npm:@turf/centroid@4.7.1",
             "@turf/helpers": "npm:@turf/helpers@4.7.1",
             "@turf/line-slice": "npm:@turf/line-slice@4.7.1",
             "@turf/concave": "npm:@turf/concave@4.7.1",
@@ -131,22 +118,11 @@ SystemJS.config({
                     "@turf/meta": "npm:@turf/meta@4.7.1"
                 }
             },
-            "npm:@turf/centroid@4.7.1": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@4.7.1",
-                    "@turf/meta": "npm:@turf/meta@4.7.1"
-                }
-            },
             "npm:@turf/unkink-polygon@4.7.1": {
                 "map": {
                     "@turf/helpers": "npm:@turf/helpers@4.7.1",
                     "simplepolygon": "npm:simplepolygon@1.2.1",
                     "@turf/meta": "npm:@turf/meta@4.7.1"
-                }
-            },
-            "npm:@turf/kinks@4.7.1": {
-                "map": {
-                    "@turf/helpers": "npm:@turf/helpers@4.7.1"
                 }
             },
             "npm:@turf/buffer@4.7.1": {
@@ -538,6 +514,11 @@ SystemJS.config({
                 "map": {
                     "safe-buffer": "npm:safe-buffer@5.1.1"
                 }
+            },
+            "npm:@turf/kinks@4.7.2": {
+                "map": {
+                    "@turf/helpers": "npm:@turf/helpers@4.7.1"
+                }
             }
         }
     },
@@ -563,8 +544,7 @@ SystemJS.config({
     ],
     map: {
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
-        "plugin-babel": "npm:systemjs-plugin-babel@0.0.21",
-        "gmap": "npm:amd-googlemaps-loader@1.8.6"
+        "plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
     },
     packages: {}
 });

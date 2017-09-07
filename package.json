@@ -1,6 +1,6 @@
 {
   "name": "turfhelper-lib-js",
-  "version": "17.2.7",
+  "version": "17.2.8",
   "description": "A bridge to use Turf along with google Maps API",
   "scripts": {
     "test": "grunt karma"
@@ -63,7 +63,6 @@
     "devDependencies": {
       "@turf/along": "npm:@turf/along@^4.6.0",
       "@turf/buffer": "npm:@turf/buffer@^4.6.1",
-      "@turf/centroid": "npm:@turf/centroid@^4.6.1",
       "@turf/concave": "npm:@turf/concave@^4.6.0",
       "@turf/helpers": "npm:@turf/helpers@^4.6.0",
       "@turf/inside": "npm:@turf/inside@^4.6.0",
@@ -91,8 +90,7 @@
     },
     "peerDependencies": {
       "fs": "npm:jspm-nodelibs-fs@^0.2.0",
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21",
-      "gmap": "npm:amd-googlemaps-loader@^1.8.5"
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21"
     },
     "overrides": {
       "npm:debug@2.6.8": {

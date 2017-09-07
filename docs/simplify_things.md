@@ -14,7 +14,7 @@ Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 
 ## simplifyFeature
 
-Simplified a Feature or google.maps.Polygon
+Simplified a Feature, google.maps.Polygon or google.maps.Polyline
 
 **Parameters**
 

@@ -1,6 +1,6 @@
 (function (QUnit) {
 
-    QUnit.module("turfHelpers Kinks");
+    QUnit.module("turfHelper Kinks");
 
     var hourglass_in = {
         "type": "Feature",
@@ -115,28 +115,28 @@
     };
 
 
-    QUnit.test('turfHelpers.kinks should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.kinks, 'function', 'turfHelpers.kinks should be of type function');
+    QUnit.test('turfHelper.kinks should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.kinks, 'function', 'turfHelper.kinks should be of type function');
     });
 
-    QUnit.test('turfHelpers.unkink should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.unkink, 'function', 'turfHelpers.unkink should be of type function');
+    QUnit.test('turfHelper.unkink should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.unkink, 'function', 'turfHelper.unkink should be of type function');
     });
 
-    QUnit.test('turfHelpers.kinks finds kinks correctly on a multipolygon', function (assert) {
+    QUnit.test('turfHelper.kinks finds kinks correctly on a multipolygon', function (assert) {
         var result = turfHelper.kinks(multipolygon_in);
         assert.deepEqual(result, multipolygon_out, 'finds kinks correctly on a multipolygon');
     });
 
-    QUnit.test('turfHelpers.kinks finds kinks correctly on a polygon with one self intersection', function (assert) {
+    QUnit.test('turfHelper.kinks finds kinks correctly on a polygon with one self intersection', function (assert) {
         var result = turfHelper.kinks(hourglass_in);
         assert.deepEqual(result, hourglass_out, 'finds kinks correctly on polygon with one self intersection');
     });
 
-    QUnit.test('turfHelpers.unkink should return a FeatureCollection of Polygons without kinks', function (assert) {
+    QUnit.test('turfHelper.unkink should return a FeatureCollection of Polygons without kinks', function (assert) {
         var result = turfHelper.unkink(hourglass_in);
 
-        assert.deepEqual(result, unkinked_hourglass, 'turfHelpers.unkink should return a FeatureCollection of Polygons without kinks');
+        assert.deepEqual(result, unkinked_hourglass, 'turfHelper.unkink should return a FeatureCollection of Polygons without kinks');
     });
 
 })(QUnit);

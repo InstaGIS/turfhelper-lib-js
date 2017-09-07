@@ -1,47 +1,13 @@
 !function(e){function t(e){Object.defineProperty(this,e,{enumerable:!0,get:function(){return this[m][e]}})}function r(e){var t;if(e&&e.__esModule){t={};for(var r in e)Object.hasOwnProperty.call(e,r)&&(t[r]=e[r]);t.__useDefault&&delete t.__useDefault,t.__esModule=!0}else{if("[object Module]"===Object.prototype.toString.call(e)||"undefined"!=typeof System&&System.isModule&&System.isModule(e))return e;t={default:e,__useDefault:!0}}return new o(t)}function o(e){Object.defineProperty(this,m,{value:e}),Object.keys(e).forEach(t,this)}function n(e){return"@node/"===e.substr(0,6)?c(e,r(v(e.substr(6))),{}):p[e]}function u(e){var t=n(e);if(!t)throw new Error('Module "'+e+'" expected, but not contained in build.');if(t.module)return t.module;var r=t.linkRecord;return d(t,r),a(t,r,[]),t.module}function d(e,t){if(!t.depLoads){t.declare&&i(e,t),t.depLoads=[];for(var r=0;r<t.deps.length;r++){var o=n(t.deps[r]);t.depLoads.push(o),o.linkRecord&&d(o,o.linkRecord);var u=t.setters&&t.setters[r];u&&(u(o.module||o.linkRecord.moduleObj),o.importerSetters.push(u))}return e}}function i(t,r){var o=r.moduleObj,n=t.importerSetters,u=!1,d=r.declare.call(e,function(e,t){if(!u){if("object"==typeof e)for(var r in e)"__useDefault"!==r&&(o[r]=e[r]);else o[e]=t;u=!0;for(var d=0;d<n.length;d++)n[d](o);return u=!1,t}},{id:t.key});"function"!=typeof d?(r.setters=d.setters,r.execute=d.execute):(r.setters=[],r.execute=d)}function l(e,t,r){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:r,setters:void 0,execute:void 0,moduleObj:{}}}}function f(e,t,r,o){return p[e]={key:e,module:void 0,importerSetters:[],linkRecord:{deps:t,depLoads:void 0,declare:void 0,execute:o,executingRequire:r,moduleObj:{default:{},__useDefault:!0},setters:void 0}}}function s(e,t,r){return function(o){for(var n=0;n<e.length;n++)if(e[n]===o){var u,d=t[n],i=d.linkRecord;return u=i?-1===r.indexOf(d)?a(d,i,r):i.moduleObj:d.module,u.__useDefault?u.default:u}}}function a(t,r,n){if(n.push(t),t.module)return t.module;var u;if(r.setters){for(var d=0;d<r.deps.length;d++){var i=r.depLoads[d],l=i.linkRecord;l&&-1===n.indexOf(i)&&(u=a(i,l,l.setters?n:[]))}r.execute.call(y)}else{var f={id:t.key},c=r.moduleObj;Object.defineProperty(f,"exports",{configurable:!0,set:function(e){c.default=e},get:function(){return c.default}});var p=s(r.deps,r.depLoads,n);if(!r.executingRequire)for(var d=0;d<r.deps.length;d++)p(r.deps[d]);var m=r.execute.call(e,p,c.default,f);if(void 0!==m?c.default=m:f.exports!==c.default&&(c.default=f.exports),c.default&&c.default.__esModule)for(var v in c.default)Object.hasOwnProperty.call(c.default,v)&&"default"!==v&&(c[v]=c.default[v])}var f=t.module=new o(r.moduleObj);if(!r.setters)for(var d=0;d<t.importerSetters.length;d++)t.importerSetters[d](f);return f}function c(e,t){return p[e]={key:e,module:t,importerSetters:[],linkRecord:void 0}}var p={},m="undefined"!=typeof Symbol?Symbol():"@@baseObject";o.prototype=Object.create(null),"undefined"!=typeof Symbol&&Symbol.toStringTag&&(o.prototype[Symbol.toStringTag]="Module");var v="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,y={};return Object.freeze&&Object.freeze(y),function(e,t,n,d){return function(i){i(function(i){var s={_nodeRequire:v,register:l,registerDynamic:f,registry:{get:function(e){return p[e].module},set:c},newModule:function(e){return new o(e)}};c("@empty",new o({}));for(var a=0;a<t.length;a++)c(t[a],r(arguments[a],{}));d(s);var m=u(e[0]);if(e.length>1)for(var a=1;a<e.length;a++)u(e[a]);return n?m.default:(m instanceof o&&Object.defineProperty(m,"__esModule",{value:!0}),m)})}}}("undefined"!=typeof self?self:global)
 
-(["a"], ["3a"], false, function($__System) {
+(["a"], [], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
-$__System.registerDynamic('b', ['c', 'd'], true, function ($__require, exports, module) {
-    var global = this || self,
-        GLOBAL = global;
-    var coordEach = $__require('c').coordEach;
-    var point = $__require('d').point;
-
-    /**
-     * Takes one or more features and calculates the centroid using the mean of all vertices.
-     * This lessens the effect of small islands and artifacts when calculating the centroid of a set of polygons.
-     *
-     * @name centroid
-     * @param {GeoJSON} geojson GeoJSON to be centered
-     * @param {Object} [properties] an Object that is used as the {@link Feature}'s properties
-     * @returns {Feature<Point>} the centroid of the input features
-     * @example
-     * var polygon = turf.polygon([[[-81, 41], [-88, 36], [-84, 31], [-80, 33], [-77, 39], [-81, 41]]]);
-     *
-     * var centroid = turf.centroid(polygon);
-     *
-     * //addToMap
-     * var addToMap = [polygon, centroid]
-     */
-    module.exports = function (geojson, properties) {
-        var xSum = 0;
-        var ySum = 0;
-        var len = 0;
-        coordEach(geojson, function (coord) {
-            xSum += coord[0];
-            ySum += coord[1];
-            len++;
-        }, true);
-        return point([xSum / len, ySum / len], properties);
-    };
-});
-$__System.registerDynamic('e', ['d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('b', ['c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     //http://en.wikipedia.org/wiki/Delaunay_triangulation
     //https://github.com/ironwallaby/delaunay
-    var helpers = $__require('d');
+    var helpers = $__require('c');
     var polygon = helpers.polygon;
     var featurecollection = helpers.featureCollection;
 
@@ -283,7 +249,7 @@ $__System.registerDynamic('e', ['d'], true, function ($__require, exports, modul
         return closed;
     }
 });
-$__System.registerDynamic('f', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('d', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://github.com/topojson/topojson-server Version 3.0.0. Copyright 2017 Mike Bostock.
@@ -1184,7 +1150,7 @@ $__System.registerDynamic('f', [], true, function ($__require, exports, module) 
     Object.defineProperty(exports, '__esModule', { value: true });
   });
 });
-$__System.registerDynamic('10', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('e', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://github.com/topojson/topojson-client Version 3.0.0. Copyright 2017 Mike Bostock.
@@ -1760,7 +1726,7 @@ $__System.registerDynamic('10', [], true, function ($__require, exports, module)
     Object.defineProperty(exports, '__esModule', { value: true });
   });
 });
-$__System.registerDynamic('11', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('f', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   module.exports = mergeViableLineStrings;
@@ -1839,7 +1805,7 @@ $__System.registerDynamic('11', [], true, function ($__require, exports, module)
     return result;
   }
 });
-$__System.registerDynamic('12', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('10', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     function flatten(gj) {
@@ -1889,7 +1855,7 @@ $__System.registerDynamic("@system-env", [], true, function() {
   };
 });
 
-$__System.registerDynamic('13', ['@system-env'], true, function ($__require, exports, module) {
+$__System.registerDynamic('11', ['@system-env'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     // From https://github.com/defunctzombie/node-process/blob/master/browser.js
@@ -1993,15 +1959,15 @@ $__System.registerDynamic('13', ['@system-env'], true, function ($__require, exp
         return 0;
     };
 });
-$__System.registerDynamic('14', ['f', '10', '11', '15', '12', '13'], true, function ($__require, exports, module) {
-  var process = $__require('13');
+$__System.registerDynamic('12', ['d', 'e', 'f', '13', '10', '11'], true, function ($__require, exports, module) {
+  var process = $__require('11');
   var global = this || self,
       GLOBAL = global;
-  var createTopology = $__require('f').topology;
-  var mergeTopology = $__require('10').merge;
-  var dissolveLineStrings = $__require('11');
-  var geomEach = $__require('15').geomEach;
-  var flatten = $__require('12');
+  var createTopology = $__require('d').topology;
+  var mergeTopology = $__require('e').merge;
+  var dissolveLineStrings = $__require('f');
+  var geomEach = $__require('13').geomEach;
+  var flatten = $__require('10');
 
   module.exports = dissolve;
 
@@ -2068,14 +2034,14 @@ $__System.registerDynamic('14', ['f', '10', '11', '15', '12', '13'], true, funct
     }
   }
 });
-$__System.registerDynamic('16', ['e', 'd', '17', '14', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('14', ['b', 'c', '15', '12', '16'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var tin = $__require('e');
-    var helpers = $__require('d');
-    var distance = $__require('17');
-    var dissolve = $__require('14');
-    var featureEach = $__require('c').featureEach;
+    var tin = $__require('b');
+    var helpers = $__require('c');
+    var distance = $__require('15');
+    var dissolve = $__require('12');
+    var featureEach = $__require('16').featureEach;
     var feature = helpers.feature;
     var featureCollection = helpers.featureCollection;
 
@@ -2159,7 +2125,7 @@ $__System.registerDynamic('16', ['e', 'd', '17', '14', 'c'], true, function ($__
         return featureCollection(cleaned);
     }
 });
-$__System.registerDynamic('18', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('17', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /*
@@ -2296,11 +2262,11 @@ $__System.registerDynamic('18', [], true, function ($__require, exports, module)
         });else if (typeof module !== 'undefined') module.exports = simplify;else if (typeof self !== 'undefined') self.simplify = simplify;else window.simplify = simplify;
     })();
 });
-$__System.registerDynamic('19', ['d', '1a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('18', ['c', '19'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var helpers = $__require('d');
-    var invariant = $__require('1a');
+    var helpers = $__require('c');
+    var invariant = $__require('19');
     var getCoords = invariant.getCoords;
     var getGeomType = invariant.getGeomType;
 
@@ -2482,7 +2448,7 @@ $__System.registerDynamic('19', ['d', '1a'], true, function ($__require, exports
         if (cross !== 0) return false;else if (Math.abs(dxl) >= Math.abs(dyl)) return dxl > 0 ? startX <= x && x <= endX : endX <= x && x <= startX;else return dyl > 0 ? startY <= y && y <= endY : endY <= y && y <= startY;
     }
 });
-$__System.registerDynamic('1b', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('1a', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -2632,13 +2598,13 @@ $__System.registerDynamic('1b', [], true, function ($__require, exports, module)
         });
     }
 });
-$__System.registerDynamic('1c', ['18', '19', 'c', '1b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1b', ['17', '18', '16', '1a'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var simplifyJS = $__require('18');
-    var cleanCoords = $__require('19');
-    var geomEach = $__require('c').geomEach;
-    var clone = $__require('1b');
+    var simplifyJS = $__require('17');
+    var cleanCoords = $__require('18');
+    var geomEach = $__require('16').geomEach;
+    var clone = $__require('1a');
 
     /**
      * Takes a {@link GeoJSON} object and returns a simplified version. Internally uses
@@ -2796,13 +2762,13 @@ $__System.registerDynamic('1c', ['18', '19', 'c', '1b'], true, function ($__requ
         return !(ring.length === 3 && ring[2][0] === ring[0][0] && ring[2][1] === ring[0][1]);
     }
 });
-$__System.registerDynamic('1d', ['17', 'd', '1e', '1f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1c', ['15', 'c', '1d', '1e'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var measureDistance = $__require('17');
-    var point = $__require('d').point;
-    var bearing = $__require('1e');
-    var destination = $__require('1f');
+    var measureDistance = $__require('15');
+    var point = $__require('c').point;
+    var bearing = $__require('1d');
+    var destination = $__require('1e');
 
     /**
      * Takes a {@link LineString|line} and returns a {@link Point|point} at a specified distance along the line.
@@ -2840,10 +2806,10 @@ $__System.registerDynamic('1d', ['17', 'd', '1e', '1f'], true, function ($__requ
         return point(coords[coords.length - 1]);
     };
 });
-$__System.registerDynamic('20', ['21'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1f', ['20'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var jsts = $__require('21');
+    var jsts = $__require('20');
 
     /**
      * Takes two or more {@link Polygon|polygons} and returns a combined polygon. If the input polygons are not contiguous, this function returns a {@link MultiPolygon} feature.
@@ -2890,7 +2856,7 @@ $__System.registerDynamic('20', ['21'], true, function ($__require, exports, mod
         };
     };
 });
-$__System.registerDynamic('22', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('21', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://d3js.org/d3-array/ Version 1.2.0. Copyright 2017 Mike Bostock.
@@ -3475,12 +3441,12 @@ $__System.registerDynamic('22', [], true, function ($__require, exports, module)
     Object.defineProperty(exports, '__esModule', { value: true });
   });
 });
-$__System.registerDynamic('23', ['22'], true, function ($__require, exports, module) {
+$__System.registerDynamic('22', ['21'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // https://d3js.org/d3-geo/ Version 1.6.4. Copyright 2017 Mike Bostock.
   (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('22')) : typeof undefined === 'function' && define.amd ? define(['exports', 'd3-array'], factory) : factory(global.d3 = global.d3 || {}, global.d3);
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, $__require('21')) : typeof undefined === 'function' && define.amd ? define(['exports', 'd3-array'], factory) : factory(global.d3 = global.d3 || {}, global.d3);
   })(exports, function (exports, d3Array) {
     'use strict';
 
@@ -6492,7 +6458,7 @@ $__System.registerDynamic('23', ['22'], true, function ($__require, exports, mod
 // https://github.com/bjornharrtell/jsts/blob/master/LICENSE_EPLv1.txt
 // https://github.com/bjornharrtell/jsts/blob/master/LICENSE_LICENSE_ES6_COLLECTIONS.txt
 !function (t, e) {
-  "object" == typeof exports && "undefined" != typeof module ? e(exports) : "function" == "function" && true ? $__System.registerDynamic("21", [], false, function ($__require, $__exports, $__module) {
+  "object" == typeof exports && "undefined" != typeof module ? e(exports) : "function" == "function" && true ? $__System.registerDynamic("20", [], false, function ($__require, $__exports, $__module) {
     if (typeof e === "function") {
       return e.call($__exports, $__exports);
     } else {
@@ -16781,10 +16747,10 @@ $__System.registerDynamic('23', ['22'], true, function ($__require, exports, mod
       return this.getClass() === t.getClass();
     } });var Go = "1.3.0 (6e65adb)";t.version = Go, t.algorithm = co, t.densify = fo, t.dissolve = go, t.geom = lo, t.geomgraph = po, t.index = yo, t.io = No, t.noding = Co, t.operation = _o, t.precision = Mo, t.simplify = Do, t.triangulate = Fo, Object.defineProperty(t, "__esModule", { value: !0 });
 });
-$__System.registerDynamic('24', ['c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('23', ['16'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var coordEach = $__require('c').coordEach;
+    var coordEach = $__require('16').coordEach;
 
     /**
      * Takes a set of features, calculates the bbox of all input features, and returns a bounding box.
@@ -16811,11 +16777,11 @@ $__System.registerDynamic('24', ['c'], true, function ($__require, exports, modu
         return bbox;
     };
 });
-$__System.registerDynamic('25', ['24', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('24', ['23', 'c'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var bbox = $__require('24');
-  var point = $__require('d').point;
+  var bbox = $__require('23');
+  var point = $__require('c').point;
 
   /**
    * Takes a {@link Feature} or {@link FeatureCollection} and returns the absolute center point of all features.
@@ -16845,14 +16811,14 @@ $__System.registerDynamic('25', ['24', 'd'], true, function ($__require, exports
     return point([x, y], properties);
   };
 });
-$__System.registerDynamic('26', ['23', '21', 'c', '25', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('25', ['22', '20', '16', '24', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var d3 = $__require('23');
-    var jsts = $__require('21');
-    var meta = $__require('c');
-    var center = $__require('25');
-    var helpers = $__require('d');
+    var d3 = $__require('22');
+    var jsts = $__require('20');
+    var meta = $__require('16');
+    var center = $__require('24');
+    var helpers = $__require('c');
     var feature = helpers.feature;
     var geomEach = meta.geomEach;
     var featureEach = meta.featureEach;
@@ -17025,10 +16991,10 @@ $__System.registerDynamic('26', ['23', '21', 'c', '25', 'd'], true, function ($_
         return projection;
     }
 });
-$__System.registerDynamic('27', ['d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('26', ['c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var point = $__require('d').point;
+    var point = $__require('c').point;
 
     /**
      * Takes a {@link LineString|linestring}, {@link MultiLineString|multi-linestring}, {@link MultiPolygon|multi-polygon}, or {@link Polygon|polygon} and returns {@link Point|points} at all self-intersections.
@@ -17073,16 +17039,27 @@ $__System.registerDynamic('27', ['d'], true, function ($__require, exports, modu
         } else {
             throw new Error('Input must be a LineString, MultiLineString, ' + 'Polygon, or MultiPolygon Feature or Geometry');
         }
-        coordinates.forEach(function (segment1) {
-            coordinates.forEach(function (segment2) {
-                for (var i = 0; i < segment1.length - 1; i++) {
-                    for (var k = i; k < segment2.length - 1; k++) {
-                        // don't check adjacent sides of a given segment, since of course they intersect in a vertex.
-                        if (segment1 === segment2 && (Math.abs(i - k) === 1 || Math.abs(i - k) === segment1.length - 2)) {
-                            continue;
+        coordinates.forEach(function (line1) {
+            coordinates.forEach(function (line2) {
+                for (var i = 0; i < line1.length - 1; i++) {
+                    // start iteration at i, intersections for k < i have already been checked in previous outer loop iterations
+                    for (var k = i; k < line2.length - 1; k++) {
+                        if (line1 === line2) {
+                            // segments are adjacent and always share a vertex, not a kink
+                            if (Math.abs(i - k) === 1) {
+                                continue;
+                            }
+                            // first and last segment in a closed lineString or ring always share a vertex, not a kink
+                            if (
+                            // segments are first and last segment of lineString
+                            i === 0 && k === line1.length - 2 &&
+                            // lineString is closed
+                            line1[i][0] === line1[line1.length - 1][0] && line1[i][1] === line1[line1.length - 1][1]) {
+                                continue;
+                            }
                         }
 
-                        var intersection = lineIntersects(segment1[i][0], segment1[i][1], segment1[i + 1][0], segment1[i + 1][1], segment2[k][0], segment2[k][1], segment2[k + 1][0], segment2[k + 1][1]);
+                        var intersection = lineIntersects(line1[i][0], line1[i][1], line1[i + 1][0], line1[i + 1][1], line2[k][0], line2[k][1], line2[k + 1][0], line2[k + 1][1]);
                         if (intersection) {
                             results.features.push(point([intersection[0], intersection[1]]));
                         }
@@ -17142,11 +17119,11 @@ $__System.registerDynamic('27', ['d'], true, function ($__require, exports, modu
         }
     }
 });
-$__System.registerDynamic("28", ["29"], true, function ($__require, exports, module) {
+$__System.registerDynamic("27", ["28"], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   // Find self-intersections in geojson polygon (possibly with interior rings)
-  var rbush = $__require("29");
+  var rbush = $__require("28");
 
   module.exports = function (feature, filterFn, useSpatialIndex) {
     if (feature.geometry.type != "Polygon") throw new Error("The input feature must be a Polygon");
@@ -17290,7 +17267,7 @@ $__System.registerDynamic("28", ["29"], true, function ($__require, exports, mod
     return true;
   }
 });
-$__System.registerDynamic('2a', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('29', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -17617,10 +17594,10 @@ $__System.registerDynamic('2a', [], true, function ($__require, exports, module)
         return distance / factor * 57.2958;
     };
 });
-$__System.registerDynamic('2b', ['1a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2a', ['19'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var invariant = $__require('1a');
+    var invariant = $__require('19');
     var getCoord = invariant.getCoord;
     var getCoords = invariant.getCoords;
 
@@ -17722,17 +17699,17 @@ $__System.registerDynamic('2b', ['1a'], true, function ($__require, exports, mod
         return bbox[0] <= pt[0] && bbox[1] <= pt[1] && bbox[2] >= pt[0] && bbox[3] >= pt[1];
     }
 });
-$__System.registerDynamic("2c", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("2b", [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   module.exports.RADIUS = 6378137;
   module.exports.FLATTENING = 1 / 298.257223563;
   module.exports.POLAR_RADIUS = 6356752.3142;
 });
-$__System.registerDynamic('2d', ['2c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2c', ['2b'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var wgs84 = $__require('2c');
+    var wgs84 = $__require('2b');
 
     module.exports.geometry = geometry;
     module.exports.ring = ringArea;
@@ -17832,7 +17809,7 @@ $__System.registerDynamic('2d', ['2c'], true, function ($__require, exports, mod
         return _ * Math.PI / 180;
     }
 });
-$__System.registerDynamic('15', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('13', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -18481,11 +18458,11 @@ $__System.registerDynamic('15', [], true, function ($__require, exports, module)
     }
     module.exports.geomReduce = geomReduce;
 });
-$__System.registerDynamic('2e', ['2d', '15'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2d', ['2c', '13'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var area = $__require('2d').geometry;
-    var geomReduce = $__require('15').geomReduce;
+    var area = $__require('2c').geometry;
+    var geomReduce = $__require('13').geomReduce;
 
     /**
      * Takes one or more features and returns their area in square meters.
@@ -18524,7 +18501,7 @@ $__System.registerDynamic('2e', ['2d', '15'], true, function ($__require, export
         }, 0);
     };
 });
-$__System.registerDynamic('2f', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('2e', [], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -18671,7 +18648,7 @@ $__System.registerDynamic('2f', [], true, function ($__require, exports, module)
     return Math.ceil(ms / n) + ' ' + name + 's';
   }
 });
-$__System.registerDynamic('30', ['2f'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2f', ['2e'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
 
@@ -18687,7 +18664,7 @@ $__System.registerDynamic('30', ['2f'], true, function ($__require, exports, mod
   exports.disable = disable;
   exports.enable = enable;
   exports.enabled = enabled;
-  exports.humanize = $__require('2f');
+  exports.humanize = $__require('2e');
 
   /**
    * The currently active debug mode names, and names to skip.
@@ -18878,7 +18855,7 @@ $__System.registerDynamic('30', ['2f'], true, function ($__require, exports, mod
     return val;
   }
 });
-$__System.registerDynamic('31', ['30'], true, function ($__require, exports, module) {
+$__System.registerDynamic('30', ['2f'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
   /**
@@ -18887,7 +18864,7 @@ $__System.registerDynamic('31', ['30'], true, function ($__require, exports, mod
    * Expose `debug()` as the module.
    */
 
-  exports = module.exports = $__require('30');
+  exports = module.exports = $__require('2f');
   exports.log = log;
   exports.formatArgs = formatArgs;
   exports.save = save;
@@ -19049,16 +19026,16 @@ $__System.registerDynamic('31', ['30'], true, function ($__require, exports, mod
     } catch (e) {}
   }
 });
-$__System.registerDynamic('32', ['28', '2a', '2b', '2e', '29', '31'], true, function ($__require, exports, module) {
+$__System.registerDynamic('31', ['27', '29', '2a', '2d', '28', '30'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var isects = $__require('28');
-  var helpers = $__require('2a');
-  var inside = $__require('2b');
-  var area = $__require('2e');
-  var rbush = $__require('29');
-  var debug = $__require('31')('simplepolygon');
-  var debugAll = $__require('31')('simplepolygon:all');
+  var isects = $__require('27');
+  var helpers = $__require('29');
+  var inside = $__require('2a');
+  var area = $__require('2d');
+  var rbush = $__require('28');
+  var debug = $__require('30')('simplepolygon');
+  var debugAll = $__require('30')('simplepolygon:all');
 
   /**
   * Takes a complex (i.e. self-intersecting) geojson polygon, and breaks it down into its composite simple, non-self-intersecting one-ring polygons.
@@ -19493,12 +19470,12 @@ $__System.registerDynamic('32', ['28', '2a', '2b', '2e', '29', '31'], true, func
     return isUnique;
   }
 });
-$__System.registerDynamic('33', ['c', 'd', '32'], true, function ($__require, exports, module) {
+$__System.registerDynamic('32', ['16', 'c', '31'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var meta = $__require('c');
-    var helpers = $__require('d');
-    var simplepolygon = $__require('32');
+    var meta = $__require('16');
+    var helpers = $__require('c');
+    var simplepolygon = $__require('31');
     var flattenEach = meta.flattenEach;
     var featureEach = meta.featureEach;
     var polygon = helpers.polygon;
@@ -19530,10 +19507,10 @@ $__System.registerDynamic('33', ['c', 'd', '32'], true, function ($__require, ex
         return featureCollection(features);
     };
 });
-$__System.registerDynamic('1e', ['1a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1d', ['19'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var getCoord = $__require('1a').getCoord;
+    var getCoord = $__require('19').getCoord;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
 
@@ -19594,11 +19571,11 @@ $__System.registerDynamic('1e', ['1a'], true, function ($__require, exports, mod
 
     module.exports = bearing;
 });
-$__System.registerDynamic('17', ['1a', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('15', ['19', 'c'], true, function ($__require, exports, module) {
   var global = this || self,
       GLOBAL = global;
-  var getCoord = $__require('1a').getCoord;
-  var radiansToDistance = $__require('d').radiansToDistance;
+  var getCoord = $__require('19').getCoord;
+  var radiansToDistance = $__require('c').radiansToDistance;
   //http://en.wikipedia.org/wiki/Haversine_formula
   //http://www.movable-type.co.uk/scripts/latlong.html
 
@@ -19638,13 +19615,13 @@ $__System.registerDynamic('17', ['1a', 'd'], true, function ($__require, exports
     return radiansToDistance(2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)), units);
   };
 });
-$__System.registerDynamic('1f', ['1a', 'd'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1e', ['19', 'c'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     //http://en.wikipedia.org/wiki/Haversine_formula
     //http://www.movable-type.co.uk/scripts/latlong.html
-    var getCoord = $__require('1a').getCoord;
-    var helpers = $__require('d');
+    var getCoord = $__require('19').getCoord;
+    var helpers = $__require('c');
     var point = helpers.point;
     var distanceToRadians = helpers.distanceToRadians;
 
@@ -19686,16 +19663,16 @@ $__System.registerDynamic('1f', ['1a', 'd'], true, function ($__require, exports
         return point([radians2degrees * longitude2, radians2degrees * latitude2]);
     };
 });
-$__System.registerDynamic('34', ['c', 'd', '1e', '17', '1a', '1f', '35'], true, function ($__require, exports, module) {
+$__System.registerDynamic('33', ['16', 'c', '1d', '15', '19', '1e', '34'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var meta = $__require('c');
-    var helpers = $__require('d');
-    var bearing = $__require('1e');
-    var distance = $__require('17');
-    var invariant = $__require('1a');
-    var destination = $__require('1f');
-    var lineIntersects = $__require('35');
+    var meta = $__require('16');
+    var helpers = $__require('c');
+    var bearing = $__require('1d');
+    var distance = $__require('15');
+    var invariant = $__require('19');
+    var destination = $__require('1e');
+    var lineIntersects = $__require('34');
     var point = helpers.point;
     var getCoords = invariant.getCoords;
     var lineString = helpers.lineString;
@@ -19785,11 +19762,11 @@ $__System.registerDynamic('34', ['c', 'd', '1e', '17', '1a', '1f', '35'], true, 
         return closestPt;
     };
 });
-$__System.registerDynamic('36', ['d', '34'], true, function ($__require, exports, module) {
+$__System.registerDynamic('35', ['c', '33'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var linestring = $__require('d').lineString;
-    var pointOnLine = $__require('34');
+    var linestring = $__require('c').lineString;
+    var pointOnLine = $__require('33');
 
     /**
      * Takes a {@link LineString|line}, a start {@link Point}, and a stop point
@@ -19846,7 +19823,7 @@ $__System.registerDynamic('36', ['d', '34'], true, function ($__require, exports
         return linestring(clipCoords, line.properties);
     };
 });
-$__System.registerDynamic('37', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('36', [], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
@@ -19909,14 +19886,14 @@ $__System.registerDynamic('37', [], true, function ($__require, exports, module)
         return a < b ? -1 : a > b ? 1 : 0;
     }
 });
-$__System.registerDynamic('29', ['37'], true, function ($__require, exports, module) {
+$__System.registerDynamic('28', ['36'], true, function ($__require, exports, module) {
     'use strict';
 
     var global = this || self,
         GLOBAL = global;
     module.exports = rbush;
 
-    var quickselect = $__require('37');
+    var quickselect = $__require('36');
 
     function rbush(maxEntries, format) {
         if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -20479,11 +20456,11 @@ $__System.registerDynamic('29', ['37'], true, function ($__require, exports, mod
         }
     }
 });
-$__System.registerDynamic('38', ['29', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('37', ['28', '16'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var rbush = $__require('29');
-    var meta = $__require('c');
+    var rbush = $__require('28');
+    var meta = $__require('16');
     var featureEach = meta.featureEach;
     var coordEach = meta.coordEach;
 
@@ -20794,7 +20771,7 @@ $__System.registerDynamic('38', ['29', 'c'], true, function ($__require, exports
         return bbox;
     }
 });
-$__System.registerDynamic('d', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('c', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -21345,7 +21322,7 @@ $__System.registerDynamic('d', [], true, function ($__require, exports, module) 
         isNumber: isNumber
     };
 });
-$__System.registerDynamic('1a', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('19', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -21552,7 +21529,7 @@ $__System.registerDynamic('1a', [], true, function ($__require, exports, module)
         getGeomType: getGeomType
     };
 });
-$__System.registerDynamic('c', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('16', [], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
     /**
@@ -22534,12 +22511,12 @@ $__System.registerDynamic('c', [], true, function ($__require, exports, module) 
         lineReduce: lineReduce
     };
 });
-$__System.registerDynamic('39', ['d', '1a', 'c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('38', ['c', '19', '16'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var helpers = $__require('d');
-    var getCoords = $__require('1a').getCoords;
-    var flattenEach = $__require('c').flattenEach;
+    var helpers = $__require('c');
+    var getCoords = $__require('19').getCoords;
+    var flattenEach = $__require('16').flattenEach;
     var lineString = helpers.lineString;
     var featureCollection = helpers.featureCollection;
 
@@ -22632,14 +22609,14 @@ $__System.registerDynamic('39', ['d', '1a', 'c'], true, function ($__require, ex
         return [west, south, east, north];
     }
 });
-$__System.registerDynamic('35', ['c', '38', 'd', '1a', '39'], true, function ($__require, exports, module) {
+$__System.registerDynamic('34', ['16', '37', 'c', '19', '38'], true, function ($__require, exports, module) {
     var global = this || self,
         GLOBAL = global;
-    var meta = $__require('c');
-    var rbush = $__require('38');
-    var helpers = $__require('d');
-    var getCoords = $__require('1a').getCoords;
-    var lineSegment = $__require('39');
+    var meta = $__require('16');
+    var rbush = $__require('37');
+    var helpers = $__require('c');
+    var getCoords = $__require('19').getCoords;
+    var lineSegment = $__require('38');
     var point = helpers.point;
     var featureEach = meta.featureEach;
     var featureCollection = helpers.featureCollection;
@@ -22739,10 +22716,10 @@ $__System.registerDynamic('35', ['c', '38', 'd', '1a', '39'], true, function ($_
         return null;
     }
 });
-$__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27', '33', '36', '35'], function (_export, _context) {
+$__System.register('a', ['c', '14', '1b', '1c', '1f', '25', '2a', '26', '32', '35', '34'], function (_export, _context) {
     "use strict";
 
-    var turf_centroid, turf_helpers, turf_concave, turf_simplify, turf_along, turf_union, turf_buffer, turf_inside, turk_kinks, turf_unkink, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
+    var turf_helpers, turf_concave, turf_simplify, turf_along, turf_union, turf_buffer, turf_inside, turk_kinks, turf_unkink, turf_line_slice, turf_line_intersect, beginsWith, endsWith, Wkt, arrayProto, splice, freeGlobal, freeSelf, root, Symbol, objectProto$1, hasOwnProperty$1, nativeObjectToString, symToStringTag$1, objectProto$2, nativeObjectToString$1, nullTag, undefinedTag, symToStringTag, asyncTag, funcTag, genTag, proxyTag, coreJsData, maskSrcKey, funcProto$1, funcToString$1, reRegExpChar, reIsHostCtor, funcProto, objectProto, funcToString, hasOwnProperty, reIsNative, Map, nativeCreate, HASH_UNDEFINED, objectProto$3, hasOwnProperty$2, objectProto$4, hasOwnProperty$3, HASH_UNDEFINED$1, LARGE_ARRAY_SIZE, HASH_UNDEFINED$2, COMPARE_PARTIAL_FLAG$2, COMPARE_UNORDERED_FLAG$1, Uint8Array, COMPARE_PARTIAL_FLAG$3, COMPARE_UNORDERED_FLAG$2, boolTag, dateTag, errorTag, mapTag, numberTag, regexpTag, setTag, stringTag, symbolTag, arrayBufferTag, dataViewTag, symbolProto, symbolValueOf, isArray, objectProto$7, propertyIsEnumerable, nativeGetSymbols, getSymbols, argsTag$1, objectProto$9, hasOwnProperty$7, propertyIsEnumerable$1, isArguments, freeExports, freeModule, moduleExports, Buffer, nativeIsBuffer, isBuffer, MAX_SAFE_INTEGER, reIsUint, MAX_SAFE_INTEGER$1, argsTag$2, arrayTag$1, boolTag$1, dateTag$1, errorTag$1, funcTag$1, mapTag$1, numberTag$1, objectTag$1, regexpTag$1, setTag$1, stringTag$1, weakMapTag, arrayBufferTag$1, dataViewTag$1, float32Tag, float64Tag, int8Tag, int16Tag, int32Tag, uint8Tag, uint8ClampedTag, uint16Tag, uint32Tag, typedArrayTags, freeExports$1, freeModule$1, moduleExports$1, freeProcess, nodeUtil, nodeIsTypedArray, isTypedArray, objectProto$8, hasOwnProperty$6, objectProto$11, nativeKeys, objectProto$10, hasOwnProperty$8, COMPARE_PARTIAL_FLAG$4, objectProto$6, hasOwnProperty$5, DataView, Promise, Set, WeakMap, mapTag$2, objectTag$2, promiseTag, setTag$2, weakMapTag$1, dataViewTag$2, dataViewCtorString, mapCtorString, promiseCtorString, setCtorString, weakMapCtorString, getTag, getTag$1, COMPARE_PARTIAL_FLAG$1, argsTag, arrayTag, objectTag, objectProto$5, hasOwnProperty$4, COMPARE_PARTIAL_FLAG, COMPARE_UNORDERED_FLAG, symbolTag$1, reIsDeepProp, reIsPlainProp, FUNC_ERROR_TEXT, MAX_MEMOIZE_SIZE, reLeadingDot, rePropName, reEscapeChar, stringToPath, INFINITY, symbolProto$1, symbolToString, INFINITY$1, COMPARE_PARTIAL_FLAG$5, COMPARE_UNORDERED_FLAG$3, baseFor, baseEach, rsAstralRange$1, rsComboMarksRange$1, reComboHalfMarksRange$1, rsComboSymbolsRange$1, rsComboRange$1, rsVarRange$1, rsAstral, rsCombo, rsFitz, rsModifier, rsNonAstral, rsRegional, rsSurrPair, rsZWJ$1, reOptMod, rsOptVar, rsOptJoin, rsSeq, rsSymbol, reUnicode, turf_linestring, debug, warn, turf_linestring$1, turf_linestring$2, turf_point, turf_linestring$3, turf_featurecollection, ig_turfhelper;
 
 
     function Wicket$1() {
@@ -25123,21 +25100,32 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
         return func(collection, castFunction(iteratee));
     }
 
-    function toLatLng(point) {
-        if (point.lat) {
-            return point;
+    /**
+     * Converts a coordinate pair into a {@link google.maps.LatLngLiteral}
+     * @param  {Position|google.maps.LatLngLiteral|google.maps.LatLng} position a coordinate pair 
+     * @return {google.maps.LatLngLiteral}     a {@link google.maps.LatLngLiteral}
+     * @private
+     */
+    function toLatLng(position) {
+        if (position instanceof google.maps.LatLng) {
+            return {
+                lat: position.lat(),
+                lng: position.lng()
+            };
+        } else if (position.lat && position.lng) {
+            return position;
         } else {
             return {
-                lat: point[1],
-                lng: point[0]
+                lat: position[1],
+                lng: position[0]
             };
         }
     }
 
     /**
      * Transforma un array de LatLng en un array de coordenadas [lng,lat]
-     * @param {Array.<Array.<Number>>} arrayLatLng [description]
-     * @return {Array.<google.maps.LatLng>} array de posiciones {@link google.maps.LatLng}
+     * @param {Array.<Position>} arrayLatLng [description]
+     * @return {Array.<google.maps.LatLngLiteral>} array of {@link google.maps.LatLngLiteral}
      */
     function toLatLngs(coordinates) {
         return map(coordinates, toLatLng);
@@ -25145,10 +25133,11 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
 
     /**
      * Transforms a {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral}
-     * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Array.<Number>} LatLng a coordinate to transform
-     * @return {Array.<Number>}      an array of numbers representing [Lng, Lat]
+     * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Position} LatLng a coordinate to transform
+     * @return {Position}   a coordinate pair
+     * @private
      */
-    function toCoord(LatLng) {
+    function toCoord$1(LatLng) {
         if (google.maps && google.maps.LatLng && LatLng instanceof google.maps.LatLng) {
             return [LatLng.lng(), LatLng.lat()];
         } else if (LatLng.lat && LatLng.lng) {
@@ -25159,13 +25148,16 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
             throw new Error('google.maps is not present in the global scope');
         }
     }
+
     /**
      * Transforms an array of coordinates to an array of [Lng, Lat]
-     * @param {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng Array of coordinates
-     * @return {Array.<Array.<Number>>} [description]
+     * @param {Array.<google.maps.LatLng>|Array.<google.maps.LatLngLiteral>} arrayLatLng Array of {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral}
+     * @param {bool} [closeRing=false] optionally, ensure the passed coordinate array forms a closed ring
+     * @return {Array.<Position>} an array of {@link Position}
      */
     function toCoords(arrayLatLng, closeRing) {
-        var ring = map(arrayLatLng, toCoord);
+
+        var ring = map(arrayLatLng, toCoord$1);
 
         if (closeRing === true) {
             var last_coord = ring.pop();
@@ -25205,6 +25197,28 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
     }
 
     /**
+     * Transforms a {@link google.maps.Marker} to a {@link Feature<Point>}
+     * @param  {google.maps.Marker} marker  - marker object to transform
+     * @return {Feature<Point>}    output Feature
+     */
+    function markerToFeaturePoint(marker) {
+        if (!marker.getPosition || typeof marker.getPosition !== 'function') {
+            throw new Error('input object does not have a getPosition method');
+        }
+        var position = marker.getPosition(),
+            Feature = {
+            type: "Feature",
+            properties: {},
+            geometry: {
+                type: "Point",
+                coordinates: [position.lng(), position.lat()]
+            }
+        };
+
+        return Feature;
+    }
+
+    /**
      * [polylineToFeatureLinestring description]
      * @param  {Array.<google.maps.LatLng>|google.maps.Polyline} objeto array of positions or a google.maps.Polyline
      * @return {Feature.<LineString>}          [description]
@@ -25227,9 +25241,11 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
      */
     function polygonToFeaturePolygon(object) {
         var ring, polygonFeature;
+
         if (object.type === 'Feature') {
             polygonFeature = object;
         } else if (object instanceof google.maps.Polygon) {
+
             object = object.getPath().getArray();
             ring = toCoords(object, true);
             polygonFeature = arrayToFeaturePolygon(ring);
@@ -25238,6 +25254,7 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
             ring = toCoords(object, true);
             polygonFeature = arrayToFeaturePolygon(ring);
         } else if (object.geometry) {
+
             polygonFeature = {
                 type: "Feature",
                 properties: {},
@@ -25269,22 +25286,13 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
                 type: "Feature",
                 geometry: {
                     type: "Point",
-                    coordinates: toCoord(latLng)
+                    coordinates: toCoords([latLng])[0]
                 }
             };
             FeatureCollection.features.push(Feature);
         });
 
         return FeatureCollection;
-    }
-
-    /**
-     * Returns the centroid of a FeatureCollection
-     * @param  {FeatureCollection} FeatureCollection [description]
-     * @return {Feature<Point>}                   [description]
-     */
-    function centroid(FeatureCollection) {
-        return turf_centroid(FeatureCollection);
     }
 
     /**
@@ -25320,7 +25328,7 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
     }
 
     /**
-     * Simplified a Feature or google.maps.Polygon
+     * Simplified a Feature, google.maps.Polygon or google.maps.Polyline
      * @param  {google.maps.Polygon|google.maps.Polyline|Array.<google.maps.LatLng>|Feature.<Polygon>|Feature.<LineString>} object feature to be simplified
      * @param  {string} output either 'feature', 'geometry' or 'object' (google maps). Case insensitive. Defaults to feature
      * @param  {mumber} tolerance   simplification tolerance
@@ -25449,13 +25457,14 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
 
     /**
      * Filters an array of points returning those who falls inside a given {@link Polygon}
-     * @param {Array<Point>} sourceArray array de SimpleFeature
+     * @param {Array<google.maps.Marker>} sourceArray array of {@link google.maps.Marker}
      * @param {Polygon|Multipolygon} geojsonPolygon  the polygon thay may contain the points
-     * @return {Array<SimpleFeature>} filteredArray the array of points which fall inside the Polygon
+     * @return {{pointsInside:Array<google.maps.Marker>, pointsOutside:Array<google.maps.Marker>}} an object with the points that fall inside and outside the polygon
      */
     function pointInPolygon(sourceArray, geojsonPolygon) {
         var pointsInside = [];
         var pointsOutside = [];
+
         if (geojsonPolygon.type !== 'Feature') {
             geojsonPolygon = {
                 "type": "Feature",
@@ -25463,10 +25472,10 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
                 "geometry": geojsonPolygon
             };
         }
-        if (geojsonPolygon.geometry.type !== 'Polygon' || geojsonPolygon.geometry.type !== 'Multipolygon') {
+        if (geojsonPolygon.geometry.type === 'Polygon' || geojsonPolygon.geometry.type === 'Multipolygon') {
             forEach(sourceArray, function (item) {
 
-                var Point = item.getGeoJsonPointFeature ? item.getGeoJsonPointFeature() : item.element.getGeoJsonPointFeature();
+                var Point = markerToFeaturePoint(item);
                 //console.zlog('Point is', Point);
                 if (turf_inside(Point, geojsonPolygon)) {
                     pointsInside.push(item);
@@ -25736,15 +25745,14 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
                 intersectionFC = turf_line_intersect(line1, line2);
 
             if (intersectionFC.features.length) {
-                var instersection = intersectionFC.features[0].geometry.coordinates;
-                instersection[0] = Math.round(instersection[0] * 100000000) / 100000000;
-                instersection[1] = Math.round(instersection[1] * 100000000) / 100000000;
-                return instersection;
+                var intersection = intersectionFC.features[0].geometry.coordinates;
+                intersection[0] = Math.round(intersection[0] * 100000000) / 100000000;
+                intersection[1] = Math.round(intersection[1] * 100000000) / 100000000;
+                return intersection;
             } else {
                 return false;
             }
         }
-
         var line1StartX = line1Start[0],
             line1StartY = line1Start[1],
             line1EndX = line1End[0],
@@ -25891,7 +25899,7 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
                 return kink.properties.position2;
             });
 
-            var intersectLatLng = toLatLng(chosenIntersection.geometry.coordinates);
+            var intersectLatLng = toLatLngs([chosenIntersection.geometry.coordinates])[0];
 
             // if the first intersection happens in the first segment of line1
             // then we don't slice it
@@ -25915,58 +25923,42 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
     }
 
     /**
-     * The Google Maps Namespace
-     * @external "google.maps"
-     * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
-     */
-    /**
-     * @external Promise
-     * @see  {@link https://promisesaplus.com/}
-     */
-    /**
-     * @external "google.maps.LatLng"
-     * @see  {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs//LatLng.md}
-     */
-
-    /**
-     * @external "google.maps.Polygon"
-     * @see  {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs//Polygon.md}
-     */
-
-    /**
-     * Este módulo permite realizar operaciones entre los objetos de Google Maps
-     * y la representación de éstos como geoJson, permitiendo realizar para ellos
-     * operaciones geométricas que Google Maps no tiene.
+     * This module acts as a bridge between google.maps and Turf, 
+     * By converting google maps overlays such as
+     * {@link google.maps.Polygon}
+     * {@link google.maps.Polyline}
+     * {@link google.maps.Point}
+     *
+     * to their proper geojson representation.
+     *
+     * This in turn allows to perform Turf operations that google.maps doesn't natively support
+     * 
      * @name turfHelper
      * @module turfHelper
-     * @todo  hay que separar esto en modulos más chicos!!!
      */
-
     return {
-        setters: [function (_a) {}, function (_b) {
-            turf_centroid = _b.default;
-        }, function (_d) {
-            turf_helpers = _d.default;
+        setters: [function (_c) {
+            turf_helpers = _c.default;
         }, function (_) {
             turf_concave = _.default;
-        }, function (_c) {
-            turf_simplify = _c.default;
-        }, function (_d2) {
-            turf_along = _d2.default;
+        }, function (_b) {
+            turf_simplify = _b.default;
+        }, function (_c2) {
+            turf_along = _c2.default;
+        }, function (_f) {
+            turf_union = _f.default;
         }, function (_2) {
-            turf_union = _2.default;
+            turf_buffer = _2.default;
+        }, function (_a) {
+            turf_inside = _a.default;
         }, function (_3) {
-            turf_buffer = _3.default;
-        }, function (_b2) {
-            turf_inside = _b2.default;
+            turk_kinks = _3.default;
         }, function (_4) {
-            turk_kinks = _4.default;
+            turf_unkink = _4.default;
         }, function (_5) {
-            turf_unkink = _5.default;
+            turf_line_slice = _5.default;
         }, function (_6) {
-            turf_line_slice = _6.default;
-        }, function (_7) {
-            turf_line_intersect = _7.default;
+            turf_line_intersect = _6.default;
         }],
         execute: function () {
             Wkt = function Wkt(obj) {
@@ -27753,7 +27745,6 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
             ig_turfhelper = {
                 along: along,
                 arrayToFeaturePoints: arrayToFeaturePoints,
-                centroid: centroid,
                 createbuffer: createbuffer,
                 pointInPolygon: pointInPolygon,
                 polygonToFeaturePolygon: polygonToFeaturePolygon,
@@ -27772,8 +27763,6 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
             _export('along', along);
 
             _export('arrayToFeaturePoints', arrayToFeaturePoints);
-
-            _export('centroid', centroid);
 
             _export('createbuffer', createbuffer);
 
@@ -27808,9 +27797,9 @@ $__System.register('a', ['3a', 'b', 'd', '16', '1c', '1d', '20', '26', '2b', '27
 })
 (function(factory) {
   if (typeof define == 'function' && define.amd)
-    define(["gmaps"], factory);
+    define([], factory);
   else if (typeof module == 'object' && module.exports && typeof require == 'function')
-    module.exports = factory(require("gmaps"));
+    module.exports = factory();
   else
-    turfHelper = factory(gmaps);
+    turfHelper = factory();
 });

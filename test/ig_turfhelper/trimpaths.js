@@ -1,7 +1,7 @@
 (function (QUnit) {
 
 
-    QUnit.module("turfHelpers trimPaths");
+    QUnit.module("turfHelper trimPaths");
 
 
     var line1 = [
@@ -118,12 +118,12 @@
         }
     ];
 
-    QUnit.test('turfHelpers.trimPaths should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.trimPaths, 'function', 'turfHelpers.trimPaths should be of type function');
+    QUnit.test('turfHelper.trimPaths should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.trimPaths, 'function', 'turfHelper.trimPaths should be of type function');
     });
 
 
-    QUnit.test('turfHelpers.trimPaths Using older method, it should find the correct intersection point and trim the segments on it', function (assert) {
+    QUnit.test('turfHelper.trimPaths Using older method, it should find the correct intersection point and trim the segments on it', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -145,7 +145,7 @@
         }
     });
 
-    QUnit.test('turfHelpers.trimPaths Using turf-line-intersect, it should find the correct intersection point and trim the segments on it', function (assert) {
+    QUnit.test('turfHelper.trimPaths Using turf-line-intersect, it should find the correct intersection point and trim the segments on it', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {

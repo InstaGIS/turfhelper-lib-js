@@ -1,7 +1,6 @@
  import turk_kinks from '@turf/kinks';
 
  import {
- 	polylineToFeatureLinestring,
  	polygonToFeaturePolygon
  } from './utils.js';
 

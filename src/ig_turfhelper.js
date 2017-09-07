@@ -1,36 +1,21 @@
 /**
- * The Google Maps Namespace
- * @external "google.maps"
- * @see {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs/|Google Maps API}
- */
-/**
- * @external Promise
- * @see  {@link https://promisesaplus.com/}
- */
-/**
- * @external "google.maps.LatLng"
- * @see  {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs//LatLng.md}
- */
-
-/**
- * @external "google.maps.Polygon"
- * @see  {@link https://github.com/amenadiel/google-maps-documentation/blob/master/docs//Polygon.md}
- */
-
-/**
- * Este módulo permite realizar operaciones entre los objetos de Google Maps
- * y la representación de éstos como geoJson, permitiendo realizar para ellos
- * operaciones geométricas que Google Maps no tiene.
+ * This module acts as a bridge between google.maps and Turf, 
+ * By converting google maps overlays such as
+ * {@link google.maps.Polygon}
+ * {@link google.maps.Polyline}
+ * {@link google.maps.Point}
+ *
+ * to their proper geojson representation.
+ *
+ * This in turn allows to perform Turf operations that google.maps doesn't natively support
+ * 
  * @name turfHelper
  * @module turfHelper
- * @todo  hay que separar esto en modulos más chicos!!!
  */
-
 import {
     polylineToFeatureLinestring,
     polygonToFeaturePolygon,
-    arrayToFeaturePoints,
-    centroid
+    arrayToFeaturePoints
 } from './components/utils.js';
 
 import {
@@ -77,11 +62,9 @@ import {
  * @alias module:turfHelper
  * @type {Object}
  */
-
 export {
     along,
     arrayToFeaturePoints,
-    centroid,
     createbuffer,
     pointInPolygon,
     polygonToFeaturePolygon,
@@ -100,7 +83,6 @@ export {
 export default {
     along: along,
     arrayToFeaturePoints: arrayToFeaturePoints,
-    centroid: centroid,
     createbuffer: createbuffer,
     pointInPolygon: pointInPolygon,
     polygonToFeaturePolygon: polygonToFeaturePolygon,

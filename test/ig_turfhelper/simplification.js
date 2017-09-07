@@ -1,6 +1,6 @@
 (function (QUnit) {
 
-    QUnit.module("turfHelpers Simplification");
+    QUnit.module("turfHelper Simplification");
 
     var points = [{
         lng: 22.455,
@@ -405,18 +405,18 @@
         lat: 48.077
     }];
 
-    QUnit.test('turfHelpers.simplifyFeature should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.simplifyFeature, 'function', 'turfHelpers.simplifyFeature should be of type function');
+    QUnit.test('turfHelper.simplifyFeature should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.simplifyFeature, 'function', 'turfHelper.simplifyFeature should be of type function');
     });
-    QUnit.test('turfHelpers.simplifyPointArray should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.simplifyPointArray, 'function', 'turfHelpers.simplifyPointArray should be of type function');
+    QUnit.test('turfHelper.simplifyPointArray should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.simplifyPointArray, 'function', 'turfHelper.simplifyPointArray should be of type function');
     });
-    QUnit.test('turfHelpers.simplifyPointArray simplifies points correctly with the given tolerance', function (assert) {
+    QUnit.test('turfHelper.simplifyPointArray simplifies points correctly with the given tolerance', function (assert) {
         var result = turfHelper.simplifyPointArray(turfHelper.toCoords(points), 0.5);
         assert.deepEqual(result, turfHelper.toCoords(simplified), 'simplifies points correctly with the given tolerance');
     });
 
-    QUnit.test('turfHelpers.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon', function (assert) {
+    QUnit.test('turfHelper.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -446,7 +446,7 @@
                 simplified_result_geom
             ];
 
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon');
+            assert.deepEqual(result, featurePolygon, 'turfHelper.simplifyFeature should simplify a google.maps.Polygon into a Feature.Polygon');
             done();
         };
         if (window.gmaps.then) {
@@ -458,7 +458,7 @@
         }
     });
 
-    QUnit.test('turfHelpers.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString', function (assert) {
+    QUnit.test('turfHelper.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -486,7 +486,7 @@
             });
             result.geometry.coordinates = simplified_result_geom;
 
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString');
+            assert.deepEqual(result, featurePolygon, 'turfHelper.simplifyFeature should simplify a google.maps.Polyline into a Feature.LineString');
             done();
         };
         if (window.gmaps.then) {

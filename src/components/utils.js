@@ -1,5 +1,3 @@
-import gmaps from 'gmaps';
-
 import {
     Wicket
 } from './wicket_helper.js';
@@ -14,7 +12,6 @@ import {
 } from 'lodash-es/forEach.js';
 
 import {
-    toCoord,
     toCoords
 } from './coords_to_latlng.js';
 
@@ -26,9 +23,6 @@ import {
     default as _reduce
 }
 from 'lodash-es/reduce.js';
-
-
-import turf_centroid from '@turf/centroid';
 
 
 import turf_helpers from '@turf/helpers';
@@ -59,6 +53,45 @@ function arrayToFeaturePolygon(LatLngArray) {
     };
 }
 
+/**
+ * Transforms a {@link google.maps.LatLng} or {@link google.maps.LatLngLiteral} into a {@link Feature.<Point>}
+ * @param  {google.maps.LatLng|google.maps.LatLngLiteral|Array.<Number>} LatLng a coordinate to transform
+ * @return {Feature.<Point>} a Point type Feature
+ */
+function latlngToFeaturePoint(LatLng) {
+    var coords = toCoord([LatLng])[0],
+        feature = {
+            type: "Feature",
+            geometry: {
+                type: "Point",
+                coordinates: coords
+            }
+        };
+
+    return feature;
+}
+
+/**
+ * Transforms a {@link google.maps.Marker} to a {@link Feature<Point>}
+ * @param  {google.maps.Marker} marker  - marker object to transform
+ * @return {Feature<Point>}    output Feature
+ */
+function markerToFeaturePoint(marker) {
+    if (!marker.getPosition || typeof marker.getPosition !== 'function') {
+        throw new Error('input object does not have a getPosition method');
+    }
+    var position = marker.getPosition(),
+        Feature = {
+            type: "Feature",
+            properties: {},
+            geometry: {
+                type: "Point",
+                coordinates: [position.lng(), position.lat()]
+            }
+        };
+
+    return Feature;
+};
 
 /**
  * [polylineToFeatureLinestring description]
@@ -84,23 +117,29 @@ function polylineToFeatureLinestring(objeto) {
  */
 function polygonToFeaturePolygon(object) {
     var ring, polygonFeature;
+
     if (object.type === 'Feature') {
         polygonFeature = object;
+
     } else if (object instanceof google.maps.Polygon) {
+
         object = object.getPath().getArray();
         ring = toCoords(object, true);
         polygonFeature = arrayToFeaturePolygon(ring);
+
     } else if (!!(object && object.constructor === Array)) {
 
         ring = toCoords(object, true);
         polygonFeature = arrayToFeaturePolygon(ring);
 
     } else if (object.geometry) {
+
         polygonFeature = {
             type: "Feature",
             properties: {},
             geometry: object.geometry
         };
+
     } else {
         throw new Error('object is not a Feature, google.maps.Polygon nor an array of google.maps.LatLng');
     }
@@ -130,7 +169,7 @@ function arrayToFeaturePoints(latLngArray) {
             type: "Feature",
             geometry: {
                 type: "Point",
-                coordinates: toCoord(latLng)
+                coordinates: toCoords([latLng])[0]
             }
         };
         FeatureCollection.features.push(Feature);
@@ -140,14 +179,6 @@ function arrayToFeaturePoints(latLngArray) {
 
 }
 
-/**
- * Returns the centroid of a FeatureCollection
- * @param  {FeatureCollection} FeatureCollection [description]
- * @return {Feature<Point>}                   [description]
- */
-function centroid(FeatureCollection) {
-    return turf_centroid(FeatureCollection);
-}
 
 /**
  * Convierte un gmaps.Polygon en un FeatureCollection de puntos
@@ -181,10 +212,12 @@ function polygonToFeaturePolygonCollection(polygon) {
 export {
     debug,
     warn,
+    centroid,
     arrayToFeaturePolygon,
     polygonToFeaturePolygonCollection,
-    polygonToFeaturePolygon,
     arrayToFeaturePoints,
-    centroid,
+    markerToFeaturePoint,
+    latlngToFeaturePoint,
+    polygonToFeaturePolygon,
     polylineToFeatureLinestring
 };

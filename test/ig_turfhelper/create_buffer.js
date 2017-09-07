@@ -1,13 +1,13 @@
 (function (QUnit) {
 
 
-    QUnit.module("turfHelpers Create Buffer");
+    QUnit.module("turfHelper Create Buffer");
 
 
-    QUnit.test('turfHelpers.createbuffer should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.createbuffer, 'function', 'turfHelpers.createbuffer should be of type function');
+    QUnit.test('turfHelper.createbuffer should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.createbuffer, 'function', 'turfHelper.createbuffer should be of type function');
     });
-    QUnit.test('turfHelpers.createbuffer should create a correct buffer from a  google.maps.Polygon', function (assert) {
+    QUnit.test('turfHelper.createbuffer should create a correct buffer from a  google.maps.Polygon', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -116,7 +116,7 @@
             ];
 
 
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.createbuffer should create a correct buffer from a  google.maps.Polygon');
+            assert.deepEqual(result, featurePolygon, 'turfHelper.createbuffer should create a correct buffer from a  google.maps.Polygon');
             done();
         };
         if (window.gmaps.then) {

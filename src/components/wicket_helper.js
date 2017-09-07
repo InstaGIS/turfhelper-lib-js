@@ -20,8 +20,6 @@
  */
 
 
-import gmaps from 'gmaps';
-
 var beginsWith, endsWith;
 
 /**

@@ -1,4 +1,3 @@
-import gmaps from 'gmaps';
 import {
 	Wicket
 } from './wicket_helper.js';

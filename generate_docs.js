@@ -32,6 +32,7 @@ const paths = {
     Geometry: 'http://geojson.org/geojson-spec.html#geometry',
     Feature: 'http://geojson.org/geojson-spec.html#feature-objects',
     FeatureCollection: 'http://geojson.org/geojson-spec.html#feature-collection-objects',
+    Position: 'http://geojson.org/geojson-spec.html#positions',
     'google.maps.LatLng': 'https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md',
     'google.maps.LatLngLiteral': 'https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md',
     'google.maps.Marker': 'https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Marker.md',

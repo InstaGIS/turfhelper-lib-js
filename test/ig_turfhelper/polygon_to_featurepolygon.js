@@ -1,13 +1,13 @@
 (function (QUnit) {
 
 
-    QUnit.module("turfHelpers Polygon to Feature Polygon");
+    QUnit.module("turfHelper Polygon to Feature Polygon");
 
 
-    QUnit.test('turfHelpers.polygonToFeaturePolygon should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.polygonToFeaturePolygon, 'function', 'turfHelpers.polygonToFeaturePolygon should be of type function');
+    QUnit.test('turfHelper.polygonToFeaturePolygon should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.polygonToFeaturePolygon, 'function', 'turfHelper.polygonToFeaturePolygon should be of type function');
     });
-    QUnit.test('turfHelpers.polygonToFeaturePolygon converts a google.maps.Polygon into a Feature with Polygon geometry', function (assert) {
+    QUnit.test('turfHelper.polygonToFeaturePolygon converts a google.maps.Polygon into a Feature with Polygon geometry', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -57,7 +57,7 @@
 
 
             var result = turfHelper.polygonToFeaturePolygon(gmPolygon);
-            assert.deepEqual(result, featurePolygon, 'turfHelpers.polygonToFeaturePolygon converts a google.maps.Polygon into a Feature with Polygon geometry');
+            assert.deepEqual(result, featurePolygon, 'turfHelper.polygonToFeaturePolygon converts a google.maps.Polygon into a Feature with Polygon geometry');
             done();
         };
         if (window.gmaps.then) {

@@ -26,7 +26,6 @@ import {
 
 import {
 	toCoords,
-	toLatLng,
 	toLatLngs
 } from './coords_to_latlng.js';
 
@@ -64,15 +63,14 @@ function lineIntersects(line1Start, line1End, line2Start, line2End, useOldMethod
 			intersectionFC = turf_line_intersect(line1, line2);
 
 		if (intersectionFC.features.length) {
-			var instersection = intersectionFC.features[0].geometry.coordinates;
-			instersection[0] = Math.round(instersection[0] * 100000000) / 100000000;
-			instersection[1] = Math.round(instersection[1] * 100000000) / 100000000;
-			return instersection;
+			var intersection = intersectionFC.features[0].geometry.coordinates;
+			intersection[0] = Math.round(intersection[0] * 100000000) / 100000000;
+			intersection[1] = Math.round(intersection[1] * 100000000) / 100000000;
+			return intersection;
 		} else {
 			return false;
 		}
 	}
-
 	var line1StartX = line1Start[0],
 		line1StartY = line1Start[1],
 		line1EndX = line1End[0],
@@ -236,7 +234,7 @@ function trimPaths(arrayLatLng1, arrayLatLng2, useOldMethod) {
 			return kink.properties.position2;
 		});
 
-		var intersectLatLng = toLatLng(chosenIntersection.geometry.coordinates);
+		var intersectLatLng = toLatLngs([chosenIntersection.geometry.coordinates])[0];
 
 		// if the first intersection happens in the first segment of line1
 		// then we don't slice it

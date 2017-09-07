@@ -1,13 +1,13 @@
 (function (QUnit) {
 
 
-    QUnit.module("turfHelpers Polyline to Feature Linestring");
+    QUnit.module("turfHelper Polyline to Feature Linestring");
 
 
-    QUnit.test('turfHelpers.polylineToFeatureLinestring should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.polylineToFeatureLinestring, 'function', 'turfHelpers.polylineToFeatureLinestring should be of type function');
+    QUnit.test('turfHelper.polylineToFeatureLinestring should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.polylineToFeatureLinestring, 'function', 'turfHelper.polylineToFeatureLinestring should be of type function');
     });
-    QUnit.test('turfHelpers.polylineToFeatureLinestring converts a google.maps.Polyline into a Feature with Polyline geometry', function (assert) {
+    QUnit.test('turfHelper.polylineToFeatureLinestring converts a google.maps.Polyline into a Feature with Polyline geometry', function (assert) {
         var done = assert.async();
 
         var runtest = function (gmaps) {
@@ -60,7 +60,7 @@
             result.geometry.coordinates = simplified_result_geom;
 
 
-            assert.deepEqual(result, featurePolyline, 'turfHelpers.polylineToFeatureLinestring converts a google.maps.Polyline into a Feature with Linestring geometry');
+            assert.deepEqual(result, featurePolyline, 'turfHelper.polylineToFeatureLinestring converts a google.maps.Polyline into a Feature with Linestring geometry');
             done();
         };
         if (window.gmaps.then) {

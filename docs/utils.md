@@ -10,6 +10,26 @@ Transforma un array de gmaps.LatLng en un Feature.Polygon
 
 Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Polygon](http://geojson.org/geojson-spec.html#polygon)>** [description]
 
+## latlngToFeaturePoint
+
+Transforms a [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) or [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md) into a [Feature.&lt;Point>](Feature.<Point>)
+
+**Parameters**
+
+-   `LatLng` **([google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md) \| [google.maps.LatLngLiteral](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLngLiteral.md) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)>)** a coordinate to transform
+
+Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Point](http://geojson.org/geojson-spec.html#point)>** a Point type Feature
+
+## markerToFeaturePoint
+
+Transforms a [google.maps.Marker](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Marker.md) to a [Feature&lt;Point>](Feature<Point>)
+
+**Parameters**
+
+-   `marker` **[google.maps.Marker](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/Marker.md)** marker object to transform
+
+Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Point](http://geojson.org/geojson-spec.html#point)>** output Feature
+
 ## polylineToFeatureLinestring
 
 [polylineToFeatureLinestring description]
@@ -40,16 +60,6 @@ donde cada Feature es un punto del array de entrada
 -   `latLngArray` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)> | google.maps.MVCArray)** array de posiciones [google.maps.LatLng](https://github.com/amenadiel/google-maps-documentation/blob/master/docs/LatLng.md)
 
 Returns **[FeatureCollection](http://geojson.org/geojson-spec.html#feature-collection-objects)** geojson FeatureCollection
-
-## centroid
-
-Returns the centroid of a FeatureCollection
-
-**Parameters**
-
--   `FeatureCollection` **[FeatureCollection](http://geojson.org/geojson-spec.html#feature-collection-objects)** [description]
-
-Returns **[Feature](http://geojson.org/geojson-spec.html#feature-objects)&lt;[Point](http://geojson.org/geojson-spec.html#point)>** [description]
 
 ## polygonToFeaturePolygonCollection
 

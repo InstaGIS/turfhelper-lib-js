@@ -1,29 +1,22 @@
 (function (QUnit) {
 
-    QUnit.module("turfHelpers Entities");
+    QUnit.module("turfHelper Entities");
 
-    QUnit.test('turfHelpers.along should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.along, 'function', 'turfHelpers.along should be of type function');
+    QUnit.test('turfHelper.along should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.along, 'function', 'turfHelper.along should be of type function');
     });
-    QUnit.test('turfHelpers.arrayToFeaturePoints should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.arrayToFeaturePoints, 'function', 'turfHelpers.arrayToFeaturePoints should be of type function');
-    });
-
-    QUnit.test('turfHelpers.centroid should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.centroid, 'function', 'turfHelpers.centroid should be of type function');
-    });
-
-    QUnit.test('turfHelpers.pointInPolygon should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.pointInPolygon, 'function', 'turfHelpers.pointInPolygon should be of type function');
+    QUnit.test('turfHelper.arrayToFeaturePoints should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.arrayToFeaturePoints, 'function', 'turfHelper.arrayToFeaturePoints should be of type function');
     });
 
 
-    QUnit.test('turfHelpers.toLatLngs should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.toLatLngs, 'function', 'turfHelpers.toLatLngs should be of type function');
+    QUnit.test('turfHelper.pointInPolygon should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.pointInPolygon, 'function', 'turfHelper.pointInPolygon should be of type function');
     });
 
-    QUnit.test('turfHelpers.union should be of type function', function (assert) {
-        assert.equal(typeof turfHelper.union, 'function', 'turfHelpers.union should be of type function');
+
+    QUnit.test('turfHelper.union should be of type function', function (assert) {
+        assert.equal(typeof turfHelper.union, 'function', 'turfHelper.union should be of type function');
     });
 
 
