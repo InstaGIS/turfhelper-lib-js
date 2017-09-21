@@ -544,7 +544,7 @@ SystemJS.config({
     ],
     map: {
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
-        "plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
+        "plugin-babel": "npm:systemjs-plugin-babel@0.0.25"
     },
     packages: {}
 });

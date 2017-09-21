@@ -26279,11 +26279,10 @@ $__System.register('a', ['c', '14', '1b', '1c', '1f', '25', '2a', '26', '32', '3
                         }
 
                         return s;
-                    }.call(this).join('')
-                };
+                    }.call(this).join(''
 
-                // Wkt BOX type gets a special bbox property in GeoJSON
-                if (this.type.toLowerCase() === 'box') {
+                    // Wkt BOX type gets a special bbox property in GeoJSON
+                    ) };if (this.type.toLowerCase() === 'box') {
                     json.type = 'Polygon';
                     json.bbox = [];
 
