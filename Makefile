@@ -3,7 +3,7 @@ VERSION = $(shell cat package.json | sed -n 's/.*"version": "\([^"]*\)",/\1/p')
 SHELL = /usr/bin/env bash
 
 default: build
-.PHONY: test build build_unminified build_minified build_utils docs
+.PHONY: test build build_unminified build_minified build_utils docs build_to_test
 
 
 version:
@@ -32,9 +32,9 @@ build_minified:
 build_utils:
 	jspm build src/components/utils.js dist/utils.min.js  --global-name turfUtils --global-deps '{"gmaps": "gmaps"}' -m
 
-build:  build_unminified test build_minified build_utils
+build:  build_to_test test build_minified build_utils
 	
-	
+build_to_test:  build_unminified test
 	
 
 
