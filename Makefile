@@ -14,7 +14,7 @@ install:
 	jspm install
 
 test:
-	grunt karma
+	$$(npm bin)/karma start
 
 docs:
 	./generate_docs.js
