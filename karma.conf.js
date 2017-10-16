@@ -24,7 +24,6 @@ module.exports = function (config) {
 			'test/vendor/jsts-polyfills.js',
 			'test/vendor/bluebird.js',
 			'test/vendor/gmaps.js',
-			'test/vendor/underscore.js',
 			'test/vendor/jquery.js',
 			'dist/ig_turfhelper.js',
 			'test/ig_turfhelper/setup/*.js',

@@ -39,15 +39,12 @@
     "bluebird": "^3.5.1",
     "documentation": "^5.2.2",
     "eslint": "^4.5.0",
-    "grunt": "^1",
-    "grunt-karma": "^2",
     "jspm": "^0.17.0-beta.45",
     "karma": "^1",
     "karma-mocha-reporter": "^2.2.3",
     "karma-phantomjs-launcher": "^1",
     "karma-qunit": "^1.2.1",
     "karma-systemjs": "^0.16.0",
-    "lodash": "^4",
     "lodash-es": "^4.17.4",
     "phantomjs-prebuilt": "^2",
     "progress": "^2.0.0",
@@ -57,7 +54,8 @@
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-replace": "^2.0.0"
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^2.0.1"
   },
   "jspm": {
     "registry": "jspm",
@@ -69,25 +67,12 @@
     "format": "amd",
     "dependencies": {},
     "devDependencies": {
-      "@turf/along": "npm:@turf/along@^4.6.0",
-      "@turf/buffer": "npm:@turf/buffer@^4.6.1",
-      "@turf/concave": "npm:@turf/concave@^4.6.0",
-      "@turf/helpers": "npm:@turf/helpers@^4.6.0",
-      "@turf/inside": "npm:@turf/inside@^4.6.0",
-      "@turf/kinks": "npm:@turf/kinks@^4.6.0",
-      "@turf/line-intersect": "npm:@turf/line-intersect@^4.6.0",
-      "@turf/line-slice": "npm:@turf/line-slice@^4.6.0",
-      "@turf/simplify": "npm:@turf/simplify@^4.6.0",
-      "@turf/truncate": "npm:@turf/truncate@^4.6.0",
-      "@turf/union": "npm:@turf/union@^4.6.0",
-      "@turf/unkink-polygon": "npm:@turf/unkink-polygon@^4.6.0",
       "assert": "npm:jspm-nodelibs-assert@^0.2.0",
       "buffer": "npm:jspm-nodelibs-buffer@^0.2.0",
       "child_process": "npm:jspm-nodelibs-child_process@^0.2.0",
       "constants": "npm:jspm-nodelibs-constants@^0.2.0",
       "crypto": "npm:jspm-nodelibs-crypto@^0.2.0",
       "events": "npm:jspm-nodelibs-events@^0.2.0",
-      "lodash-es": "npm:lodash-es@^4.14.2",
       "os": "npm:jspm-nodelibs-os@^0.2.0",
       "path": "npm:jspm-nodelibs-path@^0.2.0",
       "process": "npm:jspm-nodelibs-process@^0.2.0",
@@ -101,23 +86,6 @@
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.25"
     },
     "overrides": {
-      "npm:debug@2.6.8": {
-        "main": "src/browser.js",
-        "jspmNodeConversion": false,
-        "format": "cjs",
-        "map": {
-          "./src/browser.js": {
-            "node": "./src/node.js"
-          },
-          "./node.js": {
-            "browser": "./src/browser.js"
-          },
-          "fs": "@node/fs",
-          "net": "@node/net",
-          "tty": "@node/tty",
-          "util": "@node/util"
-        }
-      },
       "npm:inherits@2.0.3": {
         "ignore": [
           "test.js"
